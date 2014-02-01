@@ -1,0 +1,330 @@
+.appLabel, .appButton .x-btn-inner  {
+	color: black;
+	font-size: 14px;
+}
+
+.x-grid-row-over .x-grid-cell-inner {
+	font-weight: bold;
+}
+
+.x-grid-row-selected .x-grid-cell-inner {
+	font-weight: bold;
+}
+
+/* Settings Wallpaper */
+div.settings-wallpaper-item {
+	padding: 5px;
+	cursor: default;
+}
+
+div.settings-wallpaper-item-selected {
+	background-color: #d3e1f1 !important;
+}
+
+div.view-over.settings-wallpaper-item {
+	background-color: #efefef;
+}
+
+/* Desktop Windows */
+.desktop-active-win {
+	
+}
+
+.desktop-inactive-win {
+	opacity: 0.90;
+}
+
+/* WindowBar */
+.windowbar .x-btn-inner,.x-nbr .windowbar .x-btn-icon-text-left button {
+	text-align: left !important;
+}
+
+.windowbar {
+	height: 26px;
+	padding: 0;
+}
+
+/* Desktop DataView */
+.wallpaper {
+	background-color: #3d71b8;
+	display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.wallpaper-center {
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.wallpaper-tile {
+	background-repeat: repeat;
+}
+
+.desktop-shortcut {
+	cursor: pointer;
+	text-align: center;
+	margin: 12px;
+	width: 64px;
+	height: 88px; 
+	float: left;
+}
+
+.desktop-shortcut-icon {
+	width: 48px;
+	height: 48px;
+	margin: 0 auto;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+.desktop-shortcut-text {
+	font: normal 13px tahoma, arial, verdana, sans-serif;
+	text-decoration: none;
+	padding-top: 5px;
+	color: white;
+}
+
+.view-over .desktop-shortcut-text {
+	text-decoration: underline;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+/* Icons */
+
+.accesslog-icon {
+	background-image: url(../images/accesslog-icon.png);
+}
+
+.systemstatus-icon {
+	background-image: url(../images/demo/systemstatus-icon.png);
+}
+
+.grid-icon {
+	background-image: url(../images/demo/grid-icon.png);
+}
+
+.onlineusers-icon {
+	background-image: url(../images/demo/onlineusers-icon.png);
+}
+
+.notepad-icon {
+	background-image: url(../images/demo/notepad-icon.png);
+}
+
+.loggingevents-icon {
+	background-image: url(../images/loggingevents-icon.png);
+}
+
+.users-icon {
+	background-image: url(../images/users-icon.png);
+}
+
+.configuration-icon {
+	background-image: url(../images/settings-icon.png);
+}
+
+.AssigningStudents-icon {
+	background-image: url(../images/16/AssigningStudents.png);
+}
+
+.ballots-icon {
+	background-image: url(../images/16/ballots.png);
+}
+
+.class_register-icon {
+	background-image: url(../images/16/class_register.png);
+}
+
+.classes-icon {
+	background-image: url(../images/16/classes.png);
+}
+
+.closing_school_year-icon {
+	background-image: url(../images/16/closing_school_year.png);
+}
+
+.education_paths-icon {
+	background-image: url(../images/16/education_paths.png);
+}
+
+.education_subjects-icon {
+	background-image: url(../images/16/education_subjects.png);
+}
+
+.metrics-icon {
+	background-image: url(../images/16/metrics.png);
+}
+
+.opening_school_year-icon {
+	background-image: url(../images/16/opening_school_year.png);
+}
+
+.people-icon {
+	background-image: url(../images/16/people.png);
+}
+
+.school_years-icon {
+	background-image: url(../images/16/school_years.png);
+}
+
+.skills-icon {
+	background-image: url(../images/16/skills.png);
+}
+
+.student_logbook-icon {
+	background-image: url(../images/16/student_logbook.png);
+}
+
+.teacher_register-icon {
+	background-image: url(../images/16/teacher_register.png);
+}
+
+/* Shorcut */
+
+.users-shortcut {
+	background-image: url(../images/users.png);
+}
+
+.loggingevents-shortcut {
+	background-image: url(../images/loggingevents.png);
+}
+
+.accesslog-shortcut {
+	background-image: url(../images/accesslog.png);
+}
+
+.configuration-shortcut {
+	background-image: url(../images/settings.png);
+}
+
+.onlineusers-shortcut {
+	background-image: url(../images/demo/onlineusers.png);
+}
+
+.notepad-shortcut {
+	background-image: url(../images/demo/notepad.png);
+}
+
+.grid-shortcut {
+	background-image: url(../images/demo/grid.png);
+}
+
+.systemstatus-shortcut {
+	background-image: url(../images/demo/systemstatus.png);
+}
+
+.AssigningStudents-shortcut {
+	background-image: url(../images/48/AssigningStudents.png);
+}
+
+.ballots-shortcut {
+	background-image: url(../images/48/ballots.png);
+}
+
+.class_register-shortcut {
+	background-image: url(../images/48/class_register.png);
+}
+
+.classes-shortcut {
+	background-image: url(../images/48/classes.png);
+}
+
+.closing_school_year-shortcut {
+	background-image: url(../images/48/closing_school_year.png);
+}
+
+.education_paths-shortcut {
+	background-image: url(../images/48/education_paths.png);
+}
+
+.education_subjects-shortcut {
+	background-image: url(../images/48/education_subjects.png);
+}
+
+.metrics-shortcut {
+	background-image: url(../images/48/metrics.png);
+}
+
+.opening_school_year-shortcut {
+	background-image: url(../images/48/opening_school_year.png);
+}
+
+.people-shortcut {
+	background-image: url(../images/48/people.png);
+}
+
+.school_years-shortcut {
+	background-image: url(../images/48/school_years.png);
+}
+
+.skills-shortcut {
+	background-image: url(../images/48/skills.png);
+}
+
+.student_logbook-shortcut {
+	background-image: url(../images/48/student_logbook.png);
+}
+
+.teacher_register-shortcut {
+	background-image: url(../images/48/teacher_register.png);
+}
+
+.loggedOnLabel {
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.settings {
+	background-image: url(../images/settings-icon.png);
+}
+
+.logout {
+	background-image: url(../images/logout.png);
+}
+
+
+/* DEMO */
+
+.tabs-icon {
+	background-image: url(../images/demo/tabs-icon.gif);
+}
+
+user {
+	background-image: url(../images/demo/user.png);
+}
+
+.user-add {
+	background-image: url(../images/demo/user_add.png);
+}
+
+.user-delete {
+	background-image: url(../images/demo/user_delete.png);
+}
+
+.connect {
+	background-image: url(../images/demo/connect.png);
+}
+
+.user-girl {
+	background-image: url(../images/demo/user_female.png);
+}
+
+.user-kid {
+	background-image: url(../images/demo/user_green.png);
+}
+
+.add {
+	background-image: url(../images/demo/add.png);
+}
+
+.option {
+	background-image: url(../images/demo/plugin.png);
+}
+
+.remove {
+	background-image: url(../images/demo/delete.png);
+}

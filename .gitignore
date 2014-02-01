@@ -1,0 +1,10 @@
+/target
+/.git
+/.settings
+/.project
+/.classpath
+
+
+# OS generated files #
+######################
+Thumbs.db
