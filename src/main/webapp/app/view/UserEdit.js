@@ -38,7 +38,7 @@ Ext.define('Desktop.view.UserEdit', {
 			enforceMaxLength: true
 		}, {
 			name: 'name',
-			fieldLabel: i18n.user_name,
+			fieldLabel: i18n.user_surname,
 			allowBlank: true,
 			maxLength: 255,
 			enforceMaxLength: true

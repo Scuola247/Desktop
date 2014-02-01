@@ -16,7 +16,7 @@ Ext.define('Desktop.view.UsersGrid', {
 			dataIndex: 'firstName',
 			flex: 1
 		}, {
-			text: i18n.user_name,
+			text: i18n.user_surname,
 			dataIndex: 'name',
 			flex: 1
 		}, {

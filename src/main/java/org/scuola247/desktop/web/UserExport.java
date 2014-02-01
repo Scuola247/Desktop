@@ -79,7 +79,7 @@ public class UserExport {
 		Row row = sheet.createRow(0);
 		createCell(row, 0, messageSource.getMessage("user_email", null, locale), titleStyle);
 		createCell(row, 1, messageSource.getMessage("user_firstname", null, locale), titleStyle);
-		createCell(row, 2, messageSource.getMessage("user_name", null, locale), titleStyle);
+		createCell(row, 2, messageSource.getMessage("user_surname", null, locale), titleStyle);
 		createCell(row, 3, messageSource.getMessage("user_active", null, locale), titleStyle);
 
 		JPQLQuery query = new JPAQuery(entityManager).from(QUser.user);

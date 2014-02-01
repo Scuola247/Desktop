@@ -9,6 +9,8 @@ Ext.define('Desktop.view.Settings', {
 	modal: true,
 	width: 700,
 	height: 600,
+	minWidth: 500, 
+	minHeight: 300,
 	border: false,
 	constrain: true,
 	icon: app_context_path + '/resources/images/settings-icon.png',
@@ -72,6 +74,8 @@ Ext.define('Desktop.view.Settings', {
 						xtype: 'radiogroup',
 						itemId: 'picturepos',
 						fieldLabel: i18n.settings_pictureposition,
+						labelAlign: 'left',
+						labelWidth: 128,
 						width: '100%',
 						items: [ {
 							boxLabel: i18n.settings_center,
@@ -123,7 +127,7 @@ Ext.define('Desktop.view.Settings', {
 					enforceMaxLength: true
 				}, {
 					name: 'name',
-					fieldLabel: i18n.user_name,
+					fieldLabel: i18n.user_surname,
 					allowBlank: true,
 					maxLength: 255,
 					enforceMaxLength: true
