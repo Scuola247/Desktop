@@ -4,6 +4,10 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <changeSet id="0" author="dev">
+    <createSequence sequenceName="hibernate_sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+
 	<changeSet author="dev" id="1">
 		<createTable tableName="logging_event">
 			<column name="timestmp" type="BIGINT">
@@ -89,30 +93,30 @@
 	</changeSet>
 
 	<changeSet author="dev" id="8">
-		<createTable tableName="AppUser">
+		<createTable tableName="appuser">
 			<column autoIncrement="true" name="id" type="BIGINT">
 				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_AppUser" />
 			</column>
 
 			<column name="name" type="varchar(255)" />
-			<column name="firstName" type="varchar(255)" />
+			<column name="firstname" type="varchar(255)" />
 
 			<column name="email" type="varchar(255)">
 				<constraints nullable="false" unique="true" />
 			</column>
 			
-			<column name="passwordHash" type="varchar(80)" />
+			<column name="passwordhash" type="varchar(80)" />
                         <column name="locale" type="varchar(8)" />			
 			<column name="enabled" type="BOOLEAN" />			
 			<column name="settings" type="varchar(1000)" />						
-                        <column name="failedLogins" type="INT" />
-                        <column name="lockedOut" type="datetime" />
-                        <column name="lastLogin" type="datetime" />
+                        <column name="failedlogins" type="INT" />
+                        <column name="lockedout" type="datetime" />
+                        <column name="lastlogin" type="datetime" />
 		</createTable>
 	</changeSet>
 
 	<changeSet author="dev" id="9">
-		<createTable tableName="Role">
+		<createTable tableName="role">
 			<column autoIncrement="true" name="id" type="BIGINT">
 				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_Role" />
 			</column>
@@ -124,46 +128,46 @@
 	</changeSet>
 
 	<changeSet author="dev" id="10">
-		<createTable tableName="AppUserRoles">
-			<column name="userId" type="BIGINT">
+		<createTable tableName="appuserroles">
+			<column name="userid" type="BIGINT">
 				<constraints nullable="false"/>
 			</column>
 
-			<column name="roleId" type="BIGINT">
+			<column name="roleid" type="BIGINT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
-		<addPrimaryKey columnNames="userId,roleId" constraintName="PK_AppUserRoles" tableName="AppUserRoles" />
+		<addPrimaryKey columnNames="userid,roleid" constraintName="PK_AppUserRoles" tableName="appuserroles" />
 		
-		<addForeignKeyConstraint baseColumnNames="userId" baseTableName="AppUserRoles" constraintName="FK_AppUserRoles_AppUser"
+		<addForeignKeyConstraint baseColumnNames="userid" baseTableName="appuserroles" constraintName="FK_AppUserRoles_AppUser"
 			referencedColumnNames="id"
-			referencedTableName="AppUser" />		
+			referencedTableName="appuser" />		
 		
-		<addForeignKeyConstraint baseColumnNames="roleId" baseTableName="AppUserRoles" constraintName="FK_AppUserRoles_Role"
+		<addForeignKeyConstraint baseColumnNames="roleid" baseTableName="appuserroles" constraintName="FK_AppUserRoles_Role"
 			referencedColumnNames="id"
-			referencedTableName="Role" />			
+			referencedTableName="role" />			
 	</changeSet>
 	
 	<changeSet author="dev" id="11">
-	  <insert tableName="Role">
+	  <insert tableName="role">
 	  	<column name="name" value="ROLE_ADMIN"/>
 	  </insert>
-	  <insert tableName="Role">
+	  <insert tableName="role">
 	  	<column name="name" value="ROLE_USER"/>
 	  </insert>	  
 	</changeSet>
 	
 	<changeSet author="dev" id="12">
-		<createTable tableName="AccessLog">
+		<createTable tableName="accesslog">
 			<column autoIncrement="true" name="id" type="BIGINT">
 				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_AccessLog" />
 			</column>	
 			
-			<column name="sessionId" type="varchar(100)" />
-			<column name="userName" type="varchar(255)" />
-			<column name="logIn" type="DATETIME" />
-			<column name="logOut" type="DATETIME" />
-			<column name="userAgent" type="varchar(255)" />
+			<column name="sessionid" type="varchar(100)" />
+			<column name="username" type="varchar(255)" />
+			<column name="login" type="DATETIME" />
+			<column name="logout" type="DATETIME" />
+			<column name="useragent" type="varchar(255)" />
 
 		</createTable>
 	</changeSet>	
@@ -189,21 +193,28 @@
 	</changeSet>		
 	
 	<changeSet author="dev" id="14">
-		<createTable tableName="Configuration">
+		<createTable tableName="configuration">
 			<column autoIncrement="true" name="id" type="BIGINT">
-				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_Configuration" />
-			</column>	
-						
-			<column name="confKey" type="varchar(256)" />
-			<column name="confValue" type="varchar(1024)" />
-
+				<constraints nullable="false" primaryKey="true" primaryKeyName="PK_configuration" />
+			</column>							
+			<column name="confkey" type="varchar(256)" />
+			<column name="confvalue" type="varchar(1024)" />
 		</createTable>
 	</changeSet>    
 	
 	<changeSet author="dev" id="15">
-	  <sql>insert into Configuration(confKey, confValue) values('SMTP_SENDER', 'test@test.com')</sql>
-	  <sql>insert into Configuration(confKey, confValue) values('SMTP_SERVER', 'localhost')</sql>
-	  <sql>insert into Configuration(confKey, confValue) values('SMTP_PORT', '25')</sql>
+	  <insert tableName="configuration">
+	    <column name="confkey" value="SMTP_SENDER" />
+	    <column name="confvalue" value="test@test.com" />
+	  </insert>
+	  <insert tableName="configuration">
+	    <column name="confkey" value="SMTP_SERVER" />
+	    <column name="confvalue" value="localhost" />
+	  </insert>
+	  <insert tableName="configuration">
+	    <column name="confkey" value="SMTP_PORT" />
+	    <column name="confvalue" value="25" />
+	  </insert>
 	</changeSet>	
 	
 </databaseChangeLog>

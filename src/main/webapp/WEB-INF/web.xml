@@ -8,6 +8,5 @@
 	<error-page>
 		<exception-type>org.springframework.security.web.authentication.rememberme.CookieTheftException</exception-type>
 		<location>/login.html</location>
-	</error-page>
-	
+	</error-page>	
 </web-app>

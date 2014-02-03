@@ -1,15 +1,14 @@
 <!DOCTYPE context>
 <Context>
 
-  <Resource name="jdbc/e4desk" auth="Container"
+  <Resource name="jdbc/desktop" auth="Container"
             factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-            type="javax.sql.DataSource" username="sa" password=""
-            driverClassName="org.h2.Driver"
-            url="jdbc:h2:./target/Desktop"
-            initialSize="2"
-            minIdle="2"
-            maxIdle="4"
-            maxActive="10" maxWait="10000"
+            type="javax.sql.DataSource" username="postgres" password="postgres"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://localhost/desktop"
+ 			maxActive="20"
+ 			maxIdle="4"
+ 			maxWait="10000"
             defaultAutoCommit="false"/>
     
 </Context>

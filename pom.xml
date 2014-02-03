@@ -371,13 +371,13 @@
 			</exclusions>
 		</dependency>
 
+
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.3.174</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.3-1100-jdbc41</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
 	<repositories>
 

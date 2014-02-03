@@ -32,7 +32,7 @@ public class DataConfig {
 	@Bean
 	public DataSource dataSource() throws NamingException {
 		Context ctx = new InitialContext();
-		return (DataSource) ctx.lookup("java:comp/env/jdbc/e4desk");
+		return (DataSource) ctx.lookup("java:comp/env/jdbc/desktop");
 	}
 
 	@Bean

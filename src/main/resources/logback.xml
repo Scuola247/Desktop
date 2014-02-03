@@ -4,7 +4,7 @@
   
   <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
     <connectionSource class="ch.qos.logback.core.db.JNDIConnectionSource">
-      <param name="jndiLocation" value="java:comp/env/jdbc/e4desk" />
+      <param name="jndiLocation" value="java:comp/env/jdbc/desktop" />
     </connectionSource>
   </appender>
 
