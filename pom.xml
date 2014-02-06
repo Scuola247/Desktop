@@ -590,7 +590,7 @@
 								<vars>true</vars>
 								<plusplus>true</plusplus>
 								<unparam>true</unparam>
-								<predef>Ext,Deft,REMOTING_API,POLLING_URLS,desktop,app_context_path,i18n,accessLogService,userService,logService,
+								<predef>Desktop,Ext,Deft,REMOTING_API,POLLING_URLS,desktop,app_context_path,i18n,accessLogService,userService,logService,
 									loggingEventService,infrastructureService,moduleService,wallpaperService,
 									appConfigurationService</predef>
 							</options>
