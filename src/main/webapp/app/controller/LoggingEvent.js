@@ -17,7 +17,7 @@ Ext.define('Desktop.controller.LoggingEvent', {
 		logLevelFilter: {
 			change: 'filterLogLevel'
 		},
-		exportButton: true
+		exportButton: false
 	},
 
 	filterLogLevel: function(field, newValue, oldValue) {

@@ -2,7 +2,7 @@ Ext.define('Desktop.view.module.Notepad', {
 	extend: 'Ext.window.Window',
 	controller: 'Desktop.controller.module.NotepadController',
 
-	title: 'Notepad',
+	title: i18n.notepad,
 	width: 600,
 	height: 400,
 	iconCls: 'notepad-icon',
@@ -16,8 +16,8 @@ Ext.define('Desktop.view.module.Notepad', {
 			xtype: 'htmleditor',
 			id: 'notepad-editor',
 			value: [ 
-			        'Some <b>rich</b> <font color="red">text</font> goes <u>here</u><br>', 
-			        'Give it a try!' 
+			        i18n.notepad_example_text, 
+			        i18n.notepad_example_try 
 			].join('')
 		} ];
 

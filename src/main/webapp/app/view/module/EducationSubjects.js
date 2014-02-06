@@ -25,8 +25,8 @@ Ext.define('Desktop.view.module.EducationSubjects', {
 	requires: [ 'Ext.data.ArrayStore', 'Ext.util.Format', 'Ext.grid.Panel', 'Ext.grid.RowNumberer' ],
 
 	title: i18n.education_subjects,
-	width: 800,
-	height: 400,
+	width: 640,
+	height: 480,
 	iconCls: 'education_subjects-icon',
 	layout: 'fit',
 
