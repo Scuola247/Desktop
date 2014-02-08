@@ -186,6 +186,10 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/16/teacher_register.png);
 }
 
+.institutes-icon {
+	background-image: url(../images/16/institutes.png);
+}
+
 /* Shorcut */
 
 .users-shortcut {
@@ -274,6 +278,10 @@ div.view-over.settings-wallpaper-item {
 
 .teacher_register-shortcut {
 	background-image: url(../images/48/teacher_register.png);
+}
+
+.institutes-shortcut {
+	background-image: url(../images/48/institutes.png);
 }
 
 .loggedOnLabel {

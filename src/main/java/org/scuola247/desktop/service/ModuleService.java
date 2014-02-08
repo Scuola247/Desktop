@@ -54,7 +54,7 @@ public class ModuleService {
 			builder.add(new Module("Desktop.view.module.Skills", messageSource.getMessage("skills", null, locale), "skills", true));
 			builder.add(new Module("Desktop.view.module.StudentLogbook", messageSource.getMessage("student_logbook", null, locale), "student_logbook", true));
 			builder.add(new Module("Desktop.view.module.TeacherRegister", messageSource.getMessage("teacher_register", null, locale), "teacher_register", true));
-
+			builder.add(new Module("Desktop.view.module.Institutes", messageSource.getMessage("institutes", null, locale), "institutes", true));
 
 			return builder.build();
 		}
