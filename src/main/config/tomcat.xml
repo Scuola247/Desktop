@@ -1,6 +1,5 @@
 <!DOCTYPE context>
 <Context>
-<!--
       <Resource name="jdbc/desktop" auth="Container"
             factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
             type="javax.sql.DataSource" username="postgres" password="postgres"
@@ -10,5 +9,4 @@
  			maxIdle="4"
  			maxWait="10000"
             defaultAutoCommit="false"/>
- -->
 </Context>

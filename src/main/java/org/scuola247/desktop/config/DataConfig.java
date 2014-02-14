@@ -34,10 +34,10 @@ public class DataConfig {
 
 	@Bean
 	public DataSource dataSource() throws NamingException {
-     /* Context ctx = new InitialContext();
-		return (DataSource) ctx.lookup("java:comp/env/jdbc/desktop"); */ 
+        Context ctx = new InitialContext();
+		return (DataSource) ctx.lookup("java:comp/env/jdbc/desktop");  
 		
-		PoolProperties p = new PoolProperties();
+/*		PoolProperties p = new PoolProperties();
         
 		p.setUrl("jdbc:postgresql://localhost/desktop");
         p.setDriverClassName("org.postgresql.Driver");
@@ -65,7 +65,7 @@ public class DataConfig {
         DataSource d = new DataSource();
         d.setPoolProperties(p);
 	    
-        return d;	
+        return d; */	
 	}
 
 	@Bean

@@ -1,7 +1,5 @@
 package org.scuola247.desktop.beans;
 
-import java.math.BigInteger;
-
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 
@@ -9,7 +7,10 @@ import ch.rasc.extclassgenerator.ModelField;
 public class Institute {
 	
 	@ModelField
-	private BigInteger istituto;
+	private Long rv;
+
+	@ModelField
+	private Long istituto;
 	
 	@ModelField
 	private String descrizione;
@@ -28,18 +29,26 @@ public class Institute {
 		
 	}
 	
-	public Institute(BigInteger istituto, String descrizione, String codice_meccanografico, String mnemonico, boolean esempio) {
+	public Institute(Long rv, Long istituto, String descrizione, String codice_meccanografico, String mnemonico, boolean esempio) {
+		this.setRv(rv);
 		this.istituto = istituto;
 		this.descrizione = descrizione;
 		this.codice_meccanografico = codice_meccanografico;
 		this.mnemonico = mnemonico;
 		this.esempio = esempio;
 	}
+	public Long getRv() {
+		return rv;
+	}
+
+	public void setRv(Long rv) {
+		this.rv = rv;
+	}
 	
-	public BigInteger getIstituto() {
+	public Long getIstituto() {
 		return istituto;
 	}
-	public void setIstituto(BigInteger istituto) {
+	public void setIstituto(Long istituto) {
 		this.istituto = istituto;
 	}
 	public String getDescrizione() {
