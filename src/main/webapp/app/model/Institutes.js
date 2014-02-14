@@ -3,10 +3,10 @@ Ext.define("Desktop.model.Institutes",
   extend : "Ext.data.Model",
   fields : [ {
     name : "rv",
-    type : "int"
+    type : "number"
   }, {
     name : "istituto",
-    type : "int"
+    type : "number"
   }, {
     name : "descrizione",
     type : "string"

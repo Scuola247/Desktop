@@ -100,7 +100,7 @@ public class InstitutesService {
 
 		// crea prepared statement
 		//find = conn.prepareStatement("SELECT istituti_find(?)");
-		by_descrizione = conn.prepareStatement("SELECT istituti_by_descrizione(?)");
+		by_descrizione = conn.prepareStatement("SELECT * FROM istituti_by_descrizione(?)");
 		//update = conn.prepareStatement("{ SELECT istituti_update(?, ?, ?, ?, ?, ?) }");
 		//insert = conn.prepareStatement("{ SELECT istituti_find(?, ?, ?, ?) }");
 		//delete = conn.prepareStatement("{ SELECT istituti_delete(?, ?) }");
@@ -112,10 +112,13 @@ public class InstitutesService {
 		// esegui query
 		rs = by_descrizione.executeQuery();
 		// ottenuto il result set
-		while (rs.next()) {
+/*		while (rs.next()) {
 			Object o = rs.getObject(1);			
 			ans.add(new Institute(rs.getLong(1),rs.getLong(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(6)));
-		}
+		} */
+		ans.add(new Institute(new Long(184), new Long(2960), "aaa", "aaa", "aaa", true));
+		ans.add(new Institute(new Long(0), new Long(0), "bbb", "bbb", "bbb", true));
+		ans.add(new Institute(new Long(0), new Long(0), "ccc", "ccc", "ccc", true));
 		rs.close();
 		by_descrizione.close();
 		conn.close();

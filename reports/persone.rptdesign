@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130917-1035></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc.dbprofile" name="scuola247" id="7">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.db.connectionProperties</name>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.oda.profile.db.provider.id</name>
+                    <value>org.eclipse.datatools.enablement.postgresql.connectionProfile</value>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.db.savePWD</name>
+                    <value>true</value>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.drivers.defnType</name>
+                    <value>org.eclipse.datatools.enablement.postgresql.postgresqlDriverTemplate</value>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.driverDefinitionID</name>
+                    <value>DriverDefn.org.eclipse.datatools.enablement.postgresql.postgresqlDriverTemplate.PostgreSQL JDBC Driver</value>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.db.version</name>
+                    <value>8.x</value>
+                </ex-property>
+                <ex-property>
+                    <name>org.eclipse.datatools.connectivity.db.vendor</name>
+                    <value>postgres</value>
+                </ex-property>
+            </list-property>
+            <property name="databaseName">scuola247</property>
+            <property name="username">postgres</property>
+            <encrypted-property name="password" encryptionID="base64">cG9zdGdyZXM=</encrypted-property>
+            <property name="URL">jdbc:postgresql://localhost/scuola247</property>
+            <property name="driverClass">org.postgresql.Driver</property>
+            <property name="jarList">C:\Program Files\Eclipse\plugins\postgresql-9.3-1100.jdbc41.jar</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.dbprofile.sqbDataSet" name="persone" id="8">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">persona</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">persona</text-property>
+                    <text-property name="heading">persona</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">nome</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">nome</text-property>
+                    <text-property name="heading">nome</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">cognome</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">cognome</text-property>
+                    <text-property name="heading">cognome</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">nato</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">nato</text-property>
+                    <text-property name="heading">nato</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">deceduto</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">deceduto</text-property>
+                    <text-property name="heading">deceduto</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">nazione_nascita</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">nazione_nascita</text-property>
+                    <text-property name="heading">nazione_nascita</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">codice_fiscale</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">codice_fiscale</text-property>
+                    <text-property name="heading">codice_fiscale</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">sesso</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">sesso</text-property>
+                    <text-property name="heading">sesso</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">foto</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">foto</text-property>
+                    <text-property name="heading">foto</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ruolo</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ruolo</text-property>
+                    <text-property name="heading">ruolo</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">istituto</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">istituto</text-property>
+                    <text-property name="heading">istituto</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">sidi</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">sidi</text-property>
+                    <text-property name="heading">sidi</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">comune_nascita</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">comune_nascita</text-property>
+                    <text-property name="heading">comune_nascita</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">persona</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">nome</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">cognome</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">nato</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">deceduto</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">nazione_nascita</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">codice_fiscale</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">sesso</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">foto</property>
+                        <property name="dataType">blob</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">ruolo</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">istituto</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">sidi</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">comune_nascita</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">scuola247</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">persona</property>
+                    <property name="nativeName">persona</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">nome</property>
+                    <property name="nativeName">nome</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">cognome</property>
+                    <property name="nativeName">cognome</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">nato</property>
+                    <property name="nativeName">nato</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">deceduto</property>
+                    <property name="nativeName">deceduto</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">nazione_nascita</property>
+                    <property name="nativeName">nazione_nascita</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">5</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">codice_fiscale</property>
+                    <property name="nativeName">codice_fiscale</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">sesso</property>
+                    <property name="nativeName">sesso</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">foto</property>
+                    <property name="nativeName">foto</property>
+                    <property name="dataType">blob</property>
+                    <property name="nativeDataType">-2</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">ruolo</property>
+                    <property name="nativeName">ruolo</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">istituto</property>
+                    <property name="nativeName">istituto</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">sidi</property>
+                    <property name="nativeName">sidi</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-5</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">comune_nascita</property>
+                    <property name="nativeName">comune_nascita</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[SELECT "persona", "nome", "cognome", "nato", "deceduto", "nazione_nascita",
+  "codice_fiscale", "sesso", "foto", "ruolo", "istituto", "sidi",
+  "comune_nascita"
+  FROM "public"."persone"
+]]></xml-property>
+            <structure name="designerState">
+                <property name="version">1.0</property>
+                <property name="stateContentAsString">&lt;?xml version="1.0" encoding="UTF-8"?>&#13;
+&lt;SQLQueryBuilder editorInputType="SQLBuilderStorageEditorInput" name="persone" version="1.0">&#13;
+&lt;SQLStatement>SELECT &amp;quot;persona&amp;quot;, &amp;quot;nome&amp;quot;, &amp;quot;cognome&amp;quot;, &amp;quot;nato&amp;quot;, &amp;quot;deceduto&amp;quot;, &amp;quot;nazione_nascita&amp;quot;,&amp;#x0A;  &amp;quot;codice_fiscale&amp;quot;, &amp;quot;sesso&amp;quot;, &amp;quot;foto&amp;quot;, &amp;quot;ruolo&amp;quot;, &amp;quot;istituto&amp;quot;, &amp;quot;sidi&amp;quot;,&amp;#x0A;  &amp;quot;comune_nascita&amp;quot;&amp;#x0A;  FROM &amp;quot;public&amp;quot;.&amp;quot;persone&amp;quot;&amp;#x0A;&lt;/SQLStatement>&#13;
+&lt;connInfo>postgres_8.x:Transient.org.eclipse.datatools.enablement.postgresql.connectionProfile:scuola247:postgres&lt;/connInfo>&#13;
+&lt;omitSchemaInfo>false:true:&lt;/omitSchemaInfo>&#13;
+&lt;editorInputUsageOptions>useWindowState=true&lt;/editorInputUsageOptions>&#13;
+&lt;windowState height="744" version="1.0" width="1252">&#13;
+&lt;control height="116" isHideable="true" isVisible="true" name="SQLSourceViewer" width="1225"/>&#13;
+&lt;control height="239" isHideable="true" isVisible="true" name="DesignViewer" width="1238"/>&#13;
+&lt;control height="351" isHideable="true" isVisible="true" name="GraphControl" width="1230"/>&#13;
+&lt;control height="355" isHideable="true" isVisible="false" name="OutlineViewer" width="198"/>&#13;
+&lt;/windowState>&#13;
+&lt;/SQLQueryBuilder></property>
+            </structure>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>persona</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>persona</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>persona</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>nome</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>60</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>nome</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nome</design:label>
+            <design:formattingHints>
+              <design:displaySize>60</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>cognome</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>60</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>cognome</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>cognome</design:label>
+            <design:formattingHints>
+              <design:displaySize>60</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>nato</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>nato</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nato</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>deceduto</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>deceduto</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>deceduto</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>nazione_nascita</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>5</design:nativeDataTypeCode>
+            <design:precision>5</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>nazione_nascita</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>nazione_nascita</design:label>
+            <design:formattingHints>
+              <design:displaySize>6</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>codice_fiscale</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>16</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>codice_fiscale</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>codice_fiscale</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>sesso</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>sesso</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>sesso</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>foto</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-2</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>foto</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>foto</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ruolo</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ruolo</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ruolo</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>istituto</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>istituto</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>istituto</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>sidi</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>sidi</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>sidi</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>comune_nascita</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>4</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>comune_nascita</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>comune_nascita</design:label>
+            <design:formattingHints>
+              <design:displaySize>4</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria>
+        <design:rowOrdering/>
+      </design:criteria>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <text id="91">
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[Prova]]></text-property>
+        </text>
+        <table id="92">
+            <property name="dataSet">persone</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">persona</property>
+                    <text-property name="displayName">persona</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["persona"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">nome</property>
+                    <text-property name="displayName">nome</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["nome"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cognome</property>
+                    <text-property name="displayName">cognome</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cognome"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="111"/>
+            <column id="112"/>
+            <column id="113"/>
+            <header>
+                <row id="93">
+                    <cell id="94">
+                        <label id="95">
+                            <text-property name="text">persona</text-property>
+                        </label>
+                    </cell>
+                    <cell id="96">
+                        <label id="97">
+                            <text-property name="text">nome</text-property>
+                        </label>
+                    </cell>
+                    <cell id="98">
+                        <label id="99">
+                            <text-property name="text">cognome</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="100">
+                    <cell id="101">
+                        <data id="102">
+                            <property name="resultSetColumn">persona</property>
+                        </data>
+                    </cell>
+                    <cell id="103">
+                        <data id="104">
+                            <property name="resultSetColumn">nome</property>
+                        </data>
+                    </cell>
+                    <cell id="105">
+                        <data id="106">
+                            <property name="resultSetColumn">cognome</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="107">
+                    <cell id="108"/>
+                    <cell id="109"/>
+                    <cell id="110"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
