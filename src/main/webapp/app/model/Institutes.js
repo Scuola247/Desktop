@@ -22,6 +22,9 @@ Ext.define("Desktop.model.Institutes",
   } ],
   proxy : {
     type : "direct",
-    directFn : "institutesService.read"
+    directFn : "institutesService.read",
+    reader : {
+    	root : "records"
+    }
   }
 });
