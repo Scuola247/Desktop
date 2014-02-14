@@ -4,7 +4,7 @@
             factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
             type="javax.sql.DataSource" username="postgres" password="postgres"
             driverClassName="org.postgresql.Driver"
-            url="jdbc:postgresql://localhost/desktop"
+            url="jdbc:postgresql://skyscraper/desktop"
  			maxActive="20"
  			maxIdle="4"
  			maxWait="10000"

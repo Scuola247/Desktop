@@ -32,7 +32,19 @@ Ext.define('Desktop.view.module.InstitutesPanel', {
 	    	}, {
 	    		text : i18n.institutes_example ,
 	    		dataIndex: 'esempio'
-	    	}
+	    	}, {
+                xtype: 'actioncolumn',
+                width: 30,
+                sortable: false,
+                menuDisabled: true,
+                items: [{
+                	id: 'deleteInstitute', 
+                    icon: 'resources/icons/delete.png',
+                    tooltip: i18n.institutes_delete,
+                    scope: this
+                }]
+            }
+	    	
         ];
         Ext.apply(this, {
             width: 680,

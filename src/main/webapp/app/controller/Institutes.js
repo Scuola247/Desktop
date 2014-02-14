@@ -8,7 +8,10 @@ Ext.define('Desktop.controller.Institutes', {
 		grid: true,
 		addPlantButton: {
 			click: 'onAddClick'
-		}
+		}/*,
+		deleteInstitute : {
+			click: 'onRemoveClick'
+		}*/
 	},
 
 	onAddClick: function(){
@@ -34,6 +37,12 @@ Ext.define('Desktop.controller.Institutes', {
 
 	doGridRefresh: function() {
 		this.getGrid().getStore().load();
-	}
+	},
+	
+	onRemoveClick: function(grid, rowIndex){
+		
+		alert("aaa!");
+        this.getGrid().getStore().removeAt(rowIndex);
+    }
 
 });
