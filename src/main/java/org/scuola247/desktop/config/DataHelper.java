@@ -17,7 +17,7 @@ public class DataHelper {
         ds= new DataSource();
 		pool = new PoolProperties();
         
-		pool.setUrl("jdbc:postgresql://localhost/desktop");
+		pool.setUrl("jdbc:postgresql://skyscraper/desktop");
         pool.setDriverClassName("org.postgresql.Driver");
         pool.setUsername("postgres");
         pool.setPassword("postgres");

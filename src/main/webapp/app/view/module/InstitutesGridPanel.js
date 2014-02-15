@@ -1,4 +1,4 @@
-Ext.define('Desktop.view.module.InstitutesPanel', {
+Ext.define('Desktop.view.module.InstitutesGridPanel', {
     extend: 'Ext.grid.Panel',
     
     requires: [
@@ -7,7 +7,8 @@ Ext.define('Desktop.view.module.InstitutesPanel', {
         'Ext.data.*',
         'Ext.util.*',
         'Ext.form.*',
-        'Desktop.model.Institutes'
+        'Desktop.model.Institutes',
+        'Desktop.store.Institutes'
     ],
     xtype: 'cell-editing',
    
@@ -20,16 +21,34 @@ Ext.define('Desktop.view.module.InstitutesPanel', {
         var columns = [{
 	        	text : i18n.institutes_institute , 
 	        	dataIndex: 'istituto',
+        		xtype: 'numbercolumn',
+        		format: '0',
+	        	/*
+	        	editor: {
+	        		xtype: 'numberfield',
+                    allowBlank: false
+                }
+                */
 	    	}, {
 	    		text : i18n.institutes_description ,
 	    		dataIndex: 'descrizione',
+	    		editor: {
+                    allowBlank: false
+                }
 	    	}, {
 	    		text : i18n.institutes_code ,
 	    		dataIndex: 'codice_meccanografico',
+	    		editor: {
+                    allowBlank: false
+                }
 	    	}, {
 	    		text : i18n.institutes_mnem ,
 	    		dataIndex: 'mnemonico',
+	    		editor: {
+                    allowBlank: false
+                }
 	    	}, {
+	    		xtype: 'checkcolumn',
 	    		text : i18n.institutes_example ,
 	    		dataIndex: 'esempio'
 	    	}, {
@@ -39,9 +58,10 @@ Ext.define('Desktop.view.module.InstitutesPanel', {
                 menuDisabled: true,
                 items: [{
                 	id: 'deleteInstitute', 
-                    icon: 'resources/icons/delete.png',
+                	iconCls: 'remove',
                     tooltip: i18n.institutes_delete,
-                    scope: this
+                    scope: this,
+                    handler: this.onRemoveClick
                 }]
             }
 	    	
@@ -54,41 +74,19 @@ Ext.define('Desktop.view.module.InstitutesPanel', {
             columns: columns,
             selModel: {
                 selType: 'cellmodel'
-            },
-            tbar: [{
-                text: 'Add Plant',
-                itemId: 'addPlantButton'
-            }]
+            }
         });
         
         this.callParent();
-        
-//        this.on('afterlayout', this.loadStore, this, {
-//            delay: 1,
-//            single: true
-//        });
-//    },
-//    
-//    loadStore: function() {
-//        this.getStore().load(/*{
-//            // store loading is asynchronous, use a load listener or callback to handle results
-//            callback: this.onStoreLoad
-//        }*/);
-//    },
-    /*
-    onStoreLoad: function(){
-        Ext.Msg.show({
-            title: 'Store Load Callback',
-            msg: 'store was loaded, data available for processing',
-            icon: Ext.Msg.INFO,
-            buttons: Ext.Msg.OK
-        });
-        */
     },
+
+    onRemoveClick: function(grid, rowIndex){		//TODO: andra fatto il bind da controller
+        //this.getStore().removeAt(rowIndex);
+    	var sm = grid.getSelectionModel();
+    	this.getStore().remove(sm.getSelection());
+		if (this.getStore().getCount() > 0) {
+			sm.select(0);
+		}
+    }
     
-    
-//    
-//    onRemoveClick: function(grid, rowIndex){
-//        this.getStore().removeAt(rowIndex);
-//    }
 })

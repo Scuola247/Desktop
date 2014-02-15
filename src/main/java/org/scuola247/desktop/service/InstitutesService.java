@@ -2,11 +2,13 @@ package org.scuola247.desktop.service;
 
 
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
+import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_MODIFY;
 
-import java.math.BigInteger;
+
+
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -14,25 +16,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.postgresql.util.PSQLException;
 import org.scuola247.desktop.beans.Institute;
 import org.scuola247.desktop.config.DataHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-
-import ch.qos.logback.core.subst.Token.Type;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
@@ -41,7 +39,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 
 @Service
 public class InstitutesService {
-
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -51,7 +49,16 @@ public class InstitutesService {
 	@ExtDirectMethod(STORE_READ)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Transactional(readOnly = true)
-	public ExtDirectStoreResult<Institute> read(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
+	public ExtDirectStoreResult<Institute> sel(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
+		
+		String description = (String)request.getParams().get("description");
+		
+		if (description == null || description.length() == 0){
+			description = "%";
+		}
+		else{
+			description = "%" + description + "%";
+		}
 		
 		List<Institute> ans = new LinkedList<>();
 		
@@ -72,7 +79,7 @@ public class InstitutesService {
 
 		by_descrizione.registerOutParameter(1, Types.OTHER);
 
-		by_descrizione.setString(2, "%");
+		by_descrizione.setString(2, description);
 
 		by_descrizione.execute();
 		rs = (ResultSet) by_descrizione.getObject(1);
@@ -80,7 +87,6 @@ public class InstitutesService {
 		//rs = by_descrizione.executeQuery();
 		// ottenuto il result set
 		while (rs.next()) {
-			Object o = rs.getObject(1);			
 			ans.add(new Institute(rs.getLong(1),rs.getLong(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(6)));
 		} 
 		rs.close();
@@ -92,30 +98,65 @@ public class InstitutesService {
 
 
 	 
-	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY)
-	public Institute isrt(Institute newInstitute) throws SQLException {
+	@ExtDirectMethod(STORE_MODIFY)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@Transactional
+	public ExtDirectStoreResult<Institute> ins(Institute institute, Locale locale) throws SQLException {
 
 		Connection conn = null;
 	    CallableStatement isrt = null;
 
 		conn = DataHelper.myConnection();
 		// crea prepared statement
-		isrt = conn.prepareCall("{ ? = call istituti_isrt(?,?,?,?) }");
+		isrt = conn.prepareCall("{ ? = call istituti_ins(?,?,?,?) }");
 
 		isrt.registerOutParameter(1,Types.BIGINT);
 
-		isrt.setString(2, newInstitute.getDescrizione());
-		isrt.setString(3, newInstitute.getCodice_meccanografico());
-		isrt.setString(4, newInstitute.getMnemonico());
-		isrt.setBoolean(5, newInstitute.isEsempio());
+		isrt.setString(2, institute.getDescrizione());
+		isrt.setString(3, institute.getCodice_meccanografico());
+		isrt.setString(4, institute.getMnemonico());
+		isrt.setBoolean(5, institute.isEsempio());
 
-		isrt.execute();
+		try{
+			boolean ans = isrt.execute();
+			conn.commit();
+			
+			if (isrt.getUpdateCount() > 0){
+				// ha aggiornato qualcosa
+			}
+			institute.setIstituto(isrt.getLong(1));
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+		}
+		finally{
+			isrt.close();
+			conn.close();
+		}
 		
-		newInstitute.setIstituto(isrt.getLong(1));
-
-		conn.close();
-		return newInstitute;
+		List<Institute> ans = new LinkedList<>();
+		ans.add(institute);
+		
+		return new ExtDirectStoreResult<>(ans.size(), ans);
 	}
+	
+	@ExtDirectMethod(STORE_MODIFY)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@Transactional
+	public ExtDirectStoreResult<Institute> upd(Institute institute, Locale locale) throws NamingException, SQLException {
+		List<Institute> ans = new LinkedList<>();
+		return new ExtDirectStoreResult<>(ans.size(), ans);
+	}
+	
+	@ExtDirectMethod(STORE_MODIFY)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@Transactional
+	public void del(Institute institute) throws NamingException, SQLException {
+		String desc = institute.getDescrizione();
+		Long istituto = institute.getIstituto();
+	}
+
 
 /*
 	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY)

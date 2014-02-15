@@ -1,48 +1,84 @@
 Ext.define('Desktop.controller.Institutes', {
 	extend: 'Deft.mvc.ViewController',
+	requires: ['Desktop.store.Institutes'], 
 
 	control: {
 		view: {
 			show: 'onShow'
 		},
-		grid: true,
-		addPlantButton: {
-			click: 'onAddClick'
-		}/*,
-		deleteInstitute : {
-			click: 'onRemoveClick'
-		}*/
+		instituteDescriptionFilter: true,
+		institutesSearchForm: true,
+		institutesSearchButton: {
+			click: 'onClickInstitutesSearch'
+		},
+		institutesGrid: {
+			beforeedit: 'onBeforeEditGrid'
+		},
+		searchInstituteToggleButton: {
+			toggle: 'onToggleSearch'
+		},
+		editInstituteToggleButton: {
+			toggle: 'onToggleEditInstitute'
+		},
+		addInstituteButton: {
+			click: 'onClickAdd'
+		}
 	},
 
-	onAddClick: function(){
+	onClickAdd: function(){
         // Create a model instance
         var rec = new Desktop.model.Institutes({
-        	istituto : 'pippo',
-        	descrizione : 'pippo desc', 
-        	codice_meccanografico : 'pip', 
-        	mnemonico: 'pipp', 
+        	istituto : '',
+        	descrizione : '', 
+        	codice_meccanografico : '', 
+        	mnemonico: '', 
         	esempio : true
         });
         
-        this.getGrid().getStore().insert(0, rec);
-        this.getGrid().cellEditing.startEditByPosition({
+        this.getInstitutesGrid().getStore().insert(0, rec);
+        this.getInstitutesGrid().cellEditing.startEditByPosition({
             row: 0, 
             column: 0
         });
     },
+    
+    onToggleSearch: function(item, pressed, eOpts){
+    	if (pressed){
+    		this.getInstitutesSearchForm().show();
+    	}
+    	else{
+    		this.getInstitutesSearchForm().hide();
+    	}
+    },
 	
 	onShow: function() {
-		this.doGridRefresh();
+		// caricamento della griglia this.doGridRefresh();
 	},
 
-	doGridRefresh: function() {
-		this.getGrid().getStore().load();
+	doGridRefresh: function(desc) {
+		this.getInstitutesGrid().getStore().load(
+					{
+						params:{description:desc}
+					}
+				);
 	},
 	
-	onRemoveClick: function(grid, rowIndex){
-		
-		alert("aaa!");
-        this.getGrid().getStore().removeAt(rowIndex);
-    }
-
+	onToggleEditInstitute: function (item, pressed, eOpts){
+    	if (pressed){
+    		this.getInstitutesGrid().cellEditing.enable();
+    	}
+    	else{
+    		this.getInstitutesGrid().cellEditing.disable();
+    	}
+    },
+	
+    onClickInstitutesSearch: function() {
+    	this.doGridRefresh(this.getInstituteDescriptionFilter().getValue());
+    },
+    
+	onBeforeEditGrid: function() {
+		if (!this.getEditInstituteToggleButton().pressed){
+			return false;
+		}
+	}
 });

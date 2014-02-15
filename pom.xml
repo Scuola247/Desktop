@@ -185,17 +185,17 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>3.0.8</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>snakeyaml</artifactId>
-					<groupId>org.yaml</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.liquibase</groupId> -->
+<!-- 			<artifactId>liquibase-core</artifactId> -->
+<!-- 			<version>3.0.8</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>snakeyaml</artifactId> -->
+<!-- 					<groupId>org.yaml</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>org.aspectj</groupId>

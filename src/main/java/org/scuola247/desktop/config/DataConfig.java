@@ -10,7 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 /* import javax.sql.DataSource; */
 
-import liquibase.integration.spring.SpringLiquibase;
+//import liquibase.integration.spring.SpringLiquibase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -69,7 +69,7 @@ public class DataConfig {
 	}
 
 	@Bean
-	@DependsOn("liquibaseBean")
+	//@DependsOn("liquibaseBean")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
@@ -91,6 +91,7 @@ public class DataConfig {
 		return new JpaTransactionManager(entityManagerFactory().getObject());
 	}
 
+/*
 	@Bean
 	public SpringLiquibase liquibaseBean() throws NamingException {
 		SpringLiquibase bean = new SpringLiquibase();
@@ -98,5 +99,5 @@ public class DataConfig {
 		bean.setChangeLog("classpath:db/changelog.xml");
 		return bean;
 	}
-
+*/
 }

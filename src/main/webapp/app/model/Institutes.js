@@ -22,7 +22,13 @@ Ext.define("Desktop.model.Institutes",
   } ],
   proxy : {
     type : "direct",
-    directFn : "institutesService.read",
+    api : {
+    	create  : "institutesService.ins",
+        read    : "institutesService.sel",
+        update  : "institutesService.upd",
+        destroy : "institutesService.del"
+    },
+    /*directFn : "institutesService.read",*/
     reader : {
     	root : "records"
     }
