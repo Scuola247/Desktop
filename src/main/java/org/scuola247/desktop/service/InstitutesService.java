@@ -1,5 +1,6 @@
 package org.scuola247.desktop.service;
 
+
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
 
 import java.math.BigInteger;
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -19,16 +21,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.scuola247.desktop.beans.Institute;
+import org.scuola247.desktop.config.DataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
+
+import ch.qos.logback.core.subst.Token.Type;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
+import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
+
 
 @Service
 public class InstitutesService {
@@ -43,86 +52,94 @@ public class InstitutesService {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Institute> read(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
-/*
-		JPQLQuery query = new JPAQuery(entityManager).from(QAccessLog.accessLog);
-
-		if (!request.getFilters().isEmpty()) {
-			StringFilter userNameFilter = (StringFilter) request.getFilters().iterator().next();
-			String userName = userNameFilter.getValue();
-			query.where(QAccessLog.accessLog.userName.startsWithIgnoreCase(userName));
-		}
-
-		QueryUtil.addPagingAndSorting(query, request, AccessLog.class, QAccessLog.accessLog,
-				Collections.<String, String> emptyMap(), Collections.singleton("browser"));
-
-		SearchResults<AccessLog> searchResult = query.listResults(QAccessLog.accessLog);
-
-		PeriodFormatter minutesAndSeconds = new PeriodFormatterBuilder()
-				.appendMinutes()
-				.appendSuffix(" " + messageSource.getMessage("minute", null, locale),
-						" " + messageSource.getMessage("minutes", null, locale))
-				.appendSeparator(" " + messageSource.getMessage("and", null, locale) + " ")
-				.printZeroRarelyLast()
-				.appendSeconds()
-				.appendSuffix(" " + messageSource.getMessage("second", null, locale),
-						" " + messageSource.getMessage("seconds", null, locale)).toFormatter();
-
-		for (AccessLog accessLog : searchResult.getResults()) {
-			if (accessLog.getLogIn() != null && accessLog.getLogOut() != null) {
-				Duration duration = new Duration(accessLog.getLogIn(), accessLog.getLogOut());
-				Period period = new Period(duration, PeriodType.forFields(new DurationFieldType[] {
-						DurationFieldType.minutes(), DurationFieldType.seconds() }));
-				accessLog.setDuration(minutesAndSeconds.print(period));
-			}
-
-		}
-*/
-		
-		
 		
 		List<Institute> ans = new LinkedList<>();
 		
-		Context ctx = null;
-		DataSource ds = null;
 		Connection conn = null;
 		ResultSet rs = null;
-	    PreparedStatement by_descrizione = null;
-	    PreparedStatement find = null;
-	    PreparedStatement update = null;
-	    PreparedStatement insert = null;
-	    PreparedStatement delete = null;
+	    // PreparedStatement by_descrizione = null;
+	    CallableStatement by_descrizione = null;
 		
-		// prendi connessione
-		ctx = new InitialContext();
-		ds = (DataSource) ctx.lookup("java:comp/env/jdbc/desktop");
-		conn = ds.getConnection("fol@fulcro.net","password");
-		conn.setAutoCommit(false);
-
+	    conn = DataHelper.myConnection();
 		// crea prepared statement
-		//find = conn.prepareStatement("SELECT istituti_find(?)");
-		by_descrizione = conn.prepareStatement("SELECT * FROM istituti_by_descrizione(?)");
+		by_descrizione = conn.prepareCall("{ ? = call istituti_by_descrizione(?) }");
+		//by_descrizione = conn.prepareStatement("SELECT * FROM istituti_by_descrizione(?)");
 		//update = conn.prepareStatement("{ SELECT istituti_update(?, ?, ?, ?, ?, ?) }");
-		//insert = conn.prepareStatement("{ SELECT istituti_find(?, ?, ?, ?) }");
 		//delete = conn.prepareStatement("{ SELECT istituti_delete(?, ?) }");
 	
 		// compila prepare statement
 		//find.setInt(1, 1);
 
-		by_descrizione.setString(1, "%");
+		by_descrizione.registerOutParameter(1, Types.OTHER);
+
+		by_descrizione.setString(2, "%");
+
+		by_descrizione.execute();
+		rs = (ResultSet) by_descrizione.getObject(1);
 		// esegui query
-		rs = by_descrizione.executeQuery();
+		//rs = by_descrizione.executeQuery();
 		// ottenuto il result set
 		while (rs.next()) {
 			Object o = rs.getObject(1);			
 			ans.add(new Institute(rs.getLong(1),rs.getLong(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(6)));
 		} 
-/*		ans.add(new Institute(new Long(184), new Long(2960), "aaa", "aaa", "aaa", true));
-		ans.add(new Institute(new Long(0), new Long(0), "bbb", "bbb", "bbb", true));
-		ans.add(new Institute(new Long(0), new Long(0), "ccc", "ccc", "ccc", true));*/
 		rs.close();
 		by_descrizione.close();
 		conn.close();
 		return new ExtDirectStoreResult<>(ans.size(), ans);
 	}
+	
+
+
+	 
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY)
+	public Institute isrt(Institute newInstitute) throws SQLException {
+
+		Connection conn = null;
+	    CallableStatement isrt = null;
+
+		conn = DataHelper.myConnection();
+		// crea prepared statement
+		isrt = conn.prepareCall("{ ? = call istituti_isrt(?,?,?,?) }");
+
+		isrt.registerOutParameter(1,Types.BIGINT);
+
+		isrt.setString(2, newInstitute.getDescrizione());
+		isrt.setString(3, newInstitute.getCodice_meccanografico());
+		isrt.setString(4, newInstitute.getMnemonico());
+		isrt.setBoolean(5, newInstitute.isEsempio());
+
+		isrt.execute();
+		
+		newInstitute.setIstituto(isrt.getLong(1));
+
+		conn.close();
+		return newInstitute;
+	}
+
+/*
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY)
+	public List<Person> update(List<Person> modifiedPersons) {
+		List<Person> updatedRecords = Lists.newArrayList();
+		for (Person modifiedPerson : modifiedPersons) {
+			Person p = dataBean.findPerson(modifiedPerson.getId());
+			if (p != null) {
+				p.update(modifiedPerson);
+				updatedRecords.add(p);
+			}
+		}
+		return updatedRecords;
+	}
+
+	@ExtDirectMethod(value = ExtDirectMethodType.STORE_MODIFY)
+	public void destroy(List<Person> destroyPersons) {
+		for (Person person : destroyPersons) {
+			dataBean.deletePerson(person);
+		}
+	}
+	 
+	 */
+	
+	
 
 }
