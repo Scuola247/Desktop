@@ -1,11 +1,12 @@
 package org.scuola247.desktop.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,30 +19,28 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
+
 import org.scuola247.desktop.dto.ConfigurationDto;
 import org.scuola247.desktop.entity.Configuration;
-import org.scuola247.desktop.entity.QConfiguration;
-
-import com.mysema.query.jpa.impl.JPAQuery;
 
 @Service
 @Lazy
 public class AppConfigurationService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@ - PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private MailService mailService;
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public void sendTestEmail(String to) {
 		mailService.sendSimpleMessage(to, "TEST EMAIL FROM desktop@scuola247.org", "THIS IS A TEST MESSAGE");
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_LOAD)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional(readOnly = true)
 	public ConfigurationDto load() {
 
@@ -53,9 +52,14 @@ public class AppConfigurationService {
 
 		dto.setLogLevel(level);
 
+		/*
 		List<Configuration> configurations = new JPAQuery(entityManager).from(QConfiguration.configuration).list(
 				QConfiguration.configuration);
 
+		*/
+		
+		List<Configuration> configurations = new LinkedList<>();
+		
 		dto.setSender(read(ConfigurationKey.SMTP_SENDER, configurations));
 		dto.setServer(read(ConfigurationKey.SMTP_SERVER, configurations));
 		String port = read(ConfigurationKey.SMTP_PORT, configurations);
@@ -80,7 +84,7 @@ public class AppConfigurationService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional
 	public ExtDirectFormPostResult submit(ConfigurationDto data) {
 		LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
@@ -103,6 +107,7 @@ public class AppConfigurationService {
 
 	private void update(ConfigurationKey key, String value) {
 
+		/*
 		Configuration conf = new JPAQuery(entityManager).from(QConfiguration.configuration)
 				.where(QConfiguration.configuration.confKey.eq(key)).singleResult(QConfiguration.configuration);
 
@@ -124,6 +129,7 @@ public class AppConfigurationService {
 			}
 
 		}
+		*/
 	}
 
 }

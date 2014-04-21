@@ -31,6 +31,12 @@ Ext.define('Desktop.controller.Settings', {
 	backgroundColor: null,
 
 	init: function() {
+
+		/*
+		if (Ext.isEmpty(this.desktopWallpaper)){
+			this.desktopWallpaper.wallpaper = this.getController('Desktop.controller.Desktop').getView().wallpaper;
+		}
+		*/
 		this.wallpaperUrl = this.desktopWallpaper.wallpaper;
 		this.imageWidth = this.desktopWallpaper.imageWidth;
 		this.imageHeight = this.desktopWallpaper.imageHeight;

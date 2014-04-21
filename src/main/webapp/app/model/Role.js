@@ -4,11 +4,6 @@ Ext.define("Desktop.model.Role",
   fields : [ {
     name : "name",
     type : "string"
-  }, {
-    name : "id",
-    type : "int",
-    useNull : true,
-    convert : null
   } ],
   proxy : {
     type : "direct",

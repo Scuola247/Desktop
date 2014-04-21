@@ -1,0 +1,1 @@
+mvn -P jsLint clean package

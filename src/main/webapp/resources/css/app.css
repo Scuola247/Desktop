@@ -190,6 +190,14 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/16/institutes.png);
 }
 
+.settings-icon {
+	background-image: url(../images/settings-icon.png);
+}
+
+.feedback-icon {
+	background-image: url(../images/feedback-icon.png);
+}
+
 /* Shorcut */
 
 .users-shortcut {
@@ -284,6 +292,14 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/48/institutes.png);
 }
 
+.settings-shortcut {
+	background-image: url(../images/settings.png);
+}
+
+.feedback-shortcut {
+	background-image: url(../images/feedback.png);
+}
+
 .loggedOnLabel {
 	padding-right: 5px;
 	font-weight: bold;
@@ -338,4 +354,28 @@ user {
 
 .remove {
 	background-image: url(../images/demo/delete.png);
+}
+
+.institutes-row {
+	/*height: 210px;*/
+}
+
+.upload-icon {
+    background: url(../icons/image_add.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.find-icon {
+	background: url(../icons/find.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.pageedit-icon {
+	background: url(../icons/page_edit.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.add-icon {
+	background: url(../icons/add.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.print-icon {
+	background: url(../icons/print.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
 }

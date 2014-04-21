@@ -18,11 +18,6 @@ Ext.define("Desktop.model.AccessLog",
   }, {
     name : "browser",
     type : "string"
-  }, {
-    name : "id",
-    type : "int",
-    useNull : true,
-    convert : null
   } ],
   proxy : {
     type : "direct",

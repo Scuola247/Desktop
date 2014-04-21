@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.mail.MessagingException;
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,20 +20,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
+
 import org.scuola247.desktop.entity.AccessLog;
 import org.scuola247.desktop.entity.User;
-import org.scuola247.desktop.security.JpaUserDetails;
+import org.scuola247.desktop.security.UtenteDettagli;
 import org.scuola247.desktop.util.Util;
 
 @Service
 public class InfrastructureService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private MailService mailService;
@@ -48,16 +50,16 @@ public class InfrastructureService {
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional
 	public boolean switchUser(Long userId) {
-
+/*
 		User switchToUser = entityManager.find(User.class, userId);
 		if (switchToUser != null) {
-			Util.signin(switchToUser);
+			//Util.signin(switchToUser);
 			return true;
 		}
-
+*/
 		return false;
 	}
 
@@ -66,8 +68,8 @@ public class InfrastructureService {
 	@Transactional
 	public String getLoggedOnUser(HttpSession session, HttpServletRequest request) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof JpaUserDetails) {
-			JpaUserDetails userDetail = (JpaUserDetails) principal;
+		if (principal instanceof UtenteDettagli) {
+			UtenteDettagli userDetail = (UtenteDettagli) principal;
 
 			if (session != null) {
 				AccessLog accessLog = new AccessLog();
@@ -76,10 +78,10 @@ public class InfrastructureService {
 				accessLog.setLogIn(DateTime.now());
 				accessLog.setUserAgent(request.getHeader("User-Agent"));
 
-				entityManager.persist(accessLog);
+//				entityManager.persist(accessLog);
 			}
 
-			return userDetail.getFullName();
+			return userDetail.getUsername();
 
 		}
 		return principal.toString();
@@ -90,11 +92,10 @@ public class InfrastructureService {
 	@Transactional(readOnly = true)
 	public UserSettings getUserSettings() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof JpaUserDetails) {
-			JpaUserDetails userDetail = (JpaUserDetails) principal;
-			User user = entityManager.find(User.class, userDetail.getUserDbId());
-			if (user.getSettings() != null) {
-				return deserialUserSettings(user.getSettings());
+		if (principal instanceof UtenteDettagli) {
+			UtenteDettagli userDetail = (UtenteDettagli) principal;
+			if (userDetail.getSettings() != null) {
+				return userDetail.getSettings();
 			}
 		}
 		return null;
@@ -107,11 +108,11 @@ public class InfrastructureService {
 			String backgroundColor) throws IOException {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof JpaUserDetails) {
-			JpaUserDetails userDetail = (JpaUserDetails) principal;
-			User user = entityManager.find(User.class, userDetail.getUserDbId());
+		if (principal instanceof UserDetails) {
+			UserDetails userDetail = (UserDetails) principal;
 			UserSettings us = new UserSettings(wallpaper, width, height, picturePos, backgroundColor);
-			user.setSettings(serializeUserSettings(us));
+			
+			//TODO: invocare update settings dell'utente
 		}
 	}
 
@@ -143,8 +144,8 @@ public class InfrastructureService {
 	@PreAuthorize("isAuthenticated()")
 	public void sendFeedback(String feedbackText) throws MessagingException {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof JpaUserDetails) {
-			String username = ((JpaUserDetails) principal).getUsername();
+		if (principal instanceof UserDetails) {
+			String username = ((UserDetails) principal).getUsername();
 			String to;
 			if (environment.acceptsProfiles("development")) {
 				to = "test@test.com";

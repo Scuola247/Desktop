@@ -1,10 +1,11 @@
 package org.scuola247.desktop.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,17 +14,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.scuola247.desktop.entity.Configuration;
-import org.scuola247.desktop.entity.QConfiguration;
-
-import com.mysema.query.jpa.impl.JPAQuery;
 
 @Service
 public class MailService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@ - PersistenceContext
+//	private EntityManager entityManager;
 
 	private String defaultSender = null;
 
@@ -55,9 +52,13 @@ public class MailService {
 
 	@Transactional(readOnly = true)
 	public void configure() {
+		/*
 		List<Configuration> configurations = new JPAQuery(entityManager).from(QConfiguration.configuration).list(
 				QConfiguration.configuration);
-
+		 */
+		
+		List<Configuration> configurations = new LinkedList<>();
+		
 		mailSender = new JavaMailSenderImpl();
 		mailSender.setHost(read(ConfigurationKey.SMTP_SERVER, configurations));
 		String portString = read(ConfigurationKey.SMTP_PORT, configurations);

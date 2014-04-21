@@ -2,22 +2,22 @@ package org.scuola247.desktop.entity;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.JoinTable;
+//import javax.persistence.ManyToMany;
+//import javax.persistence.Table;
+//import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
+//import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
-import ch.rasc.edsutil.entity.AbstractPersistable;
+//import ch.rasc.edsutil.entity.AbstractPersistable;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelAssociation;
 import ch.rasc.extclassgenerator.ModelAssociationType;
@@ -25,15 +25,15 @@ import ch.rasc.extclassgenerator.ModelField;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name = "AppUser")
+//@ - Entity
+//@ - Table(name = "AppUser")
 @Model(value = "Desktop.model.User", readMethod = "userService.read", destroyMethod = "userService.destroy", paging = true)
-public class User extends AbstractPersistable {
+public class User /*extends AbstractPersistable*/ {
 
 	@Email
 	@Size(max = 255)
 	@NotNull
-	@Column(unique = true)
+//	@ - Column(unique = true)
 	private String email;
 
 	@Size(max = 255)
@@ -54,8 +54,8 @@ public class User extends AbstractPersistable {
 	@JsonIgnore
 	private String settings;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "AppUserRoles", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+//	@ - ManyToMany(fetch = FetchType.EAGER)
+//	@ - JoinTable(name = "AppUserRoles", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
 	@ModelAssociation(value = ModelAssociationType.HAS_MANY, model = Role.class, foreignKey = "user_id", autoLoad = false)
 	private Set<Role> roles;
 
@@ -63,14 +63,14 @@ public class User extends AbstractPersistable {
 	private Integer failedLogins;
 
 	@JsonIgnore
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+//	@ - Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime lockedOut;
 
 	@JsonIgnore
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+//	@ - Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime lastLogin;
 
-	@Transient
+//	@ - Transient
 	@ModelField(persist = false)
 	private String lastLoginDescription;
 

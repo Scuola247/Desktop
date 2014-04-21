@@ -4,19 +4,19 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.CellStyle;
+//import org.apache.poi.ss.usermodel.Font;
+//import org.apache.poi.ss.usermodel.IndexedColors;
+//import org.apache.poi.ss.usermodel.Row;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
@@ -27,29 +27,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.scuola247.desktop.entity.QUser;
+//import org.scuola247.desktop.entity.QUser;
 import org.scuola247.desktop.entity.User;
 
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
+//import com.mysema.query.BooleanBuilder;
+//import com.mysema.query.jpa.JPQLQuery;
+//import com.mysema.query.jpa.impl.JPAQuery;
 
 @Controller
 @Lazy
 public class UserExport {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private MessageSource messageSource;
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "/usersExport.xlsx", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public void userExport(HttpServletResponse response, Locale locale,
 			@RequestParam(required = false) final String filter) throws Exception {
-
+/*
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		response.addHeader("Content-disposition", "attachment;filename=users.xlsx");
 
@@ -128,13 +128,13 @@ public class UserExport {
 
 		try (OutputStream out = response.getOutputStream()) {
 			workbook.write(out);
-		}
+		}*/
 	}
 
-	private static void createCell(Row row, int column, String value, CellStyle style) {
-		Cell cell = row.createCell(column);
-		cell.setCellValue(value);
-		cell.setCellStyle(style);
-	}
+//	private static void createCell(Row row, int column, String value, CellStyle style) {
+//		Cell cell = row.createCell(column);
+//		cell.setCellValue(value);
+//		cell.setCellStyle(style);
+//	}
 
 }

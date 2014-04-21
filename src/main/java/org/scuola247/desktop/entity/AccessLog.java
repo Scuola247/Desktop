@@ -1,17 +1,17 @@
 package org.scuola247.desktop.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+//import javax.persistence.Entity;
+//import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
 
-import org.hibernate.annotations.Type;
+//import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-import ch.rasc.edsutil.entity.AbstractPersistable;
+//import ch.rasc.edsutil.entity.AbstractPersistable;
 import ch.rasc.edsutil.jackson.ISO8601DateTimeSerializer;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
@@ -19,9 +19,9 @@ import ch.rasc.extclassgenerator.ModelField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@Entity
+//@ - Entity
 @Model(value = "Desktop.model.AccessLog", readMethod = "accessLogService.read", paging = true)
-public class AccessLog extends AbstractPersistable {
+public class AccessLog /* extends AbstractPersistable*/ {
 
 	@Size(max = 100)
 	@JsonIgnore
@@ -30,23 +30,23 @@ public class AccessLog extends AbstractPersistable {
 	@Size(max = 255)
 	private String userName;
 
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+//	@ - Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	@ModelField(dateFormat = "c")
 	private DateTime logIn;
 
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+//	@ - Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	@ModelField(dateFormat = "c")
 	private DateTime logOut;
 
 	@ModelField
-	@Transient
+//	@ - Transient
 	private String duration;
 
 	@JsonIgnore
 	private String userAgent;
 
 	@ModelField
-	@Transient
+//	@ - Transient
 	private String browser;
 
 	public String getUserName() {
@@ -91,7 +91,7 @@ public class AccessLog extends AbstractPersistable {
 		this.userAgent = userAgent;
 	}
 
-	@Transient
+//	@ - Transient
 	public String getBrowser() {
 		if (userAgent != null) {
 			UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();

@@ -1,4 +1,5 @@
 <!doctype html> 
+<%@page import="org.springframework.security.core.AuthenticationException"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@page import="org.springframework.web.servlet.support.RequestContextUtils"%>
 <%@page import="java.util.Locale"%>
@@ -56,8 +57,10 @@ ${applicationScope.login_css}
   <script>
   Ext.onReady(function() {
     Ext.fly('circularG').destroy();
-	<% if (session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION") != null) { /**/ %> 
-	  Desktop.ux.window.Notification.error(i18n.error, i18n.login_failed);
+<%
+AuthenticationException e = (AuthenticationException)session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+	if (e != null) { /**/ %> 
+	  Desktop.ux.window.Notification.error(i18n.error, i18n.login_failed + "<%/*=e.getMessage()*/%>");
 	  <% session.removeAttribute("SPRING_SECURITY_LAST_EXCEPTION"); %>
 	<% } %>
   });

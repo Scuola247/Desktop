@@ -1,6 +1,6 @@
 package org.scuola247.desktop.config;
 
-import javax.sql.DataSource;
+//import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +28,24 @@ public class SecurityConfig {
 	@Configuration
 	@Order(1)
 	public static class CachableWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+		@Autowired
+		private UserDetailsService userDetailsService;
+		
+		@Autowired
+		private CustomAuthenticationProvider customAuthenticationProvider;
+		
+		@Bean
+		public PasswordEncoder passwordEncoder() {
+			return new BCryptPasswordEncoder();
+		}
+		
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.authenticationProvider(customAuthenticationProvider).userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		}
+		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			//@formatter:off
@@ -46,71 +64,76 @@ public class SecurityConfig {
 
 	@Configuration
 	public static class DefaultWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	private UserDetailsService userDetailsService;
-
-	@Autowired
-	private DataSource dataSource;
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}
-
-	@Override
-	public void configure(WebSecurity builder) throws Exception {
-			builder.ignoring().antMatchers("/resources/**", "/favicon.ico", "/api*.js");
-	}
-
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-
-		JdbcTokenRepositoryImpl tokenRepo = new JdbcTokenRepositoryImpl();
-		tokenRepo.setDataSource(dataSource);
-		tokenRepo.setCreateTableOnStartup(false);
-		tokenRepo.afterPropertiesSet();
-
-		//@formatter:off
-		http
-		.headers()
-		    .contentTypeOptions()
-		    .xssProtection()
-		    .cacheControl()
-		    .httpStrictTransportSecurity()
-		    .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
-		    .and()		
-		  .authorizeRequests()
-		    .antMatchers("/login*", "/app/ux/window/Notification.js").permitAll()
-			.anyRequest().authenticated()
-		    .and()
-	      .formLogin()
-	        .loginPage("/login.html")
-	        .defaultSuccessUrl("/index.html", true)
-	        .permitAll()
-		    .and()
-		  .logout()
-		    .deleteCookies("JSESSIONID")
-		    .permitAll()
-		    .and()
-		  .rememberMe()
-		    .tokenRepository(tokenRepo)
-		    .and()
-		  .csrf()
-		    .disable();
-		//@formatter:on
-	}
+	
+		@Autowired
+		private UserDetailsService userDetailsService;
+		
+		@Autowired
+		private CustomAuthenticationProvider customAuthenticationProvider;
+	
+//		@Autowired
+//		private DataSource dataSource;
+	
+		@Bean
+		public PasswordEncoder passwordEncoder() {
+			return new BCryptPasswordEncoder();
+		}
+	
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.authenticationProvider(customAuthenticationProvider).userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		}
+	
+		@Override
+		public void configure(WebSecurity builder) throws Exception {
+				builder.ignoring().antMatchers("/resources/**", "/favicon.ico", "/api*.js");
+		}
+	
+		@Bean
+		@Override
+		public AuthenticationManager authenticationManagerBean() throws Exception {
+			AuthenticationManager authManager = super.authenticationManagerBean();
+			return authManager;
+		}
+	
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+	
+//			JdbcTokenRepositoryImpl tokenRepo = new JdbcTokenRepositoryImpl();
+//			tokenRepo.setDataSource(dataSource);
+//			tokenRepo.setCreateTableOnStartup(false);
+//			tokenRepo.afterPropertiesSet();
+	
+			//@formatter:off
+			http
+			.headers()
+			    .contentTypeOptions()
+			    .xssProtection()
+			    .cacheControl()
+			    .httpStrictTransportSecurity()
+			    .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
+			    .and()		
+			  .authorizeRequests()
+			    .antMatchers("/login*", "/app/ux/window/Notification.js").permitAll()
+				.anyRequest().authenticated()
+			    .and()
+		      .formLogin()
+		        .loginPage("/login.html")
+		        .defaultSuccessUrl("/index.html", true)
+		        .permitAll()
+			    .and()
+			  .logout()
+			    .deleteCookies("JSESSIONID")
+			    .permitAll()
+//			    .and()
+//			  .rememberMe()
+//			    .tokenRepository(tokenRepo)
+			    .and()
+			  .csrf()
+			    .disable();
+			//@formatter:on
+		}
 	}
 
 }

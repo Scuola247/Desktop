@@ -3,9 +3,11 @@ package org.scuola247.desktop.service;
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
@@ -19,15 +21,13 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.StringFilter;
+
 import org.scuola247.desktop.entity.LoggingEvent;
-import org.scuola247.desktop.entity.QLoggingEvent;
+
 import ch.rasc.edsutil.QueryUtil;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.mysema.query.SearchResults;
-import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
 
 @Service
 public class LoggingEventService {
@@ -35,14 +35,14 @@ public class LoggingEventService {
 	private static final ImmutableMap<String, String> mapGuiColumn2DbField = new ImmutableMap.Builder<String, String>()
 			.put("dateTime", "timestmp").put("message", "formattedMessage").put("level", "levelString").build();
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@ExtDirectMethod(STORE_READ)
 	@Transactional(readOnly = true)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public ExtDirectStoreResult<org.scuola247.desktop.dto.LoggingEvent> read(ExtDirectStoreReadRequest request) {
-
+/*
 		JPQLQuery query = new JPAQuery(entityManager).from(QLoggingEvent.loggingEvent);
 
 		if (!request.getFilters().isEmpty()) {
@@ -55,9 +55,12 @@ public class LoggingEventService {
 				mapGuiColumn2DbField, Collections.<String> emptySet());
 
 		SearchResults<LoggingEvent> searchResult = query.listResults(QLoggingEvent.loggingEvent);
-
+*/
+		
+		Set<LoggingEvent> searchResult = new HashSet<>();
+		
 		List<org.scuola247.desktop.dto.LoggingEvent> loggingEventList = Lists.newArrayList();
-		for (LoggingEvent event : searchResult.getResults()) {
+		for (LoggingEvent event : searchResult) {
 			loggingEventList.add(new org.scuola247.desktop.dto.LoggingEvent(event));
 		}
 		return new ExtDirectStoreResult<>(loggingEventList.size(), loggingEventList);
@@ -65,8 +68,9 @@ public class LoggingEventService {
 
 	@ExtDirectMethod
 	@Transactional
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public void deleteAll(String level) {
+		/*
 		if (StringUtils.hasText(level)) {
 			for (org.scuola247.desktop.entity.LoggingEvent le : new JPAQuery(entityManager).from(QLoggingEvent.loggingEvent)
 					.where(QLoggingEvent.loggingEvent.levelString.eq(level)).list(QLoggingEvent.loggingEvent)) {
@@ -78,10 +82,11 @@ public class LoggingEventService {
 				entityManager.remove(le);
 			}
 		}
+		*/
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public void addTestData() {
 		Logger logger = LoggerFactory.getLogger(getClass());
 

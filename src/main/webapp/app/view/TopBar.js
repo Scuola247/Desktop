@@ -18,16 +18,30 @@ Ext.define('Desktop.view.TopBar', {
 				xtype: 'menu',
 				itemId: 'applicationMenu'
 			}
-		}, '->', {
+		}, '-', {
 			xtype: 'label',
 			text: '',
 			cls: 'loggedOnLabel',
 			itemId: 'loggedOnLabel'
-		}, '-', {
+		}, '->', {
+			xtype: 'combo',
+			editable: false,
+			fieldLabel: i18n.workspace,
+			itemId: 'spazioLavoroCombo',
+			emptyText:'',
+			width: 500,
+			queryMode: 'local',
+			valueField: 'spazio_lavoro',
+			displayField: 'descrizione'
+		}, {
+			itemId:'spazioLavoroButton',
+			icon: app_context_path + "/resources/icons/star_yellow.png"
+		}
+		/*, '-', {
 			icon: app_context_path + '/resources/images/mail_write.png',
 			text: i18n.feedback,
 			itemId: 'feedbackButton'
-		}, '-', {
+		}*/, '-', {
 			text: i18n.settings,
 			itemId: 'topBarSettings',
 			icon: app_context_path + '/resources/images/settings-icon.png'

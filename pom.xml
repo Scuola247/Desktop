@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.scuola247</groupId>
 	<artifactId>desktop</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -12,9 +12,6 @@
 
 	<properties>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
-
-		<hibernate.version>4.3.0.Final</hibernate.version>
-		<querydsl.version>3.3.0</querydsl.version>
 
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
@@ -55,6 +52,7 @@
 			<version>1.0.0</version>
 		</dependency>
 
+<!-- Spring inizio -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -91,10 +89,10 @@
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
+ 		<dependency>
+ 			<groupId>org.springframework</groupId>
+ 			<artifactId>spring-orm</artifactId>
+ 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -118,35 +116,25 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+<!-- Spring fine -->
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jadira.usertype</groupId> -->
+<!-- 			<artifactId>usertype.core</artifactId> -->
+<!-- 			<version>3.1.0.CR10</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>xml-apis</artifactId>
-					<groupId>xml-apis</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<version>3.1.0.CR10</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.2.Final</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -161,48 +149,13 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<version>${querydsl.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>asm</artifactId>
-					<groupId>asm</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>cglib</artifactId>
-					<groupId>cglib</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jsr305</artifactId>
-					<groupId>net.sourceforge.findbugs</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>hibernate-jpa-2.0-api</artifactId>
-					<groupId>org.hibernate.javax.persistence</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 <!-- 		<dependency> -->
-<!-- 			<groupId>org.liquibase</groupId> -->
-<!-- 			<artifactId>liquibase-core</artifactId> -->
-<!-- 			<version>3.0.8</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>snakeyaml</artifactId> -->
-<!-- 					<groupId>org.yaml</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
+<!-- 			<groupId>org.aspectj</groupId> -->
+<!-- 			<artifactId>aspectjrt</artifactId> -->
+<!-- 			<version>1.7.4</version> -->
 <!-- 		</dependency> -->
 
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.7.4</version>
-		</dependency>
-
+<!-- logging inizio -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -226,6 +179,7 @@
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+<!-- logging fine -->
 
 		<dependency>
 			<groupId>ch.ralscha</groupId>
@@ -233,13 +187,13 @@
 			<version>${eds.version}</version>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- richiesto da extdirectspring -->
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.3.1</version>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- non usato alla 1.0.0 -->
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>16.0-rc1</version>
@@ -257,7 +211,7 @@
 			<version>2.4</version>
 		</dependency>
 
-		<dependency>
+		<dependency><!-- usato anche in upload con extdirect -->
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3</version>
@@ -274,7 +228,7 @@
 			<artifactId>extjs-gpl</artifactId>
 			<version>${extjs.version}</version>
 		</dependency>
-
+<!-- ExtJS inizio -->
 		<dependency>
 			<groupId>resources</groupId>
 			<artifactId>extjs-gpl-theme-classic</artifactId>
@@ -291,36 +245,30 @@
 			<groupId>resources</groupId>
 			<artifactId>extjs-gpl-debug</artifactId>
 			<version>${extjs.version}</version>
-			<scope>provided</scope>
+<!-- 			<scope>provided</scope> -->
 		</dependency>
+<!-- ExtJS fine -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.poi</groupId> -->
+<!-- 			<artifactId>poi</artifactId> -->
+<!-- 			<version>3.9</version> -->
+<!-- 		</dependency> -->
 
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.9</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.9</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>stax-api</artifactId>
-					<groupId>stax</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>xml-apis</artifactId>
-					<groupId>xml-apis</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.poi</groupId> -->
+<!-- 			<artifactId>poi-ooxml</artifactId> -->
+<!-- 			<version>3.9</version> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>stax-api</artifactId> -->
+<!-- 					<groupId>stax</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<artifactId>xml-apis</artifactId> -->
+<!-- 					<groupId>xml-apis</groupId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>com.yahoo.platform.yui</groupId>
@@ -334,7 +282,7 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- usato da wallpaper services, sostituibile -->
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>1.13</version>
@@ -353,9 +301,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.rasc</groupId>
-			<artifactId>embeddedtc</artifactId>
-			<version>1.11</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>7.0.52</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -373,12 +321,28 @@
 
 
 		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-dbcp</artifactId>
+		    <version>7.0.52</version>
+		    <scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.3-1100-jdbc41</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>5.5.1</version>
+		</dependency>
+		
 	</dependencies>
+
 	<repositories>
 
 		<repository>
@@ -390,6 +354,7 @@
 	</repositories>
 
 	<build>
+		<finalName>desktop-${version}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -414,7 +379,6 @@
 		</resources>
 
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -423,14 +387,6 @@
 					<path>/</path>
 					<contextFile>${basedir}/src/main/config/tomcat.xml</contextFile>
 				</configuration>
-
-				<dependencies>
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>1.3.174</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<plugin>
@@ -438,16 +394,6 @@
 				<artifactId>apt-maven-plugin</artifactId>
 				<version>1.1.1</version>
 				<executions>
-					<execution>
-						<id>jpa</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/generated-sources/java</outputDirectory>
-							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-						</configuration>
-					</execution>
 					<execution>
 						<id>modelgen</id>
 						<goals>
@@ -465,17 +411,6 @@
 					</execution>
 				</executions>
 				<dependencies>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-apt</artifactId>
-						<version>${querydsl.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-jpa</artifactId>
-						<classifier>apt</classifier>
-						<version>${querydsl.version}</version>
-					</dependency>
 					<dependency>
 						<groupId>ch.rasc</groupId>
 						<artifactId>extclassgenerator</artifactId>
@@ -560,6 +495,18 @@
 				</configuration>
 			</plugin>
 
+		</plugins>
+
+	</build>
+
+<profiles>
+  <profile>
+    <id>jsLint</id>
+    <activation>
+      <activeByDefault>false</activeByDefault>
+    </activation>
+    <build>
+    	<plugins>
 			<plugin>
 				<groupId>com.googlecode.jslint4java</groupId>
 				<artifactId>jslint4java-maven-plugin</artifactId>
@@ -576,13 +523,13 @@
 							<sourceFolders>
 								<sourceFolder>${project.basedir}/src/main/webapp</sourceFolder>
 							</sourceFolders>
-
+	
 							<excludes>
 								<exclude>resources/extjs-gpl/**/*.js</exclude>
 								<exclude>resources/deft.js</exclude>
 								<exclude>resources/deft-debug.js</exclude>
 							</excludes>
-
+	
 							<options>
 								<browser>true</browser>
 								<sloppy>true</sloppy>
@@ -598,10 +545,10 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
-
-	</build>
+    </build>
+  </profile>
+</profiles>
 
 
 </project>

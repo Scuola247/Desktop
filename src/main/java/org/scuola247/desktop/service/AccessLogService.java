@@ -2,12 +2,14 @@ package org.scuola247.desktop.service;
 
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
 
-import java.util.Collections;
+import java.util.ArrayList;
+//import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+//import javax.persistence.EntityManager;
+//import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -28,29 +30,25 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import org.scuola247.desktop.entity.AccessLog;
-import org.scuola247.desktop.entity.QAccessLog;
-import ch.rasc.edsutil.QueryUtil;
 
-import com.mysema.query.SearchResults;
-import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPADeleteClause;
-import com.mysema.query.jpa.impl.JPAQuery;
+import org.scuola247.desktop.entity.AccessLog;
+
+import ch.rasc.edsutil.QueryUtil;
 
 @Service
 public class AccessLogService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<AccessLog> read(ExtDirectStoreReadRequest request, Locale locale) {
-
+/*
 		JPQLQuery query = new JPAQuery(entityManager).from(QAccessLog.accessLog);
 
 		if (!request.getFilters().isEmpty()) {
@@ -63,7 +61,7 @@ public class AccessLogService {
 				Collections.<String, String> emptyMap(), Collections.singleton("browser"));
 
 		SearchResults<AccessLog> searchResult = query.listResults(QAccessLog.accessLog);
-
+*/
 		PeriodFormatter minutesAndSeconds = new PeriodFormatterBuilder()
 				.appendMinutes()
 				.appendSuffix(" " + messageSource.getMessage("minute", null, locale),
@@ -74,7 +72,9 @@ public class AccessLogService {
 				.appendSuffix(" " + messageSource.getMessage("second", null, locale),
 						" " + messageSource.getMessage("seconds", null, locale)).toFormatter();
 
-		for (AccessLog accessLog : searchResult.getResults()) {
+		List<AccessLog> searchResult = new ArrayList<>();
+		
+		for (AccessLog accessLog : searchResult) {
 			if (accessLog.getLogIn() != null && accessLog.getLogOut() != null) {
 				Duration duration = new Duration(accessLog.getLogIn(), accessLog.getLogOut());
 				Period period = new Period(duration, PeriodType.forFields(new DurationFieldType[] {
@@ -84,19 +84,19 @@ public class AccessLogService {
 
 		}
 
-		return new ExtDirectStoreResult<>(searchResult.getTotal(), searchResult.getResults());
+		return new ExtDirectStoreResult<>(searchResult.size(), searchResult);
 
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional
 	public void deleteAll() {
-		new JPADeleteClause(entityManager, QAccessLog.accessLog).execute();
+//		new JPADeleteClause(entityManager, QAccessLog.accessLog).execute();
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	@Transactional
 	public void addTestData(HttpServletRequest request) {
 		String[] users = { "admin", "user" };
@@ -115,7 +115,7 @@ public class AccessLogService {
 				accessLog.setLogOut(logIn.plusMinutes(random.nextInt(120)));
 				accessLog.setUserAgent(userAgent);
 
-				entityManager.persist(accessLog);
+//				entityManager.persist(accessLog);
 			} catch (IllegalArgumentException iae) {
 				// do nothing here
 			}

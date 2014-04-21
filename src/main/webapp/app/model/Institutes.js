@@ -3,10 +3,10 @@ Ext.define("Desktop.model.Institutes",
   extend : "Ext.data.Model",
   fields : [ {
     name : "rv",
-    type : "number"
+    type : "int"
   }, {
     name : "istituto",
-    type : "number"
+    type : "int"
   }, {
     name : "descrizione",
     type : "string"
@@ -23,14 +23,11 @@ Ext.define("Desktop.model.Institutes",
   proxy : {
     type : "direct",
     api : {
-    	create  : "institutesService.ins",
-        read    : "institutesService.sel",
-        update  : "institutesService.upd",
-        destroy : "institutesService.del"
+      read : "institutesService.sel",
+      destroy : "institutesService.del"
     },
-    /*directFn : "institutesService.read",*/
     reader : {
-    	root : "records"
+      root : "records"
     }
   }
 });

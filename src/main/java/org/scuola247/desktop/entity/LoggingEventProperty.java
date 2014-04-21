@@ -1,25 +1,25 @@
 package org.scuola247.desktop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+//import javax.persistence.Column;
+//import javax.persistence.EmbeddedId;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
+//import javax.persistence.Table;
 
-@Entity
-@Table(name = "logging_event_property")
+//@ - Entity
+//@ - Table(name = "logging_event_property")
 public class LoggingEventProperty {
 
-	@EmbeddedId
+//	@ - EmbeddedId
 	private LoggingEventPropertyId id;
 
-	@Column(name = "mapped_value")
+//	@ - Column(name = "mapped_value")
 	private String mappedValue;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "event_id", nullable = false, insertable = false, updatable = false)
+//	@ - ManyToOne(fetch = FetchType.LAZY, optional = false)
+//	@ - JoinColumn(name = "event_id", nullable = false, insertable = false, updatable = false)
 	private LoggingEvent eventId;
 
 	public LoggingEventPropertyId getId() {

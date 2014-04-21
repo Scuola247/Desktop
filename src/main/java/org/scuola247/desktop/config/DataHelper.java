@@ -4,54 +4,61 @@ package org.scuola247.desktop.config;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.apache.tomcat.jdbc.pool.PoolProperties;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import org.postgresql.ds.PGPoolingDataSource;
+import org.scuola247.desktop.security.UtenteDettagli;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class DataHelper {
 
-	public static DataSource myDataSource()  {
-
+	public static DataSource myDataSource(String username, String password) throws SQLException {
+		
+		InitialContext cxt;
 		DataSource ds = null;
-		PoolProperties pool = null;
-
-        ds= new DataSource();
-		pool = new PoolProperties();
-        
-		pool.setUrl("jdbc:postgresql://skyscraper/desktop");
-        pool.setDriverClassName("org.postgresql.Driver");
-        pool.setUsername("postgres");
-        pool.setPassword("postgres");
-        pool.setJmxEnabled(true);
-        pool.setTestWhileIdle(false);
-        pool.setTestOnBorrow(true);
-        pool.setValidationQuery("SELECT 1");
-        pool.setTestOnReturn(false);
-        pool.setValidationInterval(30000);
-        pool.setTimeBetweenEvictionRunsMillis(30000);
-        pool.setMaxActive(100);
-        pool.setInitialSize(10);
-        pool.setMaxWait(10000);
-        pool.setRemoveAbandonedTimeout(60);
-        pool.setMinEvictableIdleTimeMillis(30000);
-        pool.setMinIdle(10);
-        pool.setLogAbandoned(true);
-        pool.setRemoveAbandoned(true);
-        pool.setJdbcInterceptors(
-        		"org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"+
-        		"org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
-       
-        
-        ds.setPoolProperties(pool);
-
-        return ds;
+		try {
+			cxt = new InitialContext();
+		
+			if ( cxt == null ) {
+			   throw new SQLException("No context!");
+			}
+			ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/scuola247" );
+		} catch (NamingException e) {
+			throw new SQLException(e);
+		}
+		return ds;
 	}
+	
+//	
+//	public static PGPoolingDataSource myDataSource(String username, String passwrod) throws SQLException  {
+//	
+//		PGPoolingDataSource ds = null;
+//		try {
+//			ds = (PGPoolingDataSource)new InitialContext().lookup("scuola247ds");
+//			
+////			ds = (PGPoolingDataSource)new InitialContext().lookup("java:comp/env/jdbc/scuola247ds");
+//			
+//		} catch (NamingException e) {
+//			throw new SQLException("Datasource problem", e);
+//		}
+//		
+//        return ds;
+//	}
 
-	public static Connection myConnection () throws SQLException  {
+	public static Connection myConnection () throws SQLException {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UtenteDettagli userDetail = (UtenteDettagli) principal;
+		return myConnection(userDetail.getUsername(), userDetail.getPassword());
+	}
+	
+	public static Connection myConnection (String username, String passwrod) throws SQLException  {
 		
 		Connection conn = null;
         
-		conn = myDataSource().getConnection();
-		conn.setAutoCommit(false);
+		conn = myDataSource(username, passwrod).getConnection(username, passwrod);
+		conn.setAutoCommit(true);
 		
 		return conn;
 	}

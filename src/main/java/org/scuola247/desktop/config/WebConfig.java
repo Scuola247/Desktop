@@ -38,8 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		ResourceHandlerRegistration registration = registry.addResourceHandler("/resources/**").addResourceLocations(
-				"/resources/");
+		ResourceHandlerRegistration registration = registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		if (environment.acceptsProfiles("production")) {
 			registration.setCachePeriod(31556926);
 		}
@@ -59,10 +58,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public ch.ralscha.extdirectspring.controller.Configuration configuration() {
 		ch.ralscha.extdirectspring.controller.Configuration config = new ch.ralscha.extdirectspring.controller.Configuration();
 		config.setSendStacktrace(environment.acceptsProfiles("development"));
+		config.setSendExceptionMessage(true);
 		config.setExceptionToMessage(new ImmutableMap.Builder<Class<?>, String>().put(AccessDeniedException.class,
 				"accessdenied").build());
 		return config;

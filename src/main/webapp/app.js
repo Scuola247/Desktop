@@ -10,7 +10,7 @@ Ext.Loader.setConfig({
 
 Ext.define('DesktopApp', {
 	extend: 'Deft.mvc.Application',
-	requires: [ 'overrides.AbstractMixedCollection', 'overrides.Window', 'Desktop.ux.window.Notification', 'Desktop.view.Viewport' ],
+	requires: [ 'overrides.AbstractMixedCollection', 'overrides.Window', 'Desktop.ux.window.Notification', 'Desktop.view.Viewport', 'Desktop.shared.SharedStorage' ],
 
 	init: function() {
 		Ext.fly('circularG').destroy();
@@ -91,7 +91,9 @@ Ext.define('DesktopApp', {
 		});
 
 		Deft.Injector.configure({
-			messageBus: 'Ext.util.Observable'
+			messageBus: 'Ext.util.Observable',
+			spaziLavoroStore: 'Desktop.store.SpaziLavoro',
+			sharedStorage: 'Desktop.shared.SharedStorage'
 		});
 
 		Ext.create('Desktop.view.Viewport');

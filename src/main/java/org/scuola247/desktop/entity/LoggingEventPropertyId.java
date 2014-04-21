@@ -2,18 +2,18 @@ package org.scuola247.desktop.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+//import javax.persistence.Column;
+//import javax.persistence.Embeddable;
 
-@Embeddable
+//@ - Embeddable
 public class LoggingEventPropertyId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "event_id", nullable = false)
+//	@ - Column(name = "event_id", nullable = false)
 	private long eventId;
 
-	@Column(name = "mapped_key", nullable = false, length = 255)
+//	@ - Column(name = "mapped_key", nullable = false, length = 255)
 	private String mappedKey;
 
 	public LoggingEventPropertyId() {

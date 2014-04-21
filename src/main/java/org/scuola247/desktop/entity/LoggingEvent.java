@@ -3,38 +3,38 @@ package org.scuola247.desktop.entity;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+//import javax.persistence.CascadeType;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.OneToMany;
+//import javax.persistence.Table;
 
 import com.google.common.collect.Sets;
 
-@Entity
-@Table(name = "logging_event")
+//@ - Entity
+//@ - Table(name = "logging_event")
 public class LoggingEvent {
 
-	@Column(name = "timestmp", nullable = false)
+//	@ - Column(name = "timestmp", nullable = false)
 	private BigDecimal timestmp;
 
-	@Column(name = "formatted_message", nullable = false)
+//	@ - Column(name = "formatted_message", nullable = false)
 	private String formattedMessage;
 
-	@Column(name = "logger_name", nullable = false)
+//	@ - Column(name = "logger_name", nullable = false)
 	private String loggerName;
 
-	@Column(name = "level_string", nullable = false)
+//	@ - Column(name = "level_string", nullable = false)
 	private String levelString;
 
-	@Column(name = "thread_name")
+//	@ - Column(name = "thread_name")
 	private String threadName;
 
-	@Column(name = "reference_flag")
+//	@ - Column(name = "reference_flag")
 	private Short referenceFlag;
 
 	private String arg0;
@@ -45,27 +45,27 @@ public class LoggingEvent {
 
 	private String arg3;
 
-	@Column(name = "caller_filename", nullable = false)
+//	@ - Column(name = "caller_filename", nullable = false)
 	private String callerFilename;
 
-	@Column(name = "caller_class", nullable = false)
+//	@ - Column(name = "caller_class", nullable = false)
 	private String callerClass;
 
-	@Column(name = "caller_method", nullable = false)
+//	@ - Column(name = "caller_method", nullable = false)
 	private String callerMethod;
 
-	@Column(name = "caller_line", nullable = false)
+//	@ - Column(name = "caller_line", nullable = false)
 	private String callerLine;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "event_id", unique = true, nullable = false)
+//	@ - Id
+//	@ - GeneratedValue(strategy = GenerationType.AUTO)
+//	@ - Column(name = "event_id", unique = true, nullable = false)
 	private Long eventId;
 
-	@OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//	@ - OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<LoggingEventException> loggingEventException = Sets.newHashSet();
 
-	@OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//	@ - OneToMany(mappedBy = "eventId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<LoggingEventProperty> loggingEventProperty = Sets.newHashSet();
 
 	public BigDecimal getTimestmp() {

@@ -74,7 +74,7 @@ Ext.define('Desktop.ux.window.Notification', {
 				manager: 'notification',
 				iconCls: error ? 'ux-notification-icon-error' : 'ux-notification-icon-information',
 				
-				autoCloseDelay: 4000,
+				autoCloseDelay: 10000,
 				slideInDuration: 300,
 				width: 200,
 				paddingX: 10,

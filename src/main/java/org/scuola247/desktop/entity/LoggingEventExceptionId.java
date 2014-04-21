@@ -1,17 +1,17 @@
 package org.scuola247.desktop.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+//import javax.persistence.Column;
+//import javax.persistence.Embeddable;
 
-@Embeddable
+//@ - Embeddable
 public class LoggingEventExceptionId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "event_id", nullable = false)
+//	@ - Column(name = "event_id", nullable = false)
 	private long eventId;
 
-	@Column(name = "i", nullable = false)
+//	@ - Column(name = "i", nullable = false)
 	private short i;
 
 	public LoggingEventExceptionId() {

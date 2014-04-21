@@ -5,11 +5,11 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.LocalDateTime;
+//import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,24 +23,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.scuola247.desktop.entity.LoggingEvent;
 import org.scuola247.desktop.entity.LoggingEventException;
 import org.scuola247.desktop.entity.LoggingEventProperty;
-import org.scuola247.desktop.entity.QLoggingEvent;
-import org.scuola247.desktop.entity.QLoggingEventException;
-
-import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
+//import org.scuola247.desktop.entity.QLoggingEvent;
+//import org.scuola247.desktop.entity.QLoggingEventException;
+//
+//import com.mysema.query.jpa.JPQLQuery;
+//import com.mysema.query.jpa.impl.JPAQuery;
 
 @Controller
 public class LoggingEventExport {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+//	@ - PersistenceContext
+//	private EntityManager entityManager;
 
 	@Autowired
 	private MessageSource messageSource;
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "/loggingEventExport.txt", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('gestori')")
 	public void loggingEventExport(HttpServletResponse response, @RequestParam(required = false) final String level)
 			throws Exception {
 
@@ -48,7 +48,7 @@ public class LoggingEventExport {
 		response.addHeader("Content-disposition", "attachment;filename=logs.txt");
 
 		String separator = new String(new char[140]).replace("\0", "=");
-
+/*
 		try (OutputStream out = response.getOutputStream(); PrintWriter pw = new PrintWriter(out)) {
 
 			List<LoggingEvent> events;
@@ -101,7 +101,7 @@ public class LoggingEventExport {
 			}
 
 		}
-
+*/
 	}
 
 }

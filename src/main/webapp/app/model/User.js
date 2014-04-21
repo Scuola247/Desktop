@@ -21,11 +21,6 @@ Ext.define("Desktop.model.User",
     name : "lastLoginDescription",
     type : "string",
     persist : false
-  }, {
-    name : "id",
-    type : "int",
-    useNull : true,
-    convert : null
   } ],
   associations : [ {
     type : "hasMany",

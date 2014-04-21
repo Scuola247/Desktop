@@ -1,6 +1,19 @@
 Ext.define('Desktop.controller.Desktop', {
 	extend: 'Deft.mvc.ViewController',
+	mixins: ['Deft.mixin.Injectable'],
 	requires: ['Desktop.store.ModuleStore'],
+	inject: ['spaziLavoroStore', 'sharedStorage'],
+	observe: {
+		sharedStorage: {
+			spazioLavoroChanged: 'onChangeSpazioLavoroCorrente'
+		}
+	},
+	
+	config: {
+		spaziLavoroStore: null,
+		sharedStorage: null,
+		indexFinestra: 0
+	},
 	
 	activeWindowCls: 'desktop-active-win',
 	inactiveWindowCls: 'desktop-inactive-win',
@@ -30,10 +43,16 @@ Ext.define('Desktop.controller.Desktop', {
 		applicationMenu: {
 			click: 'onApplicationMenuClick'
 		},
-		loggedOnLabel: true,
+		spazioLavoroCombo: {
+			change: 'onChangeSpazioLavoroCombo'
+		},
+		spazioLavoroButton: {
+			click: 'onSpazioLavoroButtonClick'
+		},
+		loggedOnLabel: true/*,
 		feedbackButton: {
 			click: 'onFeedbackClick'
-		}
+		}*/
 	},
 
 	init: function() {
@@ -41,13 +60,41 @@ Ext.define('Desktop.controller.Desktop', {
 		infrastructureService.getLoggedOnUser(this.showLoggedOnUser, this);
 		infrastructureService.getUserSettings(this.handleUserSettings, this);
 		
-		var moduleStore = Ext.create('Desktop.store.ModuleStore');		
+		this.getView().setLoading(true);
+		
+		var moduleStore = Ext.create('Desktop.store.ModuleStore');
 		moduleStore.load({
 			scope: this,
 			callback: function() {
 				this.updateApplicationMenu(moduleStore);
 			}
 		});
+		
+		var spazilavoroStore = this.getSpaziLavoroStore();
+		spazilavoroStore.load({
+			scope: this,
+			callback: function() {
+				this.updatespazioLavoroCombo(spazilavoroStore);
+			}
+		});
+		
+		spazioLavoroDefaultService.getSessionUtente(function(provider, response) {
+    		// process response
+			if (Ext.isNumeric(response.result)){
+				this.getSharedStorage().user = parseInt(response.result);
+				this.getView().setLoading(false);
+			}
+			else{
+				//response.result è il messaggio di errore
+				Ext.Msg.show({
+					title:i18n.workspace_selection_error,
+					buttons: Ext.Msg.OK,
+					msg: response.result,
+					icon: Ext.MessageBox.ERROR
+				});
+				this.getView().setLoading(response.result);
+			}
+		}, this);
 		
 		this.windows = new Ext.util.MixedCollection();
 
@@ -64,6 +111,9 @@ Ext.define('Desktop.controller.Desktop', {
 		windowBarCtxMenu.down('menuitem[action=minimize]').on('click', this.onWindowBarContextmenuMinimize, this);
 		windowBarCtxMenu.down('menuitem[action=maximize]').on('click', this.onWindowBarContextmenuMaximize, this);
 		windowBarCtxMenu.down('menuitem[action=close]').on('click', this.onWindowBarContextmenuClose, this);
+		
+		this.settingsWindow = Ext.create('Desktop.view.SpazioLavoro');
+		this.getView().add(this.settingsWindow);
 	},
 
 	showLoggedOnUser: function(fullname) {
@@ -110,6 +160,49 @@ Ext.define('Desktop.controller.Desktop', {
 		});
 
 	},
+	
+	updatespazioLavoroCombo: function(store) {
+		var me = this;
+		var spazioLavoroCombo = this.getSpazioLavoroCombo();
+		spazioLavoroCombo.bindStore(store);
+		store.each(function(item) {
+			var data = item.data;
+			if (data.spazio_lavoro_default){
+				spazioLavoroCombo.setValue(item);
+			} 
+		});
+	},
+	
+	onChangeSpazioLavoroCorrente: function () {
+		var comboSpazioLavoro = this.getSpazioLavoroCombo();
+		var spazio_lavoro = this.getSharedStorage().sl_spazio_lavoro;
+		if (spazio_lavoro == -1){
+			comboSpazioLavoro.emptyText = this.getSharedStorage().sl_descrizione;
+			comboSpazioLavoro.clearValue();
+			
+		}
+		else{
+			var spazioDiLavoroIndex = comboSpazioLavoro.getStore().find("spazio_lavoro", spazio_lavoro);
+			var spazioDiLavoro = comboSpazioLavoro.getStore().getAt(spazioDiLavoroIndex);
+			comboSpazioLavoro.setValue(spazioDiLavoro);
+		}
+	},
+	
+	onChangeSpazioLavoroCombo: function ( combo, newValue, oldValue, eOpts ) {
+		var spazioDiLavoro = this.getSpazioLavoroCombo().getValue();
+		var record = this.getSpazioLavoroCombo().findRecordByValue(spazioDiLavoro);
+		
+		var sharedStorage = this.getSharedStorage();
+		if (!Ext.isEmpty(newValue) && newValue != sharedStorage.sl_spazio_lavoro){
+			sharedStorage.changeSpazioLavoro(record);
+		}
+	},
+	
+	onSpazioLavoroButtonClick: function (menu, item, e) {
+		if (!this.settingsWindow.isVisible()){
+			this.settingsWindow.show();
+		}
+	},
 
 	onApplicationMenuClick: function(menu, item, e) {
 		if (item.winId) {
@@ -123,12 +216,13 @@ Ext.define('Desktop.controller.Desktop', {
 		this.getView().add(settingsWindow);
 		settingsWindow.show();
 	},
-	
+/*	
 	onFeedbackClick: function() {
 		var feedbackWindow = Ext.create('Desktop.view.Feedback');
 		this.getView().add(feedbackWindow);
 		feedbackWindow.show();
 	},
+*/
 	
 	onDesktopContextmenu: function(e) {
 		var count = this.windows.getCount();
@@ -285,8 +379,11 @@ Ext.define('Desktop.controller.Desktop', {
 			return exWin;
 		}
 
+		var indexFinestra = this.getIndexFinestra();
+		indexFinestra++;
+		this.setIndexFinestra(indexFinestra);
 		var win = Ext.create(winId, {
-			windowId: winId,
+			windowId: indexFinestra,
 			stateful: true,
 			constrainHeader: true,
 			constrain: true,
@@ -295,7 +392,7 @@ Ext.define('Desktop.controller.Desktop', {
 		});
 
 		this.getView().add(win);
-		this.windows.add(winId, win);
+		this.windows.add(indexFinestra, win);
 
 		win.windowButton = this.addWindowButton(win);
 		win.animateTarget = win.windowButton.el;

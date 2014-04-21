@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
-
-import org.scuola247.desktop.security.JpaUserDetails;
+import org.scuola247.desktop.security.UtenteDettagli;
 
 public class AppLocaleResolver extends AbstractLocaleResolver {
 
@@ -18,8 +17,10 @@ public class AppLocaleResolver extends AbstractLocaleResolver {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null) {
 			return request.getLocale();
-		} else if (authentication.getPrincipal() instanceof JpaUserDetails) {
+		} /*else if (authentication.getPrincipal() instanceof JpaUserDetails) {
 			return ((JpaUserDetails) authentication.getPrincipal()).getLocale();
+		}*/ else if (authentication.getPrincipal() instanceof UtenteDettagli){
+			return ((UtenteDettagli) authentication.getPrincipal()).getLocale();
 		} else if (getDefaultLocale() != null) {
 			return getDefaultLocale();
 		} else {

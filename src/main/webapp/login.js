@@ -33,6 +33,7 @@ Ext.onReady(function() {
 			fieldLabel: i18n.user_email,
 			name: 'username',
 			allowBlank: false,
+			blankText: i18n.login_username_is_mandatory,
 			listeners: {
 				specialkey: function(field, e) {
 					if (e.getKey() === e.ENTER) {
@@ -45,6 +46,7 @@ Ext.onReady(function() {
 			name: 'password',
 			inputType: 'password',
 			allowBlank: false,
+			blankText: i18n.login_password_is_mandatory,
 			listeners: {
 				specialkey: function(field, e) {
 					if (e.getKey() === e.ENTER) {
@@ -63,8 +65,8 @@ Ext.onReady(function() {
 			handler: function() {
 				var form = this.up('form').getForm();
 				form.setValues({
-					username: 'user@scuola247.org',
-					password: 'user'
+					username: 'studente@scuola.org',
+					password: 'password'
 				});
 				form.submit();
 			}
@@ -73,8 +75,8 @@ Ext.onReady(function() {
 			handler: function() {
 				var form = this.up('form').getForm();
 				form.setValues({
-					username: 'admin@scuola247.org',
-					password: 'admin'
+					username: 'fol@fulcro.net',
+					password: 'password'
 				});
 				form.submit();
 			}
