@@ -8,7 +8,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.postgresql.ds.PGPoolingDataSource;
 import org.scuola247.desktop.security.UtenteDettagli;
 import org.springframework.security.core.context.SecurityContextHolder;
 
