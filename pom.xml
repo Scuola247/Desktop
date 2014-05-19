@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.scuola247</groupId>
 	<artifactId>desktop</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.4</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -341,9 +341,41 @@
 		    <version>5.5.1</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		
+		<!-- 
+		
+		installazione pacchetto manuale
+		mvn install:install-file -Dfile=C:\Users\denis\Documents\GitHub\Desktop\jasperreports-functions-5.5.1.jar -DgroupId=net.sf.jasperreports -DartifactId=jasperreports-functions -Dversion=5.5.1 -Dpackaging=jar -DlocalRepositoryPath=C:\Users\denis\Documents\GitHub\Desktop\external
+		
+		 -->
+		
+		<dependency> 
+			<groupId>net.sf.jasperreports</groupId> 
+			<artifactId>jasperreports-functions</artifactId> 
+			<version>5.5.1</version> 
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sf.opencsv</groupId>
+		    <artifactId>opencsv</artifactId>
+		    <version>2.3</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
+		<repository>
+			<id>jasper local</id>
+			<url>file://${basedir}/external</url>
+		</repository>
+		<repository>
+			<id>Apache snapshots</id>
+			<url>http://repository.apache.org/snapshots/</url>
+		</repository>
 
 		<repository>
 			<id>rasc</id>
@@ -354,7 +386,7 @@
 	</repositories>
 
 	<build>
-		<finalName>desktop-${version}</finalName>
+		<finalName>desktop-${project.version}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>

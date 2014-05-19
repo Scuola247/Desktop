@@ -28,7 +28,7 @@ public class ModuleService {
 		if (user != null) {
 			ImmutableList.Builder<Module> builder = ImmutableList.builder();
 
-			if (Util.hasRole("gestori")) {
+			if (Util.hasRole("Gestore")) {
 				builder.add(new Submenu(messageSource.getMessage("system", null, locale), "settings", "system"));
 				builder.add(new Module("Desktop.view.UsersWindow", messageSource.getMessage("user", null, locale),"users", true, "system"));
 				builder.add(new Module("Desktop.view.LoggingEventsWindow", messageSource.getMessage("logevents", null,locale), "loggingevents", true, "system"));
@@ -36,7 +36,7 @@ public class ModuleService {
 				builder.add(new Module("Desktop.view.ConfigurationWindow", messageSource.getMessage("configuration",null, locale), "configuration", false, "system"));
 				builder.add(new Module("Desktop.view.module.Institutes", messageSource.getMessage("institutes", null, locale), "institutes", true));
 			}
-			
+			builder.add(new Module("Desktop.view.module.DataExport", messageSource.getMessage("dataexport", null, locale), "dataexport", true));
 			builder.add(new Module("Desktop.view.Feedback", messageSource.getMessage("feedback", null, locale), "feedback", true));
 			//builder.add(new Module("Desktop.view.Settings", messageSource.getMessage("settings", null, locale), "settings", true));
 			builder.add(new Module("Desktop.view.module.OnlineUsers", messageSource.getMessage("onlineusers", null, locale), "onlineusers", true));
@@ -57,8 +57,8 @@ public class ModuleService {
 			builder.add(new Module("Desktop.view.module.SchoolYears", messageSource.getMessage("school_years", null, locale), "school_years", true));
 			builder.add(new Module("Desktop.view.module.Skills", messageSource.getMessage("skills", null, locale), "skills", true));
 			builder.add(new Module("Desktop.view.module.StudentLogbook", messageSource.getMessage("student_logbook", null, locale), "student_logbook", true));
-			if (Util.hasRole("docenti") || Util.hasRole("dirigenti") || Util.hasRole("gestori")) {
-				builder.add(new Module("Desktop.view.module.TeacherRegister", messageSource.getMessage("teacher_register", null, locale), "teacher_register", true));
+			if (Util.hasRole("Docente") || Util.hasRole("Dirigente") || Util.hasRole("Gestore")) {
+				builder.add(new Module("Desktop.view.TeacherRegister", messageSource.getMessage("teacher_register", null, locale), "teacher_register", true));
 			}
 
 			return builder.build();

@@ -46,7 +46,7 @@ public class UserExport {
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "/usersExport.xlsx", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public void userExport(HttpServletResponse response, Locale locale,
 			@RequestParam(required = false) final String filter) throws Exception {
 /*

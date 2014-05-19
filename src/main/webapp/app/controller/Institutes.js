@@ -46,8 +46,19 @@ Ext.define('Desktop.controller.Institutes', {
 	},
 
 	onClickPrintInstituteButton: function(){
-		var url = app_context_path + "/print/institute/" + "pippo";
-		window.open(url, "prova");
+		var value = this.getInstituteDescriptionFilter().getValue();
+		if (!Ext.isEmpty(value)){
+			var url = app_context_path + "/print/institute/" + value;
+			window.open(url, "prova");
+		}
+		else{
+			Ext.Msg.show({
+            	title:i18n.institutes_info,
+            	buttons: Ext.Msg.OK,
+            	msg: i18n.institutes_set_filter,
+            	icon: Ext.MessageBox.INFO
+            });
+		}
 	},
 	
 	onClickAdd: function(){

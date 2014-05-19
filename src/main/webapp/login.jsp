@@ -53,6 +53,9 @@ ${applicationScope.login_css}
   <% if (locale != null && locale.getLanguage().toLowerCase().equals("de")) { %>
     <script src="<%= request.getContextPath() %>/resources/extjs-gpl/<spring:eval expression='@environment["extjs.version"]'/>/locale/ext-lang-de.js"></script>
   <% } %>
+  <% if (locale != null && locale.getLanguage().toLowerCase().equals("it")) { %>
+    <script src="<%= request.getContextPath() %>/resources/extjs-gpl/<spring:eval expression='@environment["extjs.version"]'/>/locale/ext-lang-it.js"></script>
+  <% } %>
   
   <script>
   Ext.onReady(function() {

@@ -50,7 +50,7 @@ public class InfrastructureService {
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public boolean switchUser(Long userId) {
 /*

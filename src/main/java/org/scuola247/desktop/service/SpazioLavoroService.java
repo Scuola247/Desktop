@@ -38,7 +38,7 @@ public class SpazioLavoroService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<SpazioLavoro> list(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<SpazioLavoro> ans = new LinkedList<>();
@@ -107,7 +107,7 @@ public class SpazioLavoroService {
 	
 	
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<SpazioLavoro> ins(SpazioLavoro spazioLavoro, Locale locale) throws SQLException {
 		String errorMessage = null;
@@ -200,7 +200,7 @@ public class SpazioLavoroService {
 	}
 	
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<SpazioLavoro> del(SpazioLavoro spazioLavoro) throws NamingException, SQLException {
 		String errorMessage = null;

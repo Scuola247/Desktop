@@ -54,7 +54,7 @@ Ext.define('Desktop.view.module.InstitutesGridPanel', {
 				sortable: true,
 				align: 'center',
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
-					return '<img src="' + app_context_path + "/images/institute_logo/" + value + '" width="30px" height=30px/>';
+					return '<img src="' + app_context_path + "/images/institute_logo/" + value + '" width="30px" height="30px"/>';
 				}/*,
 				editor: {
 					xtype: 'filefield',

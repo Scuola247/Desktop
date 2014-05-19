@@ -5,7 +5,8 @@ Ext.define('Desktop.controller.Desktop', {
 	inject: ['spaziLavoroStore', 'sharedStorage'],
 	observe: {
 		sharedStorage: {
-			spazioLavoroChanged: 'onChangeSpazioLavoroCorrente'
+			spazioLavoroChanged: 'onChangeSpazioLavoroCorrente',
+			reloadRoles: 'onReloadRoles'
 		}
 	},
 	
@@ -29,7 +30,7 @@ Ext.define('Desktop.controller.Desktop', {
 			}
 		},
 		shortcutView: {
-			itemclick: 'onShortcutViewItemClick'
+			itemdblclick: 'onShortcutViewItemClick'
 		},
 		windowBar: {
 			contextmenu: {
@@ -186,6 +187,10 @@ Ext.define('Desktop.controller.Desktop', {
 			var spazioDiLavoro = comboSpazioLavoro.getStore().getAt(spazioDiLavoroIndex);
 			comboSpazioLavoro.setValue(spazioDiLavoro);
 		}
+	},
+	
+	onReloadRoles: function (){
+		location.reload();
 	},
 	
 	onChangeSpazioLavoroCombo: function ( combo, newValue, oldValue, eOpts ) {

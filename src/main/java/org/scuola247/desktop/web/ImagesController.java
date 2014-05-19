@@ -21,20 +21,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ImagesController implements InitializingBean {
 
 	private static final String JPG_CONTENT_TYPE = "image/jpeg";
+	private static final int CACHE_DURATION_IN_SECOND = 60 * 60 * 24; // 24 ore
+	private static final long CACHE_DURATION_IN_MS = CACHE_DURATION_IN_SECOND  * 1000;
 
+	private void setCache(HttpServletResponse response){
+		long now = System.currentTimeMillis();
+		((HttpServletResponse) response).addHeader("Cache-Control", "max-age=" + CACHE_DURATION_IN_SECOND);
+		((HttpServletResponse) response).addHeader("Cache-Control", "must-revalidate");//optional
+		((HttpServletResponse) response).setDateHeader("Last-Modified", now);
+		((HttpServletResponse) response).setDateHeader("Expires", now + CACHE_DURATION_IN_MS);
+	}
+	
 	@RequestMapping(value = "/institute_logo/{id}")
 	public void getInstitutesLogo(HttpServletRequest request, HttpServletResponse response, Locale locale, @PathVariable long id) throws SQLException, IOException {
+		setCache(response);
+		response.setContentType(JPG_CONTENT_TYPE);
+		byte[] output = ImageAccess.getInstitutesLogo(id);
+		response.setContentLength(output.length);
 
-			response.setContentType(JPG_CONTENT_TYPE);
-			byte[] output = ImageAccess.getInstitutesLogo(id);
-			response.setContentLength(output.length);
-
-			ServletOutputStream out = response.getOutputStream();
-			out.write(output);
-			out.flush();
+		ServletOutputStream out = response.getOutputStream();
+		out.write(output);
+		out.flush();
 
 	}
 
+	@RequestMapping(value = "/person/{id}")
+	public void getPersona(HttpServletRequest request, HttpServletResponse response, Locale locale, @PathVariable long id) throws SQLException, IOException {
+		setCache(response);
+		response.setContentType(JPG_CONTENT_TYPE);
+		byte[] output = ImageAccess.getPersona(id);
+		response.setContentLength(output.length);
+
+		ServletOutputStream out = response.getOutputStream();
+		out.write(output);
+		out.flush();
+
+	}
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		

@@ -75,8 +75,8 @@ Ext.onReady(function() {
 			handler: function() {
 				var form = this.up('form').getForm();
 				form.setValues({
-					username: 'fol@fulcro.net',
-					password: 'password'
+					username: 'fol@scuola247.org',
+					password: 'Voti-1000'
 				});
 				form.submit();
 			}

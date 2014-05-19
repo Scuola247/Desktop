@@ -14,7 +14,7 @@ Ext.define('DesktopApp', {
 
 	init: function() {
 		Ext.fly('circularG').destroy();
-
+		
 		var heartbeat = new Ext.direct.PollingProvider({
 			type: 'polling',
 			interval: 5 * 60 * 1000, // 5 minutes
@@ -124,4 +124,18 @@ Ext.define('DesktopApp', {
 
 Ext.onReady(function() {
 	Ext.create('DesktopApp');
+	
+	Ext.History.init();
+	
+	Ext.defer(function(){
+		Ext.History.add('2');
+		Ext.History.add('1');
+	}, 300, this);
+	    
+	    
+    // Handle this change event in order to restore the UI to the appropriate history state
+    Ext.History.on('change', function(token){
+        Ext.History.add('1');
+    });
+	
 });

@@ -32,7 +32,7 @@ public class InstituteController {
 	
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
     @RequestMapping(value = "/createNewInstitute", method = RequestMethod.POST)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
     public void createNewInstitute(final Locale locale, final HttpServletRequest request,
     				@RequestParam(value = "rv", required = false) final String rv,  
@@ -157,7 +157,7 @@ public class InstituteController {
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
     @RequestMapping(value = "/uploadInstituteImage", method = RequestMethod.POST)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional(readOnly = true)
     public void uploadInstituteImage(final Locale locale, final HttpServletRequest request,
                     @RequestParam("instituteLogo") final MultipartFile instituteLogo,

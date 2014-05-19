@@ -54,6 +54,10 @@
   <% } else if (locale != null && locale.getLanguage().toLowerCase().equals("it")) { %>
     <script src="<%= request.getContextPath() %>/resources/extjs-gpl/<spring:eval expression='@environment["extjs.version"]'/>/locale/ext-lang-it.js"></script>
   <% } %>
-  
+<!-- Fields required for history management -->
+<form id="history-form" class="x-hide-display">
+    <input type="hidden" id="x-history-field" />
+    <iframe id="x-history-frame"></iframe>
+</form>
 </body>
 </html>

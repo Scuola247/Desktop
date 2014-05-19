@@ -194,6 +194,10 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/settings-icon.png);
 }
 
+.dataexport-icon{
+	background-image: url(../images/dataexport-icon.png);
+}
+
 .feedback-icon {
 	background-image: url(../images/feedback-icon.png);
 }
@@ -296,6 +300,10 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/settings.png);
 }
 
+.dataexport-shortcut {
+	background-image: url(../images/dataexport.png);
+}
+
 .feedback-shortcut {
 	background-image: url(../images/feedback.png);
 }
@@ -379,3 +387,12 @@ user {
 .print-icon {
 	background: url(../icons/print.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
 }
+
+.judgmentGridColumn {
+	font-weight: bold;
+	/*font-size: 15px;*/
+}
+
+.judgmentGrid .x-grid-cell-inner {
+    height: 50px
+ }

@@ -38,7 +38,7 @@ public class FamigliareService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<FamigliareClasse> listFamigliariByRuoloClasse(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<FamigliareClasse> ans = new LinkedList<>();

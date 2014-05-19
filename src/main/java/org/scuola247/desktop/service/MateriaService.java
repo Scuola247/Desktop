@@ -40,7 +40,7 @@ public class MateriaService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Materia> list(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<Materia> ans = new LinkedList<>();
@@ -89,7 +89,7 @@ public class MateriaService {
 	
 	/*
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<AnnoScolastico> ins(AnnoScolastico annoScolastico, Locale locale) throws SQLException {
 		String errorMessage = null;
@@ -138,7 +138,7 @@ public class MateriaService {
 	*/
 	/*
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<AnnoScolastico> upd(AnnoScolastico institute, Locale locale) throws NamingException, SQLException {
 		String errorMessage = null;
@@ -192,7 +192,7 @@ public class MateriaService {
 	*/
 	
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<AnnoScolastico> del(AnnoScolastico annoScolastico) throws NamingException, SQLException {
 		String errorMessage = null;

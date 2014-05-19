@@ -78,9 +78,40 @@ public class ImageAccess {
 				conn.close();
 			}
 		}
-
-		
 		return newRv;
+	}
+
+	// persona
+	public static byte[] getPersona(long id) throws SQLException{
+		byte[] output = null;
+		Connection conn = null;
+		CallableStatement by_id = null;
+		try{
+			conn = DataHelper.myConnection();
+			by_id = conn.prepareCall("{ ? = call persone_sel_foto_miniatura(?) }");
+			
+			by_id.registerOutParameter(1, Types.BINARY);
+			
+			by_id.setLong(2, id);
+			
+			by_id.execute();
+			
+			output = by_id.getBytes(1);
+		}
+		catch (SQLException e){
+			Logger logger = LoggerFactory.getLogger(ImageAccess.class);
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+		finally{
+			if (by_id != null){
+				by_id.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+		return output;
 	}
 
 }

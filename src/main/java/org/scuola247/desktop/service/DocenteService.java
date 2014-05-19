@@ -41,7 +41,7 @@ public class DocenteService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<DocenteIstituto> listDocenteIstituto(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<DocenteIstituto> ans = new LinkedList<>();
@@ -104,7 +104,7 @@ public class DocenteService {
 	}
 	
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasAnyRole('docenti','dirigenti','gestori')")
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<FirmaClasseDocente> listFirmaClasseDocente(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<FirmaClasseDocente> ans = new LinkedList<>();
@@ -159,7 +159,7 @@ public class DocenteService {
 	}
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasAnyRole('docenti','dirigenti','gestori')")
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<LezioneDocenteClasseMateria> listLezioneDocenteClasseMateria(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<LezioneDocenteClasseMateria> ans = new LinkedList<>();

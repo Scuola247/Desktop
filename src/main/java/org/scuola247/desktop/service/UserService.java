@@ -60,7 +60,7 @@ public class UserService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<User> read(ExtDirectStoreReadRequest request, Locale locale) {
 /*
@@ -112,7 +112,7 @@ public class UserService {
 	}
 
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public void destroy(User destroyUser) {
 		if (!isLastAdmin(destroyUser)) {
@@ -122,7 +122,7 @@ public class UserService {
 
 	@ExtDirectMethod(FORM_POST)
 	@Transactional
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public ExtDirectFormPostResult userFormPost(@RequestParam(value = "id", required = false) final Long userId,
 			@RequestParam(required = false) final String roleIds, @Valid final User modifiedUser,
 			final BindingResult bindingResult, Locale locale) {

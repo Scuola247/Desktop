@@ -29,21 +29,42 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
+        Set<String> roles;
+        roles = loadUserRoles(username, password);
+        
+		UserSettings settings = new UserSettings();
+        Utente utente = new Utente(username, password, true, true, Lingue.IT, settings, roles);
+        
+        UtenteDettagli utenteDettagli = new UtenteDettagli(utente);
+        
+        return new UsernamePasswordAuthenticationToken(utenteDettagli, null, utenteDettagli.getAuthorities());
+    }
+
+	public Set<String> loadUserRoles(String username, String password) {
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement ruoli_utente = null;
-        Set<String> roles = new HashSet<>();
+        
+		Set<String> roles;
+		roles = new HashSet<>();
         try {
-			conn = DataHelper.myConnection(username, password);
+        	if (username != null){
+        		//solo per quando non si è ancora loggati
+        		conn = DataHelper.myConnection(username, password);
+        	}
+        	else{
+        		// si deve già essere loggati
+        		conn = DataHelper.myConnection();
+        	}
 			conn.setAutoCommit(false);
-			ruoli_utente = conn.prepareCall("{ ? = call rolnames_by_session_user() }");
+			ruoli_utente = conn.prepareCall("{ ? = call ruoli_by_session_user() }");
 			ruoli_utente.registerOutParameter(1, Types.OTHER);
 			
 			ruoli_utente.execute();
 			
 			rs = (ResultSet) ruoli_utente.getObject(1);
 			
-			roles.add("public");	// sono tutti abilitati ai ruoli pubblici
+			roles.add("Pubblico");	// sono tutti abilitati ai ruoli pubblici
 			while (rs.next()){
 				roles.add(rs.getString(1));
 			}
@@ -85,15 +106,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				}
         	}
         }
-        
-		UserSettings settings = new UserSettings();
-        Utente utente = new Utente(username, password, true, true, Lingue.IT, settings, roles);
-        
-        UtenteDettagli utenteDettagli = new UtenteDettagli(utente);
-        
-        
-        return new UsernamePasswordAuthenticationToken(utenteDettagli, null, utenteDettagli.getAuthorities());
-    }
+		return roles;
+	}
  
     @Override
     public boolean supports(Class<?> arg0) {

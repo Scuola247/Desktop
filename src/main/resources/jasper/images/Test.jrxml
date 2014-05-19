@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Test" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a4eb00c-968e-473c-a053-ffbbe744fe41">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="scuola247 on localhost"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="anni_scolastici" uuid="a8e9429b-4e4d-4f57-acbb-fe9dd5b501da">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="scuola247 on localhost"/>
+		<parameter name="ist" class="java.lang.Long">
+			<defaultValueExpression><![CDATA[$F{istituto}.longValue()]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select * from anni_scolastici where istituto =  $P{ist} ]]>
+		</queryString>
+		<field name="anno_scolastico" class="java.lang.Long"/>
+		<field name="istituto" class="java.lang.Long"/>
+		<field name="descrizione" class="java.lang.String"/>
+		<field name="inizio" class="java.sql.Date">
+			<fieldDescription><![CDATA[Indica la data di inizio dell'anno scolastico, non necessariamente deve corrispondere con l'inizio delle lezioni. Chiaramente la data di fine dell'anno scolastico è considerata il giorno prima dell'anno dopo la data di inizio delle lezioni.
+I dati dei registro relativi alle lezioni si potranno inserire solo se con data compresa tra la data di inizio dell'anno scolastico e la data di fine delle lezioni.]]></fieldDescription>
+		</field>
+		<field name="fine_lezioni" class="java.sql.Date">
+			<fieldDescription><![CDATA[Indica la data di fine delle lezioni.
+E' necessario indicarla perchè in anticipo rispetto alla data di fine anno scolastico che è il giorno prima dell'anno dopo la data di inizio_anno_scolastico.
+I dati dei registri relativi alle lezioni si potranno inserire solo se con data compresa tra la data di inizio dell'anno scolastico e la data di fine delle lezioni.]]></fieldDescription>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[select * from istituti]]>
+	</queryString>
+	<field name="istituto" class="java.lang.Long"/>
+	<field name="descrizione" class="java.lang.String"/>
+	<field name="codice_meccanografico" class="java.lang.String"/>
+	<field name="mnemonico" class="java.lang.String"/>
+	<field name="esempio" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[Indica se l'istituto e tutti i dati collegati sono stati inseriti per essere di esempio.
+Se il dato è impostato a vero l'istituto verrà usato come sorgente dati per la compilazione dei dati di esempio.]]></fieldDescription>
+	</field>
+	<field name="logo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="54" y="2" width="70" height="30" uuid="3204f22a-76e2-4323-843f-2b5cf66f6c30"/>
+				<text><![CDATA[istituto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="2" width="70" height="30" uuid="18beb9a5-84aa-4866-a0f2-b590d14f30fd"/>
+				<text><![CDATA[descrizione]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="272" splitType="Stretch">
+			<textField>
+				<reportElement x="50" y="10" width="70" height="30" uuid="74c333d4-2e16-4682-871d-cb9ebb1ef0a9"/>
+				<textFieldExpression><![CDATA[$F{istituto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="10" width="70" height="30" uuid="b80e606c-6dfd-4017-bb4a-d7ab66f9dd7e"/>
+				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="54" y="72" width="486" height="200" uuid="a969a005-3833-4736-bfe8-b9b07bf7b6b3"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="anni_scolastici" uuid="72c9be03-6f54-4ec5-a1f4-b6de22832f4a">
+						<datasetParameter name="ist">
+							<datasetParameterExpression><![CDATA[$F{istituto}.longValue()]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="e86170cb-01e0-4c6f-adf9-405d11fb9263">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="1b7411ad-39f6-4b87-8688-dd2a48792cd7"/>
+								<text><![CDATA[istituto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="30" uuid="9a01def2-d1d2-48b9-8ed5-87f9ec5718da"/>
+								<textFieldExpression><![CDATA[$F{istituto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="0ac9745a-c0f8-422c-bcc2-aa8b89774121">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="f60121f8-e111-4d8c-9ebf-2fcc9dfdba71"/>
+								<text><![CDATA[descrizione]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="110" height="30" uuid="847eb971-e20e-4364-83e8-6e703e2069fb"/>
+								<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="c8864574-b1e0-43d0-9ec1-57e43845766a">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="4120e26b-2405-4e16-b2c0-82068e1ae3e8"/>
+								<text><![CDATA[inizio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="110" height="30" uuid="1721b2fa-89e2-4eb7-a062-7bb46d4ba5b4"/>
+								<textFieldExpression><![CDATA[$F{inizio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="126" uuid="7b1e278b-d814-4a0c-8f31-64c51be23317">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="52a414d4-67f4-4156-baae-d3252e77d72f"/>
+								<text><![CDATA[fine_lezioni]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+							<textField>
+								<reportElement x="0" y="0" width="126" height="30" uuid="9e0df97d-4281-4029-b9c1-2fe025c0b867"/>
+								<textFieldExpression><![CDATA[$F{fine_lezioni}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="94" uuid="646b68ff-7cb2-444a-a362-4cd7818eb4bf">
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="26f76fb2-7b99-4012-95b0-7af0b12c1779"/>
+								<text><![CDATA[anno_scolastico]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="e049c1d4-703f-443e-b924-43946c0d4538"/>
+								<textFieldExpression><![CDATA[$F{anno_scolastico}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

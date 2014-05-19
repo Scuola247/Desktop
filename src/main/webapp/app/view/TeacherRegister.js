@@ -1,16 +1,28 @@
-Ext.define('Desktop.view.module.TeacherRegister', {
+Ext.define('Desktop.view.TeacherRegister', {
 	extend: 'Ext.window.Window',
 	requires: [
 	           'Ext.tab.Panel',
 	           'Ext.grid.*',
-	           'Desktop.model.ValutazioneAlunno',
-	           'Desktop.store.ValutazioniAlunni',
+	           'Ext.selection.CellModel',
+	           'Ext.ux.grid.FiltersFeature',
+	           'Desktop.model.GrigliaValutazioneColonna',
+	           'Desktop.store.GrigliaValutazioneColonne',
+	           'Desktop.model.GrigliaValutazioneRiga',
+	           'Desktop.store.GrigliaValutazioneRighe',
+	           'Desktop.store.Voti',
+	           'Desktop.model.Voto',
 	           'Desktop.model.AlunnoEx',
 	           'Desktop.store.AlunniEx',
 	           'Desktop.model.FirmaClasseDocente',
 	           'Desktop.store.FirmeClasseDocente',
 	           'Desktop.model.LezioneDocenteClasseMateria',
-	           'Desktop.store.LezioniDocenteClasseMateria'
+	           'Desktop.store.LezioniDocenteClasseMateria',
+	           'Desktop.model.TipoVoto',
+	           'Desktop.store.TipiVoto',
+	           'Desktop.model.Argomento',
+	           'Desktop.store.Argomenti',
+	           'Desktop.model.Metrica',
+	           'Desktop.store.Metriche'
 	           ],
 	controller: 'Desktop.controller.TeacherRegister',
 	title: i18n.teacher_register_title,
@@ -23,79 +35,316 @@ Ext.define('Desktop.view.module.TeacherRegister', {
 		var me = this;
 		me.border = false;
 		
-		var valutazioniAlunniStore = Ext.create('Desktop.store.ValutazioniAlunni');
+		var grigliaValutazioneRigheStore = Ext.create('Desktop.store.GrigliaValutazioneRighe');
 		var alunniEXStore = Ext.create('Desktop.store.AlunniEx');
 		var firmeClasseDocenteStore = Ext.create('Desktop.store.FirmeClasseDocente');
 		var lezioniDocenteClasseMateriaStore = Ext.create('Desktop.store.LezioniDocenteClasseMateria');
 		
+		var tipiVotoStore = Ext.create('Desktop.store.TipiVoto');
+		var argomentiStore = Ext.create('Desktop.store.Argomenti');
+		var metricheStore = Ext.create('Desktop.store.Metriche');
+		
+		var judgmentGridEditor = Ext.create('Ext.grid.plugin.CellEditing',{clicksToEdit:1});
+		//filtri
+	    // configure whether filter query is encoded or not (initially)
+	    var judgmentGridFiltersEncode = false;
+	    
+	    // configure whether filtering is performed locally or remotely (initially)
+	    var judgmentGridFiltersLocal = true;
+		
+		var judgmentGridFilters = {
+		        ftype: 'filters',
+		        // encode and local configuration options defined previously for easier reuse
+		        encode: judgmentGridFiltersEncode, // json encode the filter query
+		        local: judgmentGridFiltersLocal,   // defaults to false (remote filtering)
+
+		        // Filters are most naturally placed in the column definition, but can also be
+		        // added here.
+		        filters: [{
+		        	type:'list',
+		        	dataIndex: 'cognome'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'nome'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'assenze'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'ritardi'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'uscite'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'fuori_classe'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'note'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'mancanze'
+		        },{
+		        	type:'list',
+		        	dataIndex: 'condotta'
+		        }]
+		    };
 		var judgmentGridColumns = [{
-			text:'Studente',
+			text:i18n.teacher_register_judgment_photo,
 			lockable : false,
 			sealedColumns:true,
 			hideable:false,
 			resizable: false,
 			sortable: false,
 			locked : true,
-			columns:[{
-				text:'Foto',
-				lockable : false,
-				sealedColumns:true,
-				hideable:false,
-				resizable: false,
-				sortable: false,
-				locked : true,
-				width: 40,
-				dataIndex: 'foto_miniatura',
-				align: 'center',
-			},{
-				text:'Cognome',
-				lockable : false,
-				sealedColumns:true,
-				hideable:false,
-				resizable: false,
-				sortable: false,
-				locked : true,
-				dataIndex: 'cognome',
-				width:120
-			},{
-				text:'Nome',
-				lockable : false,
-				sealedColumns:true,
-				hideable:false,
-				resizable: false,
-				sortable: false,
-				locked : true,
-				dataIndex: 'nome',
-				width:120
-			}]
+			width: 48,
+			dataIndex: 'alunno',
+			align: 'center',
+			renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+				return '<img src="' + app_context_path + "/images/person/" + value + '" width="34px"/>';
+			}
+		},{
+			text:i18n.teacher_register_judgment_surname,
+			hideable:false,
+			lockable : false,
+			sealedColumns:true,
+			locked : true,
+			dataIndex: 'cognome',
+			width:120
+		},{
+			text:'Nome',
+			hideable:false,
+			lockable : false,
+			sealedColumns:true,
+			locked : true,
+			dataIndex: 'nome',
+			width:120
+		},{
+			text:'A',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'assenze',
+			align:'center',
+			tooltip: 'Assenze',
+			width:35
+		},{
+			text:'R',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'ritardi',
+			align:'center',
+			tooltip: 'Ritardi',
+			width:35
+		},{
+			text:'U',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'uscite',
+			align:'center',
+			tooltip: 'Uscite',
+			width:35
+		},{
+			text:'F',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'fuori_classe',
+			align:'center',
+			tooltip: 'Fuori classe',
+			width:35
+		},{
+			text:'N',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'note',
+			align:'center',
+			tooltip: 'Note disciplinari personali',
+			width:35
+		},{
+			text:'M',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'mancanze',
+			align:'center',
+			tooltip: 'Mancanze didattiche',
+			width:35
+		},{
+			text:'C',
+			hideable:false,
+			resizable: false,
+			lockable : false,
+			locked : true,
+			dataIndex: 'condotta',
+			align:'center',
+			tooltip: 'Voto di condotta',
+			width:35
 		}];
-		for (var i = 0; i < 200; i++){
+		
+		for (var i = 1; i <= 200; i++){
 			judgmentGridColumns.push({
 				text:'',
-				width:40, 
+				dataIndex:'vo_' + i,
+				width:40,
 				align:'center',
-				lockable : false,
-				sealedColumns:true,
 				hideable:false,
-				resizable: false,
-				sortable: false,
-				hidden: true
+				lockable:false,
+				hidden: true,
+				tdCls: 'judgmentGridColumn'
 			});
 		}
+	
+		
+		
+		
+		var judgmentContainer = Ext.create('Ext.panel.Panel', {
+			title:i18n.teacher_register_judgment,
+			border:false,
+			header:false,
+			layout: {
+				type: 'fit'
+			},
+			items:[{
+				//title:i18n.teacher_register_judgment,
+				xtype:'gridpanel',
+				itemId:'judgmentGrid',
+				cls:'judgmentGrid',
+				store: grigliaValutazioneRigheStore,
+				columnLines:true,
+				enableColumnMove:false,
+				columns:judgmentGridColumns,
+				features:[judgmentGridFilters],
+				plugins:[judgmentGridEditor],
+				tbar: [
+				       {
+				    	   xtype: 'button', 
+				    	   text: i18n.teacher_register_judgment_add,
+				    	   itemId: 'addJudgmentButton',
+				    	   iconCls: 'add-icon'
+				       }
+				]
+			},{
+				xtype:'panel',
+				itemId:'judgmentGridAddPanel',
+				hidden: true,
+				items:[{
+					xtype: 'form',
+					itemId:'judgmentGridAddForm',
+					bodyPadding: '10 10 0 10',
+					border:false,
+					defaults: {
+		        		xtype: 'combobox',
+		        		width: 400
+		        	},
+		        	items: [{
+		        		itemId: 'judgmentGridAddFormTipoVoto',
+		        		fieldLabel:'Tipo voto',
+		        		name:'tipo_voto',
+		        		editable:false,
+		        		queryMode: 'local',
+		        		displayField: 'descrizione',
+		        		valueField:'tipo_voto',
+		        		store:tipiVotoStore,
+		        		allowBlank: false
+		        	},{
+		        		itemId: 'judgmentGridAddFormArgomento',
+		        		fieldLabel:'Argomento',
+		        		name:'argomento',
+		        		editable:false,
+		        		queryMode: 'local',
+		        		displayField: 'descrizione',
+		        		valueField:'argomento',
+		        		store:argomentiStore,
+		        		allowBlank: false
+		        	},{
+		        		itemId: 'judgmentGridAddFormMetrica',
+		        		fieldLabel:'Metrica',
+		        		name:'metrica',
+		        		editable:false,
+		        		queryMode: 'local',
+		        		displayField: 'descrizione',
+		        		valueField:'metrica',
+		        		store:metricheStore,
+		        		allowBlank: false
+		        	},{
+		        		xtype: 'datefield',
+		        		itemId: 'judgmentGridAddFormGiorno',
+		        		fieldLabel:'Giorno',
+		        		name:'giorno',
+		        		disabledDays:  [0],
+		        		allowBlank: false,
+		        		maxValue: new Date()
+		        	}
+		        	]
+				}],
+	        	buttons: [{
+	        		text:'Inserisci',
+	        		itemId: 'addJudgmentConfirmButton'
+	        	},{
+	        		text:'Annulla',
+	        		itemId: 'addJudgmentCancelButton'
+	        	}]
+			},{
+				xtype:'panel',
+				itemId:'judgmentGridEditPanel',
+				hidden: true,
+				items:[{
+					xtype: 'form',
+					itemId:'judgmentGridEditForm',
+					bodyPadding: '10 10 0 10',
+					border:false,
+					defaults: {
+		        		xtype: 'combobox',
+		        		width: 400
+		        	},
+		        	items: [{
+						xtype: 'hidden',
+						itemId: 'judgmentGridEditFormValutazione'
+					},{
+		        		xtype: 'hidden',
+		        		itemId: 'judgmentGridEditFormRV'
+		        	},{
+		        		xtype: 'textfield',
+		        		fieldLabel:'Giudizio',
+		        		itemId: 'judgmentGridEditFormGiudizio'
+		        	},{
+		        		xtype: 'checkbox',
+		        		fieldLabel:'Privato',
+		        		itemId: 'judgmentGridEditFormPrivato'
+		        	},{
+		        		xtype: 'checkbox',
+		        		fieldLabel:'Nota',
+		        		itemId: 'judgmentGridEditFormNota'
+		        	}
+		        	]
+				}],
+				buttons: [{
+	        		text:'Inserisci',
+	        		itemId: 'judgmentGridEditConfirmButton'
+	        	},{
+	        		text:'Annulla',
+	        		itemId: 'judgmentGridEditCancelButton'
+	        	}]
+			}]
+		});
+		
+		
 		
 		
 		me.items = [{
 			xtype:'tabpanel',
 			itemId:'teacherRegisterTabPanel',
-			items:[{
-				title:i18n.teacher_register_judgment,
-				xtype:'gridpanel',
-				itemId:'judgmentGrid',
-				store: valutazioniAlunniStore,
-				columnLines:true,
-				enableColumnMove:false,
-				columns:judgmentGridColumns,
-			},{
+			items:[judgmentContainer,{
 				//studenti
 				title:i18n.teacher_register_student,
 				xtype:'gridpanel',

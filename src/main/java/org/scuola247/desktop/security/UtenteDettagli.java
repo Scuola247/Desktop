@@ -2,6 +2,7 @@ package org.scuola247.desktop.security;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Set;
 
 import org.scuola247.desktop.service.UserSettings;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +19,7 @@ public class UtenteDettagli implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final ImmutableSet<GrantedAuthority> authorities;
+	private /*final*/ ImmutableSet<GrantedAuthority> authorities;
 	
 	private final String username;
 	
@@ -47,12 +48,22 @@ public class UtenteDettagli implements UserDetails {
 		this.locked = utente.isLocked();
 		this.lingua = utente.getLingua();
 		this.settings = utente.getSettings();
+		ImmutableSet<GrantedAuthority> authorities = getAuthorities(utente.getRoles());
+		this.authorities = authorities;
+	}
+	
+	public void setRuoli(Set<String> roles){
+		this.authorities = getAuthorities(roles);
+	}
+	
+	private ImmutableSet<GrantedAuthority> getAuthorities(Set<String> roles) {
 		Builder<GrantedAuthority> builder = ImmutableSet.builder();
-		for (String role : utente.getRoles()) {
+		for (String role : roles) {
 			builder.add(new SimpleGrantedAuthority(role));
 		}
 
-		this.authorities = builder.build();
+		ImmutableSet<GrantedAuthority> authorities = builder.build();
+		return authorities;
 	}
 	
 	@Override

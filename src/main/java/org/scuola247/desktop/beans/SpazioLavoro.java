@@ -21,19 +21,19 @@ public class SpazioLavoro {
 	@ModelField
 	private Long anno_scolastico;
 	
-	@ModelField
+	@ModelField(useNull=true)
 	private Long classe;
 	
-	@ModelField
+	@ModelField(useNull=true)
 	private Long materia;
 	
-	@ModelField
+	@ModelField(useNull=true)
 	private Long docente;
 	
-	@ModelField
+	@ModelField(useNull=true)
 	private Long famigliare;
 	
-	@ModelField
+	@ModelField(useNull=true)
 	private Long alunno;
 	
 	@ModelField

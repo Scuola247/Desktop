@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperTemplate PUBLIC "-//JasperReports//DTD Template//EN" "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+	<style name="Riga" vAlign="Middle" markup="html" fontName="Arial" fontSize="10"/>
+	<style name="Riga piccola" vAlign="Middle" markup="html" fontName="Arial" fontSize="8"/>
+	<style name="Riga grande" vAlign="Middle" markup="html" fontName="Arial" fontSize="12"/>
+	<style name="Titolo report" forecolor="#FF0011" hAlign="Center" vAlign="Middle" markup="html" fontName="Arial" fontSize="16"/>
+	<style name="Titolo riga" hAlign="Center" vAlign="Middle" markup="html" fontName="Arial" fontSize="10"/>
+	<style name="Titolo riga piccola" hAlign="Center" vAlign="Middle" markup="html" fontName="Arial" fontSize="8"/>
+	<style name="Titolo riga grande" hAlign="Center" vAlign="Middle" markup="html" fontName="Arial" fontSize="12"/>
+	<style name="Titolo pagina" hAlign="Center" vAlign="Middle" markup="html" fontName="Arial" fontSize="14"/>
+</jasperTemplate>

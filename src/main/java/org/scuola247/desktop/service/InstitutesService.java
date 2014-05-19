@@ -39,7 +39,7 @@ public class InstitutesService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Institute> list(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<Institute> ans = new LinkedList<>();
@@ -84,7 +84,7 @@ public class InstitutesService {
 	}
 	
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Institute> sel(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<Institute> ans = new LinkedList<>();
@@ -142,7 +142,7 @@ public class InstitutesService {
 	
 	/*
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<Institute> ins(Institute institute, Locale locale) throws SQLException {
 		String errorMessage = null;
@@ -191,7 +191,7 @@ public class InstitutesService {
 	*/
 	/*
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<Institute> upd(Institute institute, Locale locale) throws NamingException, SQLException {
 		String errorMessage = null;
@@ -245,7 +245,7 @@ public class InstitutesService {
 	*/
 	
 	@ExtDirectMethod(STORE_MODIFY)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectStoreResult<Institute> del(Institute institute) throws NamingException, SQLException {
 		String errorMessage = null;

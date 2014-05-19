@@ -40,7 +40,7 @@ public class LoggingEventExport {
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "/loggingEventExport.txt", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public void loggingEventExport(HttpServletResponse response, @RequestParam(required = false) final String level)
 			throws Exception {
 

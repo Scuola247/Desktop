@@ -121,10 +121,10 @@ Ext.define('Desktop.view.module.Institutes', {
 			        	        	fieldLabel: i18n.institutes_example,
 			        	        	name:'esempio'
 			        	        }
-			        	        ],
-			        	        api: {
-			        	        	submit: 'instituteController.createNewInstitute'
-			        	        }
+	        	        ],
+	        	        api: {
+	        	        	submit: 'instituteController.createNewInstitute'
+	        	        }
 			        },
 			        {
 			        	xtype: 'form',
@@ -185,12 +185,12 @@ Ext.define('Desktop.view.module.Institutes', {
 			        ],
 			        buttons: [{
 			        	text: i18n.institutes_creation_form_insert_button,
-			        	itemId: 'insertNewInstituteButton',
+			        	itemId: 'insertNewInstituteButton'
 			        	/*disabled: true*/
 			        },
 			        {
 			        	text: i18n.institutes_creation_form_cancel_button,
-			        	itemId: 'closeInsertNewInstituteButton',
+			        	itemId: 'closeInsertNewInstituteButton'
 			        }
 			        ]
 		});

@@ -29,10 +29,14 @@ Ext.define('Desktop.shared.SharedStorage', {
         this.mixins.observable.constructor.call(this, config);
 
         this.addEvents(
-            'spazioLavoroChanged'
+            'spazioLavoroChanged',
+            'reloadRoles'
         );
     },
     changeSpazioLavoro : function (spazioLavoro) {
+    	
+    	var reloadRoles = !Ext.isEmpty(this.sl_istituto) && this.sl_istituto != spazioLavoro.get("istituto");
+    	
 		this.sl_spazio_lavoro = spazioLavoro.get("spazio_lavoro");
 		this.sl_descrizione = spazioLavoro.get("descrizione");
 		this.sl_istituto = spazioLavoro.get("istituto");
@@ -45,7 +49,7 @@ Ext.define('Desktop.shared.SharedStorage', {
 		this.fireEvent('spazioLavoroChanged',{});
 		
 		if (!Ext.isEmpty(this.sl_spazio_lavoro) && this.sl_spazio_lavoro != -1){
-			spazioLavoroDefaultService.setSpazioLavoroDefault(this.sl_spazio_lavoro, function(provider, response) {
+			spazioLavoroDefaultService.setSpazioLavoroDefault(this.sl_spazio_lavoro, reloadRoles, function(provider, response) {
 				   // process response
 					if (response.result != "OK"){
 						//response.result è il messaggio di errore
@@ -55,6 +59,11 @@ Ext.define('Desktop.shared.SharedStorage', {
 		                	msg: response.result,
 		                	icon: Ext.MessageBox.ERROR
 		                });
+					}
+					else{
+				    	if (reloadRoles){
+				    		this.fireEvent('reloadRoles',{});
+				    	}
 					}
 				}, this);
 		}

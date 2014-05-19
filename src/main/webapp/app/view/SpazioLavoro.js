@@ -100,7 +100,7 @@ Ext.define('Desktop.view.SpazioLavoro', {
 					                getInnerTpl: function() {
 					                    var tpl = '<div>'+
 					                              '<tpl if="foto_miniatura != \'\'"><img src="data:image/png;base64,{foto_miniatura}" style="width:11px; height:15px; align:left;"></tpl>&nbsp;&nbsp;'+
-					                              '{nome} {cognome}</div>';
+					                              '{cognome} {nome}</div>';
 					                    return tpl;
 					                }
 					            },
@@ -118,7 +118,7 @@ Ext.define('Desktop.view.SpazioLavoro', {
 					                getInnerTpl: function() {
 					                    var tpl = '<div>'+
 					                              '<tpl if="foto_miniatura != \'\'"><img src="data:image/png;base64,{foto_miniatura}" style="width:11px; height:15px; align:left;"></tpl>&nbsp;&nbsp;'+
-					                              '{nome} {cognome}</div>';
+					                              '{cognome} {nome}</div>';
 					                    return tpl;
 					                }
 					            },
@@ -136,7 +136,7 @@ Ext.define('Desktop.view.SpazioLavoro', {
 					                getInnerTpl: function() {
 					                    var tpl = '<div>'+
 					                              '<tpl if="foto_miniatura != \'\'"><img src="data:image/png;base64,{foto_miniatura}" style="width:11px; height:15px; align:left;"></tpl>&nbsp;&nbsp;'+
-					                              '{nome} {cognome}</div>';
+					                              '{cognome} {nome}</div>';
 					                    return tpl;
 					                }
 					            },

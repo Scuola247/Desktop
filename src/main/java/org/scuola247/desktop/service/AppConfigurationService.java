@@ -34,13 +34,13 @@ public class AppConfigurationService {
 	private MailService mailService;
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public void sendTestEmail(String to) {
 		mailService.sendSimpleMessage(to, "TEST EMAIL FROM desktop@scuola247.org", "THIS IS A TEST MESSAGE");
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_LOAD)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional(readOnly = true)
 	public ConfigurationDto load() {
 
@@ -84,7 +84,7 @@ public class AppConfigurationService {
 	}
 
 	@ExtDirectMethod(value = ExtDirectMethodType.FORM_POST)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	@Transactional
 	public ExtDirectFormPostResult submit(ConfigurationDto data) {
 		LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();

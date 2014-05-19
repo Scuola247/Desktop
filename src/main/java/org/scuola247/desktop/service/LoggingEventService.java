@@ -40,7 +40,7 @@ public class LoggingEventService {
 
 	@ExtDirectMethod(STORE_READ)
 	@Transactional(readOnly = true)
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public ExtDirectStoreResult<org.scuola247.desktop.dto.LoggingEvent> read(ExtDirectStoreReadRequest request) {
 /*
 		JPQLQuery query = new JPAQuery(entityManager).from(QLoggingEvent.loggingEvent);
@@ -68,7 +68,7 @@ public class LoggingEventService {
 
 	@ExtDirectMethod
 	@Transactional
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public void deleteAll(String level) {
 		/*
 		if (StringUtils.hasText(level)) {
@@ -86,7 +86,7 @@ public class LoggingEventService {
 	}
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('gestori')")
+	@PreAuthorize("hasRole('Gestore')")
 	public void addTestData() {
 		Logger logger = LoggerFactory.getLogger(getClass());
 

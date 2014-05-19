@@ -5,12 +5,17 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Set;
 
 import org.postgresql.util.PSQLException;
+import org.scuola247.desktop.config.CustomAuthenticationProvider;
 import org.scuola247.desktop.config.DataHelper;
+import org.scuola247.desktop.security.UtenteDettagli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +24,13 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 @Service
 public class SpazioLavoroDefaultService {
 	
+	@Autowired
+	private CustomAuthenticationProvider customAuthenticationProvider;
+	
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
-    public String setSpazioLavoroDefault(String spazioLavoro) throws IOException, SQLException {
+    public String setSpazioLavoroDefault(String spazioLavoro, boolean reloadRoles) throws IOException, SQLException {
 		String errorMessage = null;
 		Connection conn = null;
 
@@ -56,6 +64,18 @@ public class SpazioLavoroDefaultService {
 			}
 		}
 		if (errorMessage == null){
+			//salvata l'impostazione spazio di lavoro
+			
+			
+			if (reloadRoles){ 
+				Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				UtenteDettagli userDetail = (UtenteDettagli) principal;
+		
+				Set<String> roles = customAuthenticationProvider.loadUserRoles(null, null);
+				
+				userDetail.setRuoli(roles);
+			
+			}
 			return "OK";
 		}
 		else{
@@ -64,7 +84,7 @@ public class SpazioLavoroDefaultService {
     }
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public String getSessionUtente() throws IOException, SQLException {
 		String errorMessage = null;
@@ -105,7 +125,7 @@ public class SpazioLavoroDefaultService {
 	}
 	
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public String getSessionPersona(Long istituto) throws IOException, SQLException {
 		String errorMessage = null;

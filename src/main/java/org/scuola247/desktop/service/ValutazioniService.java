@@ -1,31 +1,38 @@
 package org.scuola247.desktop.service;
 
 
+import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_MODIFY;
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
 
+import java.io.IOException;
+import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
-import org.apache.commons.codec.binary.Base64;
+import org.joda.time.DateTime;
 import org.postgresql.util.PSQLException;
 import org.scuola247.desktop.beans.AlunnoClasse;
-import org.scuola247.desktop.beans.AlunnoEx;
-import org.scuola247.desktop.beans.ValutazioneAlunno;
+import org.scuola247.desktop.beans.GrigliaValutazioneColonna;
+import org.scuola247.desktop.beans.GrigliaValutazioneRiga;
 import org.scuola247.desktop.config.DataHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,62 +51,54 @@ public class ValutazioniService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasAnyRole('docenti','dirigenti','gestori')")
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
-	public ExtDirectStoreResult<ValutazioneAlunno> listValutazioniByClasse(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
-		List<ValutazioneAlunno> ans = new LinkedList<>();
-		Integer filtroClasse = (Integer)request.getParams().get("classe");
+	public ExtDirectStoreResult<GrigliaValutazioneColonna> griglia_valutazioni_colonne_by_classe_docente_materia(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
+		List<GrigliaValutazioneColonna> ans = new LinkedList<>();
+		Map<String, Object> requestParams = request.getParams();
+		Integer filtroClasse = (Integer)requestParams.get("classe");
+		Integer filtroDocente = (Integer)requestParams.get("docente");
+		Integer filtroMateria = (Integer)requestParams.get("materia");
 		
 		Connection conn = null;
 		ResultSet rs = null;
-	    CallableStatement cambia_il_mio_nome = null;
+	    CallableStatement colonneValutazioni = null;
 	    
-	    Long alunno;
-	    String foto_miniatura, cognome, nome;
-	    
+		Date giorno;
+		long tipo_voto;
+		String tipo_voto_descrizione;
+		long argomento;
+		String argomento_descrizione;
+		long metrica;
+		String metrica_descrizione;
+				
 	    try{
 		    conn = DataHelper.myConnection();
 		    conn.setAutoCommit(false);
 			// crea prepared statement
-			cambia_il_mio_nome = conn.prepareCall("{ ? = call classe_alunni_ex(?) }");
+			colonneValutazioni = conn.prepareCall("{ ? = call griglia_valutazioni_colonne_by_classe_docente_materia(?, ?, ?) }");
 			// compila prepare statement
-			cambia_il_mio_nome.registerOutParameter(1, Types.OTHER);
+			colonneValutazioni.registerOutParameter(1, Types.OTHER);
 	
-			cambia_il_mio_nome.setLong(2, filtroClasse);
+			colonneValutazioni.setLong(2, filtroClasse);
+			colonneValutazioni.setLong(3, filtroDocente);
+			colonneValutazioni.setLong(4, filtroMateria);
 	
-			cambia_il_mio_nome.execute();
-			rs = (ResultSet) cambia_il_mio_nome.getObject(1);
+			colonneValutazioni.execute();
+			rs = (ResultSet) colonneValutazioni.getObject(1);
 			// ottenuto il result set
-			/*
 			while (rs.next()) {
-
-				classe = rs.getLong(1);
-				alunno = rs.getLong(2);
 				
-				byte[] data = rs.getBytes(3);
-				foto_miniatura = Base64.encodeBase64String(data);
-				codice_fiscale = rs.getString(4);
-				nome = rs.getString(5);
-				cognome = rs.getString(6);
-				sesso = rs.getString(7);
-				nato = rs.getDate(8);
-				comune_nascita_descrizione = rs.getString(9);
-				assenze = rs.getLong(10);
-				assenze_non_giustificate = rs.getLong(11);
-				ritardi = rs.getLong(12);
-				ritardi_non_giustificati = rs.getLong(13);
-				uscite = rs.getLong(14);
-				uscite_non_giustificate = rs.getLong(15);
-				fuori_classi = rs.getLong(16);
-				note = rs.getLong(17);
-				*/
-			for (int i = 0; i < 10; i++){
-				alunno = 0L;
-				foto_miniatura = "" + i;
-				cognome = "" + i;
-				nome = "" + i;
 				
-				ans.add(new ValutazioneAlunno(alunno, foto_miniatura, cognome, nome));
+				giorno = rs.getDate(1);
+				tipo_voto = rs.getLong(2);
+				tipo_voto_descrizione = rs.getString(3);
+				argomento = rs.getLong(4);
+				argomento_descrizione = rs.getString(5);
+				metrica = rs.getLong(6);
+				metrica_descrizione = rs.getString(7);
+				
+				ans.add(new GrigliaValutazioneColonna(giorno, tipo_voto, tipo_voto_descrizione, argomento, argomento_descrizione, metrica, metrica_descrizione));
 			} 
 	    }
 		catch (PSQLException e){
@@ -111,8 +110,8 @@ public class ValutazioniService {
 			if (rs != null){
 				rs.close();
 			}
-			if (cambia_il_mio_nome != null){
-				cambia_il_mio_nome.close();
+			if (colonneValutazioni != null){
+				colonneValutazioni.close();
 			}
 			if (conn != null){
 				conn.setAutoCommit(true);
@@ -122,9 +121,160 @@ public class ValutazioniService {
 		
 		return new ExtDirectStoreResult<>(ans.size(), ans);
 	}
-
+	
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('public')")
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional(readOnly = true)
+	public ExtDirectStoreResult<GrigliaValutazioneRiga> griglia_valutazioni_righe_by_classe_docente_materia(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
+		List<GrigliaValutazioneRiga> ans = new LinkedList<>();
+		Map<String, Object> requestParams = request.getParams();
+		Integer filtroClasse = (Integer)requestParams.get("classe");
+		Integer filtroDocente = (Integer)requestParams.get("docente");
+		Integer filtroMateria = (Integer)requestParams.get("materia");
+
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement valutazioni_stm = null;
+	    
+		long alunno;
+		String cognome;
+		String nome;
+		int assenze;
+		int ritardi;
+		int uscite;
+		int fuori_classe;
+		int note;
+		int mancanze;
+		String condotta;
+		Array rvArray;
+		Long[] rv;
+		Array valutazioneArray;
+		Long[] valutazioni;
+		Array votoArray;
+		Long[] voto;
+				
+	    try{
+		    conn = DataHelper.myConnection();
+		    conn.setAutoCommit(false);
+			// crea prepared statement
+		    valutazioni_stm = conn.prepareStatement("select * from griglia_valutazioni_righe_by_classe_docente_materia(?,?,?)");
+			// compila prepare statement
+	
+		    valutazioni_stm.setLong(1, filtroClasse);
+		    valutazioni_stm.setLong(2, filtroDocente);
+		    valutazioni_stm.setLong(3, filtroMateria);
+	
+			rs = valutazioni_stm.executeQuery();
+			// ottenuto il result set
+			while (rs.next()) {
+				int i = 1;
+				alunno = rs.getLong(i++);
+				cognome = rs.getString(i++);
+				nome = rs.getString(i++);
+				assenze = rs.getInt(i++);
+				ritardi = rs.getInt(i++);
+				uscite = rs.getInt(i++);
+				fuori_classe = rs.getInt(i++);
+				note = rs.getInt(i++);
+				mancanze = rs.getInt(i++);
+				condotta = rs.getString(i++);
+				
+				rvArray = rs.getArray(i++);
+				valutazioneArray = rs.getArray(i++);
+				votoArray = rs.getArray(i++);
+				
+				rv = (Long[])rvArray.getArray();
+				valutazioni = (Long[])valutazioneArray.getArray();
+				voto = (Long[])votoArray.getArray();
+				
+				GrigliaValutazioneRiga grigliaValutazioneRiga = new GrigliaValutazioneRiga(alunno, cognome, nome, assenze, ritardi, uscite, fuori_classe, note, mancanze, condotta );
+				
+				//Recupero la parte variabile
+				
+				int posizioneVoto = 1;
+				for (int j = 0; j < valutazioni.length; j++){
+					grigliaValutazioneRiga.setValutazione(posizioneVoto++, rv[j], valutazioni[j], voto[j]);
+				}
+				
+				ans.add(grigliaValutazioneRiga);
+			} 
+	    }
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+		finally{
+			if (rs != null){
+				rs.close();
+			}
+			if (valutazioni_stm != null){
+				valutazioni_stm.close();
+			}
+			if (conn != null){
+				conn.setAutoCommit(true);
+				conn.close();
+			}
+		}
+		
+		return new ExtDirectStoreResult<>(ans.size(), ans);
+	}
+	
+	@ExtDirectMethod(STORE_MODIFY)
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional
+	public ExtDirectStoreResult<GrigliaValutazioneRiga> update_valutazione(GrigliaValutazioneRiga rigaValutazione, Locale locale) throws NamingException, SQLException {
+		String errorMessage = null;
+		Connection conn = null;
+	    CallableStatement upd = null;
+	    /*
+	    conn = DataHelper.myConnection();
+		// crea prepared statement
+		
+	    upd = conn.prepareCall("{ ? = call istituti_upd(?,?,?,?,?,?) }");
+
+		upd.registerOutParameter(1,Types.BIGINT);
+		
+		upd.setLong(2, institute.getRv());
+		upd.setLong(3, institute.getIstituto());
+		upd.setString(4, institute.getDescrizione());
+		upd.setString(5, institute.getCodice_meccanografico());
+		upd.setString(6, institute.getMnemonico());
+		upd.setBoolean(7, institute.isEsempio());
+		try{
+			upd.execute();
+						
+			if (upd.getUpdateCount() > 0){
+				// ha aggiornato qualcosa
+			}
+			institute.setRv(upd.getLong(1));
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+//			throw e;
+			errorMessage = e.getMessage();
+		}
+		finally{
+			if (upd != null){
+				upd.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+	     */		
+		List<GrigliaValutazioneRiga> valutazioneList = new LinkedList<>();
+		if (errorMessage == null){
+			//TODO:valutazioneList.add(institute);
+		}
+		ExtDirectStoreResult<GrigliaValutazioneRiga> ans = new ExtDirectStoreResult<>(valutazioneList.size(), valutazioneList, errorMessage == null);
+		ans.setMessage(errorMessage);
+		return ans;
+	}
+	
+	@ExtDirectMethod(STORE_READ)
+	@PreAuthorize("hasRole('Pubblico')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<AlunnoClasse> listAlunniByRuoloClasse(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<AlunnoClasse> ans = new LinkedList<>();
@@ -181,5 +331,271 @@ public class ValutazioniService {
 		
 		return new ExtDirectStoreResult<>(ans.size(), ans);
 	}
+	
+	@ExtDirectMethod
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional(readOnly = true)
+    public String valutazioni_ins(
+			Long rv,  
+			Long valutazione, 
+			Long classe,
+		    Long alunno,
+		    Long materia,
+		    Long tipo_voto,
+		    Long argomento,
+		    Long voto,
+		    String giudizio,
+		    Boolean privato,
+		    Long docente,
+		    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") DateTime giorno)
+            throws IOException, SQLException {
+		String ans = "";
+		String errorMessage = null;
+		Connection conn = null;
+		CallableStatement stsm = null;
+		
+		
+		Long newRv = null;
+		Long newValutazione = null;
+
+		conn = DataHelper.myConnection();
+		// crea prepared statement
+
+		if (rv == null){
+			stsm = conn.prepareCall("{call valutazioni_ins(?,?,?,?,?,?,?,?,?,?,?,?) }");
+	
+			stsm.registerOutParameter(1,Types.BIGINT);
+			stsm.registerOutParameter(2,Types.BIGINT);
+	
+			stsm.setLong(3, classe);
+			stsm.setLong(4, alunno);
+			stsm.setLong(5, materia);
+			stsm.setLong(6, tipo_voto);
+			stsm.setLong(7, argomento);
+			stsm.setLong(8, voto);
+			stsm.setString(9, giudizio);
+			stsm.setBoolean(10, privato);
+			stsm.setLong(11, docente);
+			stsm.setDate(12, new java.sql.Date(giorno.getMillis()));
+			
+			try{
+				stsm.execute();
+	
+				newRv = stsm.getLong(1);
+				newValutazione = stsm.getLong(2);
+			}
+			catch (PSQLException e){
+				Logger logger = LoggerFactory.getLogger(getClass());
+				logger.error(e.getMessage(), e);
+				//			throw e;
+				errorMessage = e.getMessage();
+			}
+			finally{
+				if (stsm != null){
+					stsm.close();
+				}
+				if (conn != null){
+					conn.close();
+				}
+			}
+		}
+		else{
+			stsm = conn.prepareCall("{? = call valutazioni_upd_voto(?,?,?) }");
+			
+			stsm.registerOutParameter(1,Types.BIGINT);
+	
+			stsm.setLong(2, rv);
+			stsm.setLong(3, valutazione);
+			stsm.setLong(4, voto);
+			
+			try{
+				stsm.execute();
+	
+				newRv = stsm.getLong(1);
+				newValutazione = valutazione;
+			}
+			catch (PSQLException e){
+				Logger logger = LoggerFactory.getLogger(getClass());
+				logger.error(e.getMessage(), e);
+				//			throw e;
+				errorMessage = e.getMessage();
+			}
+			finally{
+				if (stsm != null){
+					stsm.close();
+				}
+				if (conn != null){
+					conn.close();
+				}
+			}
+		}
+		if (errorMessage == null){
+			ans = "OK," + newRv + "," + newValutazione;
+		}
+		else {
+			ans = "KO," + errorMessage;
+		}
+    	return ans;
+    }
+	
+	@ExtDirectMethod
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional(readOnly = true)
+    public String valutazioni_del(
+			Long rv,  
+			Long valutazione)
+            throws IOException, SQLException {
+		String ans = "";
+		String errorMessage = null;
+		Connection conn = null;
+		CallableStatement stsm = null;
+
+		conn = DataHelper.myConnection();
+		// crea prepared statement
+
+		stsm = conn.prepareCall("{call valutazioni_del(?,?) }");
+		stsm.setLong(1, rv);
+		stsm.setLong(2, valutazione);
+		
+		try{
+			stsm.execute();
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			//			throw e;
+			errorMessage = e.getMessage();
+		}
+		finally{
+			if (stsm != null){
+				stsm.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+		if (errorMessage == null){
+			ans = "OK,OK";
+		}
+		else {
+			ans = "KO," + errorMessage;
+		}
+    	return ans;
+    }
+	
+	@ExtDirectMethod
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional(readOnly = true)
+    public Map<String, Object> valutazioni_sel(Long valutazione)
+            throws IOException, SQLException {
+		Map<String,Object> ans = new HashMap<>();
+		String errorMessage = null;
+		Connection conn = null;
+		CallableStatement stsm = null;
+
+		conn = DataHelper.myConnection();
+		// crea prepared statement
+
+		stsm = conn.prepareCall("{call valutazioni_sel(?,?,?,?,?) }");
+		stsm.registerOutParameter(1, Types.BIGINT);
+		stsm.registerOutParameter(3, Types.VARCHAR);
+		stsm.registerOutParameter(4, Types.BOOLEAN);
+		stsm.registerOutParameter(5, Types.BOOLEAN);
+		
+		stsm.setLong(2, valutazione);
+		
+		Long rv;
+		String giudizio;
+		boolean privato;
+		boolean nota;
+		
+		try{
+			stsm.execute();
+			rv = stsm.getLong(1);
+			giudizio = stsm.getString(3);
+			privato = stsm.getBoolean(4);
+			nota = stsm.getBoolean(5);
+			ans.put("rv", rv);
+			ans.put("giudizio", giudizio);
+			ans.put("privato", privato);
+			ans.put("nota", nota);
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			//			throw e;
+			errorMessage = e.getMessage();
+		}
+		finally{
+			if (stsm != null){
+				stsm.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+		if (errorMessage == null){
+			ans.put("status","OK");
+		}
+		else {
+			ans.put("status", "KO," + errorMessage);
+		}
+    	return ans;
+    }
+
+	@ExtDirectMethod
+	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
+	@Transactional(readOnly = true)
+    public Map<String, Object> valutazioni_upd(Long rv, Long valutazione, String giudizio, boolean privato, boolean nota)
+            throws IOException, SQLException {
+		Map<String,Object> ans = new HashMap<>();
+		String errorMessage = null;
+		Connection conn = null;
+		CallableStatement stsm = null;
+
+		conn = DataHelper.myConnection();
+		// crea prepared statement
+
+		stsm = conn.prepareCall("{? = call valutazioni_upd(?,?,?,?,?) }");
+		stsm.registerOutParameter(1, Types.BIGINT);
+		
+		stsm.setLong(2, rv);
+		stsm.setLong(3, valutazione);
+		stsm.setString(4, giudizio);
+		stsm.setBoolean(5, privato);
+		stsm.setBoolean(6, nota);
+		
+		Long rvOut;
+		
+		try{
+			stsm.execute();
+			rvOut = stsm.getLong(1);
+			ans.put("rv", rvOut);
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			//			throw e;
+			errorMessage = e.getMessage();
+		}
+		finally{
+			if (stsm != null){
+				stsm.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+		if (errorMessage == null){
+			ans.put("status","OK");
+		}
+		else {
+			ans.put("status", "KO," + errorMessage);
+		}
+    	return ans;
+    }
+	
+	
+	
 	
 }
