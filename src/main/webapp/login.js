@@ -10,11 +10,87 @@ Ext.onReady(function() {
 		}
 	}
 	
+	var buttonsList = [];
+	if (isDevelopment){
+		buttonsList.push ({
+			text: i18n.login_withuser,
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'alunno@scuola247.it',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+		buttonsList.push ({
+			text: 'login famigliare',
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'famigliare@scuola247.it',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+		buttonsList.push ({
+			text: 'login docente',
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'docente@scuola247.it',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+		buttonsList.push ({
+			text: 'login impiegato',
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'impiegato@scuola247.it',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+		buttonsList.push ({
+			text: 'login dirigente',
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'dirigente@scuola247.it',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+		buttonsList.push ({
+			text: i18n.login_withadmin,
+			handler: function() {
+				var form = this.up('form').getForm();
+				form.setValues({
+					username: 'fol@scuola247.org',
+					password: 'Voti-1000'
+				});
+				form.submit();
+			}
+		});
+	}
+	buttonsList.push ({
+		text: i18n.login,
+		handler: function() {
+			submitForm();
+		}
+	});
+	
 	login = Ext.create('Ext.form.Panel', {
 		frame: true,
 		title: 'Scuola247 Login',
 		url: 'login.html',
-		width: 380,
+		width: (isDevelopment)?720:380,
 		icon: 'resources/images/key.png',
 
 		standardSubmit: true,
@@ -60,32 +136,7 @@ Ext.onReady(function() {
 			xtype: 'checkbox'
 		} ],
 
-		buttons: [ /* <_debug> */{
-			text: i18n.login_withuser,
-			handler: function() {
-				var form = this.up('form').getForm();
-				form.setValues({
-					username: 'studente@scuola.org',
-					password: 'password'
-				});
-				form.submit();
-			}
-		}, {
-			text: i18n.login_withadmin,
-			handler: function() {
-				var form = this.up('form').getForm();
-				form.setValues({
-					username: 'fol@scuola247.org',
-					password: 'Voti-1000'
-				});
-				form.submit();
-			}
-		},/* </debug> */{
-			text: i18n.login,
-			handler: function() {
-				submitForm();
-			}
-		} ]
+		buttons: buttonsList
 	});
 
 	Ext.create('Ext.container.Viewport', {

@@ -29,8 +29,14 @@ Ext.define('Desktop.controller.TeacherRegister', {
 	
 	control: {
 		view: {
-			show: 'onShow'
+			show: 'onShow',
+			contextmenu: {
+				fn: 'preventContextMenu',
+				element: 'el',
+				preventDefault: true
+			}
 		},
+		
 		teacherRegisterTabPanel: {
 			tabchange: 'onTeacherRegisterTabPanelChange'
 		},
@@ -38,7 +44,8 @@ Ext.define('Desktop.controller.TeacherRegister', {
 			select: 'onJudgmentGridSelect',
 			cellclick: 'onJudgmentGridCellClick',
 			cellkeydown: 'onJudgmentGridCellKeydown',
-			validateedit : 'onJudgmentGridValidateEdit'
+			validateedit : 'onJudgmentGridValidateEdit',
+			cellcontextmenu: 'onGridContextmenu'
 		},
 		judgmentGridAddPanel:true,
 		judgmentGridAddForm:true,
@@ -63,7 +70,7 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		judgmentGridEditFormValutazione:true,
 		judgmentGridEditFormRV: true,
 		judgmentGridEditFormGiudizio: true,
-		judgmentGridEditFormPrivato: true,
+		judgmentGridEditFormPrivata: true,
 		judgmentGridEditFormNota: true,
 		judgmentGridEditConfirmButton:{
 			click : 'judgmentGridEditConfirmButtonClick'
@@ -73,6 +80,9 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		},
 		addJudgmentButton:{
 			click: 'onAddJudgmentButtonClick'
+		},
+		showJudgmentGridDetails:{
+			toggle: 'onToggleShowJudgmentGridDetails'
 		},
 		studentsGrid: true,
 		signaturesGrid: true,
@@ -87,6 +97,40 @@ Ext.define('Desktop.controller.TeacherRegister', {
 			change : 'onChangePersonalScheduleGridWeek'
 		}
 		
+	},
+	
+	onGridContextmenu: function(grid, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+		e.preventDefault();
+		
+		this.setEditRow(rowIndex);
+		this.setEditCol(cellIndex);
+		this.setSelectedCol(cellIndex);
+		
+		var valutazione = record.get("va_" + (cellIndex + 1));
+		if(grid.getHeaderByCell(td).dataIndex.search('vo_') !== -1 && !Ext.isEmpty(valutazione)){
+	        var contextMenu = Ext.widget('editdelete');
+	        
+	        var rv = record.get("rv_" + (cellIndex + 1));
+			
+			contextMenu.utils = {
+					scope: this,
+					data:{
+						rv: rv,
+						val: valutazione,
+						row: rowIndex,
+						col: cellIndex + 1,
+						store: grid.getStore()
+					},
+					onModificaClick: this.onModificaClick,
+					onEliminaClick: this.onEliminaClick
+			},
+			
+	 		contextMenu.showAt(e.getXY());
+		}
+	},
+	
+	preventContextMenu: function(e, t, eOpts ){
+		e.preventDefault();
 	},
 	
 	onShow: function() {
@@ -288,6 +332,7 @@ Ext.define('Desktop.controller.TeacherRegister', {
 				var indexRow = this.getEditRow();
 				var indexCol = this.getEditCol() + 1;
 				
+			
 				
 				Ext.Msg.confirm("Cancellazione voto", Ext.String.format("Confermare cancellazione voto {0}", voto_descrizione), function(btn, text){
 		    	    if (btn == 'yes'){
@@ -329,10 +374,13 @@ Ext.define('Desktop.controller.TeacherRegister', {
 							}, this);
 		    	    }
 		    	    else{
-		    	    	//TODO:... chiedere reject changes
 //		    	    	var judgmentGridStore = this.getJudgmentGrid().getStore();
-//		    	    	judgmentGridStore.rejectChanges();
+//		    	    	
+//		    	    	var record = judgmentGridStore.getAt(indexRow);
+//		    	    	record.set("vo_" + indexCol, vo);
+//		    	    	
 //		    	    	judgmentGridStore.commitChanges();
+
 		    	    }
 		    	}, this);
 			}
@@ -404,6 +452,9 @@ Ext.define('Desktop.controller.TeacherRegister', {
 	},
 	onAddJudgmentButtonClick:function (){
 		this.getJudgmentGrid().hide();
+		this.getJudgmentGridAddFormMetrica().reset();
+		this.getJudgmentGridAddFormGiorno().reset();
+		this.getJudgmentGridAddFormGiorno().setDisabled(true);
 		this.getJudgmentGridAddPanel().show();
 	},
 	
@@ -499,7 +550,7 @@ Ext.define('Desktop.controller.TeacherRegister', {
 	onJudgmentGridSelect: function( grid, record, index, eOpts ){
 		this.setSelectedRow(index);
 	},
-	onJudgmentGridCellClick: function( grid, td, cellIndex, record, tr, rowIndex, e, eOpts ){
+	updateSelectionData: function(rowIndex, cellIndex, record){
 		this.setSelectedRow(rowIndex);
 		this.setSelectedCol(cellIndex);
 		this.setAlunno(record.get("alunno"));
@@ -513,13 +564,15 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		this.setSelectedTipoVoto(colonna.get('tipo_voto'));
 		this.setSelectedArgomento(colonna.get('argomento'));
 	},
+	onJudgmentGridCellClick: function( grid, td, cellIndex, record, tr, rowIndex, e, eOpts ){
+		this.updateSelectionData(rowIndex, cellIndex, record);
+	},
 	onJudgmentGridCellKeydown: function ( grid, td, cellIndex, record, tr, rowIndex, e, eOpts ){
+		this.updateSelectionData(rowIndex, cellIndex, record);
 		if (e.getKey() == Ext.EventObject.ENTER){
-			
-			this.setSelectedRow(rowIndex);
-			this.setSelectedCol(cellIndex);
+
 			//....
-			
+			/*			
 			var indexColonna = cellIndex + 1;
 			var valutazione = record.get("va_" + indexColonna);
 			if (!Ext.isEmpty(valutazione)){
@@ -529,7 +582,7 @@ Ext.define('Desktop.controller.TeacherRegister', {
 						this.getJudgmentGridEditFormValutazione().setValue(valutazione);
 						this.getJudgmentGridEditFormRV().setValue(response.result.rv);
 						this.getJudgmentGridEditFormGiudizio().setValue(response.result.giudizio);
-						this.getJudgmentGridEditFormPrivato().setValue(response.result.privato);
+						this.getJudgmentGridEditFormPrivata().setValue(response.result.privata);
 						this.getJudgmentGridEditFormNota().setValue(response.result.nota);
 						
 						this.getJudgmentGrid().hide();
@@ -546,7 +599,7 @@ Ext.define('Desktop.controller.TeacherRegister', {
 				}, this);
 				
 			}
-			
+			*/
 		}
 	},
 	judgmentGridEditConfirmButtonClick: function ( button, e, eOpts ){
@@ -554,19 +607,32 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		var valutazione = this.getJudgmentGridEditFormValutazione().getValue();
 		var rv = this.getJudgmentGridEditFormRV().getValue();
 		var giudizio = this.getJudgmentGridEditFormGiudizio().getValue();
-		var privato = this.getJudgmentGridEditFormPrivato().getValue();
+		var privata = this.getJudgmentGridEditFormPrivata().getValue();
 		var nota = this.getJudgmentGridEditFormNota().getValue();
 		
-		valutazioniService.valutazioni_upd(rv, valutazione, giudizio, privato, nota, function(provider, response) {
+		valutazioniService.valutazioni_upd(rv, valutazione, giudizio, privata, nota, function(provider, response) {
 			   // process response
 				if (!Ext.isEmpty(response.result) && response.result.status == 'OK'){
 					
+					if (!this.getIsUpdating()){
+						this.setIsUpdating(true);
+						var judgmentGridStore = this.getJudgmentGrid().getStore();
+						var indexRow = this.getEditRow();
+						var indexCol = this.getEditCol() + 1;
+						
+						var record = judgmentGridStore.getAt(indexRow);
+
+						record.set("rv_" + indexCol, response.result.rv);
+											
+						judgmentGridStore.commitChanges();
+						this.setEditRow(null);
+						this.setEditCol(null);
+
+						this.setIsUpdating(false);
+					}
 					
-					alert("salvare in griglia l'rv " + response.result.rv);
-					
-					
-					this.getJudgmentGrid().hide();
-					this.getJudgmentGridEditPanel().show();
+//					this.getJudgmentGrid().hide();
+//					this.getJudgmentGridEditPanel().show();
 				}
 				else{
 					Ext.Msg.show({
@@ -671,6 +737,95 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		
 		colonna.setEditor(editor);
 		colonna.setVisible(true);
+	},
+	onModificaClick: function(data){
+		var valutazione = data.val;
+		if (!Ext.isEmpty(valutazione)){
+			valutazioniService.valutazioni_sel(valutazione, function(provider, response) {
+			   // process response
+				if (!Ext.isEmpty(response.result) && response.result.status == 'OK'){
+					
+					this.getJudgmentGridEditFormValutazione().setValue(valutazione);
+					this.getJudgmentGridEditFormRV().setValue(response.result.rv);
+					this.getJudgmentGridEditFormGiudizio().setValue(response.result.giudizio);
+					this.getJudgmentGridEditFormPrivata().setValue(response.result.privata);
+					this.getJudgmentGridEditFormNota().setValue(response.result.nota);
+					
+					this.getJudgmentGrid().hide();
+					this.getJudgmentGridEditPanel().show();
+				}
+				else{
+					Ext.Msg.show({
+	                	title:i18n.teacher_register_error,
+	                	buttons: Ext.Msg.OK,
+	                	msg: response.result.status,
+	                	icon: Ext.MessageBox.ERROR
+	                });
+				}
+			}, this);
+			
+		}
+	},
+	onEliminaClick: function(data){
+		var judgmentGridStore = data.store;
+		var indexRow = this.getEditRow();
+		var indexCol = this.getEditCol() + 1;
+		var record = judgmentGridStore.getAt(indexRow);
+		var vo = record.get("vo_" + indexCol);
+		
+		var colonne = this.getStoreGrigliaValutazioneColonne();
+		var selectedCol = this.getSelectedCol();
+		var colonna = colonne.getAt(selectedCol);
+		
+		var votiMetrica = this.getVoti().get(colonna.get('metrica'));
+		
+		var voto_descrizione = votiMetrica.getAt(votiMetrica.findExact('voto', vo)).get('mnemonico');
+		
+		Ext.Msg.confirm("Cancellazione voto", Ext.String.format("Confermare cancellazione voto {0}", voto_descrizione), function(btn, text){
+		    if (btn == 'yes'){
+				valutazioniService.valutazioni_del(
+						data.rv,  
+						data.val,
+						function(provider, response) {
+					   // process response
+						if (!Ext.isEmpty(response.result)){
+							
+							var resultTokens = response.result.split(",");
+							if (resultTokens[0] == "KO"){
+								//response.result è il messaggio di errore
+								Ext.Msg.show({
+				                	title:i18n.teacher_register_error,
+				                	buttons: Ext.Msg.OK,
+				                	msg: resultTokens[1],
+				                	icon: Ext.MessageBox.ERROR
+				                });
+							}
+							else{
+								var record = judgmentGridStore.getAt(data.row);
+								var indexCol = data.col;
+								record.set("rv_" + indexCol, null);
+								record.set("va_" + indexCol, null);
+								record.set("vo_" + indexCol, null);
+								
+								judgmentGridStore.commitChanges();
+		
+							}
+						}
+					}, this);
+		    }
+		});
+	},
+	onToggleShowJudgmentGridDetails: function(item, pressed, eOpts){
+		var columns = this.getJudgmentGrid().columns;
+		this.getJudgmentGrid().suspendEvents(true);
+		columns[0].setVisible(pressed);
+		columns[3].setVisible(pressed);
+		columns[4].setVisible(pressed);
+		columns[5].setVisible(pressed);
+		columns[6].setVisible(pressed);
+		columns[7].setVisible(pressed);
+		columns[8].setVisible(pressed);
+		columns[9].setVisible(pressed);
+		this.getJudgmentGrid().resumeEvents();
 	}
-	
 });

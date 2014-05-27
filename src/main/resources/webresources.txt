@@ -27,6 +27,7 @@ app_js:
   /resources/extjs-gpl/{extjs.version}/ux/form/MultiSelect.js
   /app/ux/
   /app/model/
+  /app/shared/
   /app/store/
   /app/controller/
   /app/view/

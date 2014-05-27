@@ -223,6 +223,9 @@ Ext.define('Desktop.view.TeacherRegister', {
 				columnLines:true,
 				enableColumnMove:false,
 				columns:judgmentGridColumns,
+				selModel: {
+	                selType: 'cellmodel'
+	            },
 				features:[judgmentGridFilters],
 				plugins:[judgmentGridEditor],
 				tbar: [
@@ -231,7 +234,12 @@ Ext.define('Desktop.view.TeacherRegister', {
 				    	   text: i18n.teacher_register_judgment_add,
 				    	   itemId: 'addJudgmentButton',
 				    	   iconCls: 'add-icon'
-				       }
+				       },{
+						   text: 'Dettagli',
+						   itemId: 'showJudgmentGridDetails',
+						   enableToggle: true,
+						   pressed: true
+					   }
 				]
 			},{
 				xtype:'panel',
@@ -319,8 +327,8 @@ Ext.define('Desktop.view.TeacherRegister', {
 		        		itemId: 'judgmentGridEditFormGiudizio'
 		        	},{
 		        		xtype: 'checkbox',
-		        		fieldLabel:'Privato',
-		        		itemId: 'judgmentGridEditFormPrivato'
+		        		fieldLabel:'Privata',
+		        		itemId: 'judgmentGridEditFormPrivata'
 		        	},{
 		        		xtype: 'checkbox',
 		        		fieldLabel:'Nota',

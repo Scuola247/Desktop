@@ -345,7 +345,7 @@ public class ValutazioniService {
 		    Long argomento,
 		    Long voto,
 		    String giudizio,
-		    Boolean privato,
+		    Boolean privata,
 		    Long docente,
 		    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") DateTime giorno)
             throws IOException, SQLException {
@@ -374,7 +374,7 @@ public class ValutazioniService {
 			stsm.setLong(7, argomento);
 			stsm.setLong(8, voto);
 			stsm.setString(9, giudizio);
-			stsm.setBoolean(10, privato);
+			stsm.setBoolean(10, privata);
 			stsm.setLong(11, docente);
 			stsm.setDate(12, new java.sql.Date(giorno.getMillis()));
 			
@@ -506,18 +506,18 @@ public class ValutazioniService {
 		
 		Long rv;
 		String giudizio;
-		boolean privato;
+		boolean privata;
 		boolean nota;
 		
 		try{
 			stsm.execute();
 			rv = stsm.getLong(1);
 			giudizio = stsm.getString(3);
-			privato = stsm.getBoolean(4);
+			privata = stsm.getBoolean(4);
 			nota = stsm.getBoolean(5);
 			ans.put("rv", rv);
 			ans.put("giudizio", giudizio);
-			ans.put("privato", privato);
+			ans.put("privata", privata);
 			ans.put("nota", nota);
 		}
 		catch (PSQLException e){
@@ -546,7 +546,7 @@ public class ValutazioniService {
 	@ExtDirectMethod
 	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
-    public Map<String, Object> valutazioni_upd(Long rv, Long valutazione, String giudizio, boolean privato, boolean nota)
+    public Map<String, Object> valutazioni_upd(Long rv, Long valutazione, String giudizio, boolean privata, boolean nota)
             throws IOException, SQLException {
 		Map<String,Object> ans = new HashMap<>();
 		String errorMessage = null;
@@ -562,7 +562,7 @@ public class ValutazioniService {
 		stsm.setLong(2, rv);
 		stsm.setLong(3, valutazione);
 		stsm.setString(4, giudizio);
-		stsm.setBoolean(5, privato);
+		stsm.setBoolean(5, privata);
 		stsm.setBoolean(6, nota);
 		
 		Long rvOut;

@@ -35,13 +35,18 @@ ${applicationScope.login_css}
   <div id="circularG_8" class="circularG">
   </div>
   </div>
-	
+  <spring:eval expression="@environment.acceptsProfiles('development')" var="isDevelopment" />
   <script>
     var app_context_path = '<%= request.getContextPath() %>';
+    <% if ((Boolean)pageContext.getAttribute("isDevelopment")) { %>
+    var isDevelopment = true;
+    <% } else { %>
+    var isDevelopment = false;
+    <% } %>
+    
   </script>		
 
   <% Locale locale = RequestContextUtils.getLocale(request); %>
-  <spring:eval expression="@environment.acceptsProfiles('development')" var="isDevelopment" />
   <% if ((Boolean)pageContext.getAttribute("isDevelopment")) { %>
   <script src="i18n.js"></script>  
   <% } else { %>

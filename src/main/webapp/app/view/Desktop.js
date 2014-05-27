@@ -4,7 +4,7 @@ Ext.define('Desktop.view.Desktop', {
 	requires: [ 'Desktop.view.WindowBar', 'Desktop.view.Wallpaper', 'Desktop.store.DesktopStore', 'Desktop.view.TopBar', 'Desktop.view.module.OnlineUsers',
 			'Desktop.view.module.Notepad', 'Desktop.view.module.TabWindow', 'Desktop.view.module.GridWindow', 'Desktop.view.module.EducationSubjects', 'Desktop.view.module.SystemStatus',
 			'Desktop.view.UsersWindow', 'Desktop.view.LoggingEventsWindow', 'Desktop.view.AccessLogWindow', 'Desktop.view.ConfigurationWindow', 'Desktop.view.module.Institutes', 
-			'Desktop.view.SpazioLavoro', 'Desktop.view.TeacherRegister', 'Desktop.view.module.ClassRegister', 'Desktop.view.module.DataExport' ],
+			'Desktop.view.SpazioLavoro', 'Desktop.view.TeacherRegister', 'Desktop.view.module.ClassRegister', 'Desktop.view.module.DataExport', 'Desktop.view.contextmenu.EditDelete'],
 
 	border: false,
 	html: '&#160;',

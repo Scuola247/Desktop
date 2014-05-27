@@ -77,7 +77,7 @@ Ext.define('DesktopApp', {
 				Ext.getCmp('server_connect_status').setSrc(app_context_path + '/resources/images/connect-off.gif');
 			}
 		});
-
+		
 		Ext.apply(Ext.form.field.VTypes, {
 			password: function(val, field) {
 				if (field.initialPassField) {

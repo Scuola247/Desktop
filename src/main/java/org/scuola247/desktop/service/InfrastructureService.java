@@ -148,11 +148,11 @@ public class InfrastructureService {
 			String username = ((UserDetails) principal).getUsername();
 			String to;
 			if (environment.acceptsProfiles("development")) {
-				to = "test@test.com";
+				to = "fol@fulcro.net";
 			} else {
-				to = "someproductionemail@test.com";
+				to = "fol@fulcro.net";
 			}
-			mailService.sendHtmlMessage(username, to, "Feedback from desktop@scuola247.org", feedbackText);
+			mailService.sendHtmlMessage(username, to, "Feedback from desktop@scuola247.it", feedbackText);
 		}
 	}
 

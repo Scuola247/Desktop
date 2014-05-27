@@ -7,6 +7,33 @@
 <head>
   <meta charset="utf-8">
   <title>Scuola247 Desktop</title>
+  <!-- script per il servizio pingdom -->
+  <!-- script per il servizio pingdom -->
+  <!-- script per il servizio pingdom -->
+  <script>
+		var _prum = [['id', '53807377abe53db63d882bf6'],
+		             ['mark', 'firstbyte', (new Date()).getTime()]];
+		(function() {
+		    var s = document.getElementsByTagName('script')[0]
+		      , p = document.createElement('script');
+		    p.async = 'async';
+		    p.src = '//rum-static.pingdom.net/prum.min.js';
+		    s.parentNode.insertBefore(p, s);
+		})();
+</script>
+  <!-- script per il servizio google analytics -->
+  <!-- script per il servizio google analytics -->
+  <!-- script per il servizio google analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41757616-5', 'scuola247.it');
+  ga('send', 'pageview');
+
+</script>
   <link rel="icon" type="image/png" href="resources/images/favicon16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="resources/images/favicon32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="resources/images/favicon48.png" sizes="48x48">
