@@ -147,11 +147,11 @@ public class ValutazioniService {
 		int mancanze;
 		String condotta;
 		Array rvArray;
-		Long[] rv;
+		Long[] rv = null;
 		Array valutazioneArray;
-		Long[] valutazioni;
+		Long[] valutazioni = null;
 		Array votoArray;
-		Long[] voto;
+		Long[] voto = null;
 				
 	    try{
 		    conn = DataHelper.myConnection();
@@ -183,17 +183,21 @@ public class ValutazioniService {
 				valutazioneArray = rs.getArray(i++);
 				votoArray = rs.getArray(i++);
 				
-				rv = (Long[])rvArray.getArray();
-				valutazioni = (Long[])valutazioneArray.getArray();
-				voto = (Long[])votoArray.getArray();
+				if (rvArray != null){
+					rv = (Long[])rvArray.getArray();
+					valutazioni = (Long[])valutazioneArray.getArray();
+					voto = (Long[])votoArray.getArray();
+				}
 				
 				GrigliaValutazioneRiga grigliaValutazioneRiga = new GrigliaValutazioneRiga(alunno, cognome, nome, assenze, ritardi, uscite, fuori_classe, note, mancanze, condotta );
 				
 				//Recupero la parte variabile
 				
 				int posizioneVoto = 1;
-				for (int j = 0; j < valutazioni.length; j++){
-					grigliaValutazioneRiga.setValutazione(posizioneVoto++, rv[j], valutazioni[j], voto[j]);
+				if (rvArray != null){
+					for (int j = 0; j < valutazioni.length; j++){
+						grigliaValutazioneRiga.setValutazione(posizioneVoto++, rv[j], valutazioni[j], voto[j]);
+					}
 				}
 				
 				ans.add(grigliaValutazioneRiga);

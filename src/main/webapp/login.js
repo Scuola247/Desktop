@@ -11,7 +11,7 @@ Ext.onReady(function() {
 	}
 	
 	var buttonsList = [];
-	if (isDevelopment){
+	/* */ if (isDevelopment){
 		buttonsList.push ({
 			text: i18n.login_withuser,
 			handler: function() {
@@ -77,8 +77,9 @@ Ext.onReady(function() {
 				});
 				form.submit();
 			}
-		});
-	}
+		}); 
+	} 
+	/* */
 	buttonsList.push ({
 		text: i18n.login,
 		handler: function() {
@@ -90,6 +91,7 @@ Ext.onReady(function() {
 		frame: true,
 		title: 'Scuola247 Login',
 		url: 'login.html',
+/*		width: 380,*/
 		width: (isDevelopment)?720:380,
 		icon: 'resources/images/key.png',
 
@@ -130,11 +132,11 @@ Ext.onReady(function() {
 					}
 				}
 			}
-		}, {
+		}/*, {
 			fieldLabel: i18n.login_rememberme,
 			name: 'remember-me',
 			xtype: 'checkbox'
-		} ],
+		} */],
 
 		buttons: buttonsList
 	});

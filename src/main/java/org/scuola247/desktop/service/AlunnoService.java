@@ -43,7 +43,8 @@ public class AlunnoService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('Pubblico')")
+	//@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<AlunnoEx> listClasseAlunniEx(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<AlunnoEx> ans = new LinkedList<>();
@@ -115,7 +116,8 @@ public class AlunnoService {
 	}
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('Pubblico')")
+	//@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<AlunnoClasse> listAlunniByRuoloClasse(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<AlunnoClasse> ans = new LinkedList<>();

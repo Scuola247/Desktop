@@ -35,28 +35,28 @@ public class ModuleService {
 				builder.add(new Module("Desktop.view.AccessLogWindow", messageSource.getMessage("accesslog", null,locale), "accesslog", true, "system"));
 				builder.add(new Module("Desktop.view.ConfigurationWindow", messageSource.getMessage("configuration",null, locale), "configuration", false, "system"));
 				builder.add(new Module("Desktop.view.module.Institutes", messageSource.getMessage("institutes", null, locale), "institutes", true));
+				builder.add(new Module("Desktop.view.module.DataExport", messageSource.getMessage("dataexport", null, locale), "dataexport", true));
+				builder.add(new Module("Desktop.view.Feedback", messageSource.getMessage("feedback", null, locale), "feedback", true));
+				//builder.add(new Module("Desktop.view.Settings", messageSource.getMessage("settings", null, locale), "settings", true));
+				builder.add(new Module("Desktop.view.module.OnlineUsers", messageSource.getMessage("onlineusers", null, locale), "onlineusers", true));
+				builder.add(new Module("Desktop.view.module.Notepad", messageSource.getMessage("notepad", null, locale), "notepad", true));
+	/*			builder.add(new Module("Desktop.view.module.TabWindow", messageSource.getMessage("tabs", null, locale), "tabs", false)); */
+				builder.add(new Module("Desktop.view.module.GridWindow", messageSource.getMessage("grid", null, locale), "grid", true));
+				builder.add(new Module("Desktop.view.module.SystemStatus", messageSource.getMessage("systemstatus", null, locale), "systemstatus", true, "system"));
+				builder.add(new Module("Desktop.view.module.AssigningStudents", messageSource.getMessage("AssigningStudents", null, locale), "AssigningStudents", true));
+				builder.add(new Module("Desktop.view.module.Ballots",  messageSource.getMessage("ballots", null, locale), "ballots", true));
+				builder.add(new Module("Desktop.view.module.ClassRegister", messageSource.getMessage("class_register", null, locale), "class_register", true));
+				builder.add(new Module("Desktop.view.module.Classes", messageSource.getMessage("classes", null, locale), "classes", true));
+				builder.add(new Module("Desktop.view.module.ClosingSchoolYear", messageSource.getMessage("closing_school_year", null, locale), "closing_school_year", true));
+				builder.add(new Module("Desktop.view.module.EducationPaths", messageSource.getMessage("education_paths", null, locale), "education_paths", true));
+				builder.add(new Module("Desktop.view.module.EducationSubjects", messageSource.getMessage("education_subjects", null, locale), "education_subjects", true));
+				builder.add(new Module("Desktop.view.module.Metrics", messageSource.getMessage("metrics", null, locale), "metrics", true));
+				builder.add(new Module("Desktop.view.module.OpeningSchoolYear", messageSource.getMessage("opening_school_year", null, locale), "opening_school_year", true));
+				builder.add(new Module("Desktop.view.module.People", messageSource.getMessage("people", null, locale), "people", true));
+				builder.add(new Module("Desktop.view.module.SchoolYears", messageSource.getMessage("school_years", null, locale), "school_years", true));
+				builder.add(new Module("Desktop.view.module.Skills", messageSource.getMessage("skills", null, locale), "skills", true));
+				builder.add(new Module("Desktop.view.module.StudentLogbook", messageSource.getMessage("student_logbook", null, locale), "student_logbook", true));
 			}
-			builder.add(new Module("Desktop.view.module.DataExport", messageSource.getMessage("dataexport", null, locale), "dataexport", true));
-			builder.add(new Module("Desktop.view.Feedback", messageSource.getMessage("feedback", null, locale), "feedback", true));
-			//builder.add(new Module("Desktop.view.Settings", messageSource.getMessage("settings", null, locale), "settings", true));
-			builder.add(new Module("Desktop.view.module.OnlineUsers", messageSource.getMessage("onlineusers", null, locale), "onlineusers", true));
-			builder.add(new Module("Desktop.view.module.Notepad", messageSource.getMessage("notepad", null, locale), "notepad", true));
-/*			builder.add(new Module("Desktop.view.module.TabWindow", messageSource.getMessage("tabs", null, locale), "tabs", false)); */
-			builder.add(new Module("Desktop.view.module.GridWindow", messageSource.getMessage("grid", null, locale), "grid", true));
-			builder.add(new Module("Desktop.view.module.SystemStatus", messageSource.getMessage("systemstatus", null, locale), "systemstatus", true, "system"));
-			builder.add(new Module("Desktop.view.module.AssigningStudents", messageSource.getMessage("AssigningStudents", null, locale), "AssigningStudents", true));
-			builder.add(new Module("Desktop.view.module.Ballots",  messageSource.getMessage("ballots", null, locale), "ballots", true));
-			builder.add(new Module("Desktop.view.module.ClassRegister", messageSource.getMessage("class_register", null, locale), "class_register", true));
-			builder.add(new Module("Desktop.view.module.Classes", messageSource.getMessage("classes", null, locale), "classes", true));
-			builder.add(new Module("Desktop.view.module.ClosingSchoolYear", messageSource.getMessage("closing_school_year", null, locale), "closing_school_year", true));
-			builder.add(new Module("Desktop.view.module.EducationPaths", messageSource.getMessage("education_paths", null, locale), "education_paths", true));
-			builder.add(new Module("Desktop.view.module.EducationSubjects", messageSource.getMessage("education_subjects", null, locale), "education_subjects", true));
-			builder.add(new Module("Desktop.view.module.Metrics", messageSource.getMessage("metrics", null, locale), "metrics", true));
-			builder.add(new Module("Desktop.view.module.OpeningSchoolYear", messageSource.getMessage("opening_school_year", null, locale), "opening_school_year", true));
-			builder.add(new Module("Desktop.view.module.People", messageSource.getMessage("people", null, locale), "people", true));
-			builder.add(new Module("Desktop.view.module.SchoolYears", messageSource.getMessage("school_years", null, locale), "school_years", true));
-			builder.add(new Module("Desktop.view.module.Skills", messageSource.getMessage("skills", null, locale), "skills", true));
-			builder.add(new Module("Desktop.view.module.StudentLogbook", messageSource.getMessage("student_logbook", null, locale), "student_logbook", true));
 			if (Util.hasRole("Docente") || Util.hasRole("Dirigente") || Util.hasRole("Gestore")) {
 				builder.add(new Module("Desktop.view.TeacherRegister", messageSource.getMessage("teacher_register", null, locale), "teacher_register", true));
 			}

@@ -28,7 +28,8 @@ public class SpazioLavoroDefaultService {
 	private CustomAuthenticationProvider customAuthenticationProvider;
 	
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('Pubblico')")
+	//@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
     public String setSpazioLavoroDefault(String spazioLavoro, boolean reloadRoles) throws IOException, SQLException {
 		String errorMessage = null;
@@ -84,7 +85,8 @@ public class SpazioLavoroDefaultService {
     }
 
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('Pubblico')")
+	//@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
 	public String getSessionUtente() throws IOException, SQLException {
 		String errorMessage = null;
@@ -125,7 +127,8 @@ public class SpazioLavoroDefaultService {
 	}
 	
 	@ExtDirectMethod
-	@PreAuthorize("hasRole('Pubblico')")
+	//@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
 	public String getSessionPersona(Long istituto) throws IOException, SQLException {
 		String errorMessage = null;

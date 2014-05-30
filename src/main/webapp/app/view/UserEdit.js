@@ -81,7 +81,7 @@ Ext.define('Desktop.view.UserEdit', {
 			displayField: 'name',
 			valueField: 'id',
 			allowBlank: true
-		}];
+		}]; 
 
 		me.buttons = [ {
 			xtype: 'button',
