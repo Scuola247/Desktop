@@ -21,7 +21,8 @@ Ext.define('Desktop.controller.Settings', {
 		resetWindowPosButton: {
 			click: 'onResetWindowPosButtonClick'
 		},
-		userSettingsPanel: true
+		userSettingsPanel: true,
+		changePasswordSettingsPanel: true
 	},
 
 	wallpaperUrl: null,
@@ -104,6 +105,12 @@ Ext.define('Desktop.controller.Settings', {
 				}
 			});
 		}
+		/*
+		//TODO
+		if (this.getChangePasswordSettingsPanel().isValid()){
+			
+		}
+		*/
 	},
 
 	onCancelButtonClick: function() {

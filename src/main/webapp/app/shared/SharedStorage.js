@@ -51,12 +51,11 @@ Ext.define('Desktop.shared.SharedStorage', {
 		if (!Ext.isEmpty(this.sl_spazio_lavoro) && this.sl_spazio_lavoro != -1){
 			spazioLavoroDefaultService.setSpazioLavoroDefault(this.sl_spazio_lavoro, reloadRoles, function(provider, response) {
 				   // process response
-					if (response.result != "OK"){
-						//response.result è il messaggio di errore
+					if (!response.result.ok){
 						Ext.Msg.show({
 		                	title:i18n.workspace_selection_error,
 		                	buttons: Ext.Msg.OK,
-		                	msg: response.result,
+		                	msg: Desktop.ux.util.ExceptionDecoder.decode(response.result),
 		                	icon: Ext.MessageBox.ERROR
 		                });
 					}

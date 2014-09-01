@@ -1,22 +1,13 @@
 package org.scuola247.desktop.security;
 
 //import javax.persistence.EntityManager;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.persistence.PersistenceContext;
-
-
-
-
 import org.joda.time.DateTime;
+import org.scuola247.desktop.entity.User;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.scuola247.desktop.entity.User;
 
 @Component
 public class UserAuthenticationErrorHandler implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {

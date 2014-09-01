@@ -2,6 +2,8 @@ package org.scuola247.desktop.service;
 
 import java.util.Locale;
 
+import org.scuola247.desktop.security.UtenteDettagli;
+import org.scuola247.desktop.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,9 +11,6 @@ import org.springframework.stereotype.Service;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
-
-import org.scuola247.desktop.security.UtenteDettagli;
-import org.scuola247.desktop.util.Util;
 
 import com.google.common.collect.ImmutableList;
 
@@ -59,6 +58,7 @@ public class ModuleService {
 			}
 			if (Util.hasRole("Docente") || Util.hasRole("Dirigente") || Util.hasRole("Gestore")) {
 				builder.add(new Module("Desktop.view.TeacherRegister", messageSource.getMessage("teacher_register", null, locale), "teacher_register", true));
+//				builder.add(new Module("Desktop.view.Topics", messageSource.getMessage("topics", null, locale), "topics", true));
 			}
 
 			return builder.build();

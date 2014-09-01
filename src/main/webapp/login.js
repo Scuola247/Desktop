@@ -18,7 +18,7 @@ Ext.onReady(function() {
 				var form = this.up('form').getForm();
 				form.setValues({
 					username: 'alunno@scuola247.it',
-					password: 'Voti-1000'
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}
@@ -29,7 +29,7 @@ Ext.onReady(function() {
 				var form = this.up('form').getForm();
 				form.setValues({
 					username: 'famigliare@scuola247.it',
-					password: 'Voti-1000'
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}
@@ -40,7 +40,7 @@ Ext.onReady(function() {
 				var form = this.up('form').getForm();
 				form.setValues({
 					username: 'docente@scuola247.it',
-					password: 'Voti-1000'
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}
@@ -51,7 +51,7 @@ Ext.onReady(function() {
 				var form = this.up('form').getForm();
 				form.setValues({
 					username: 'impiegato@scuola247.it',
-					password: 'Voti-1000'
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}
@@ -62,7 +62,7 @@ Ext.onReady(function() {
 				var form = this.up('form').getForm();
 				form.setValues({
 					username: 'dirigente@scuola247.it',
-					password: 'Voti-1000'
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}
@@ -72,8 +72,8 @@ Ext.onReady(function() {
 			handler: function() {
 				var form = this.up('form').getForm();
 				form.setValues({
-					username: 'fol@scuola247.org',
-					password: 'Voti-1000'
+					username: 'manager@scuola247.it',
+					password: 'Voti-9999'
 				});
 				form.submit();
 			}

@@ -20,9 +20,6 @@ public class DataHelper {
 		try {
 			cxt = new InitialContext();
 		
-			if ( cxt == null ) {
-			   throw new SQLException("No context!");
-			}
 			ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/scuola247" );
 		} catch (NamingException e) {
 			throw new SQLException(e);
@@ -52,11 +49,11 @@ public class DataHelper {
 		return myConnection(userDetail.getUsername(), userDetail.getPassword());
 	}
 	
-	public static Connection myConnection (String username, String passwrod) throws SQLException  {
+	public static Connection myConnection (String username, String password) throws SQLException  {
 		
 		Connection conn = null;
         
-		conn = myDataSource(username, passwrod).getConnection(username, passwrod);
+		conn = myDataSource(username, password).getConnection(username, password);
 		conn.setAutoCommit(true);
 		
 		return conn;

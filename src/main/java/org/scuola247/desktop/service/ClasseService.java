@@ -1,7 +1,6 @@
 package org.scuola247.desktop.service;
 
 
-import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_MODIFY;
 import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_READ;
 
 import java.sql.CallableStatement;
@@ -16,7 +15,6 @@ import java.util.Locale;
 import javax.naming.NamingException;
 
 import org.postgresql.util.PSQLException;
-import org.scuola247.desktop.beans.AnnoScolastico;
 import org.scuola247.desktop.beans.Classe;
 import org.scuola247.desktop.config.DataHelper;
 import org.slf4j.Logger;

@@ -1,6 +1,5 @@
 Ext.define('Desktop.controller.DataExport', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: ['Deft.mixin.Injectable'],
 	inject: ['sharedStorage'],
 	requires: [], 
 

@@ -74,10 +74,25 @@ public class SpazioLavoroService {
 				istituto = rs.getLong(3);
 				anno_scolastico = rs.getLong(4);
 				classe = rs.getLong(5);
+				if (rs.wasNull()){
+					classe = null;
+				}
 				materia = rs.getLong(6);
+				if (rs.wasNull()){
+					materia = null;
+				}
 				docente = rs.getLong(7);
+				if (rs.wasNull()){
+					docente = null;
+				}
 				famigliare = rs.getLong(8);
+				if (rs.wasNull()){
+					famigliare = null;
+				}
 				alunno = rs.getLong(9);
+				if (rs.wasNull()){
+					alunno = null;
+				}
 				descrizione = rs.getString(10);
 				spazio_lavoro_default = rs.getBoolean(11);
 				
@@ -132,12 +147,19 @@ public class SpazioLavoroService {
 			isrt.setString(3,spazioLavoro.getDescrizione());
 			isrt.setLong(4, spazioLavoro.getIstituto());
 			isrt.setLong(5, spazioLavoro.getAnno_scolastico());
-			isrt.setLong(6, spazioLavoro.getClasse());
 			
+			classe = spazioLavoro.getClasse();
 			materia = spazioLavoro.getMateria();
 			docente = spazioLavoro.getDocente();
 			famigliare = spazioLavoro.getFamigliare();
 			alunno = spazioLavoro.getAlunno();
+
+			if (classe == null){
+				isrt.setNull(6, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(6, classe);
+			}
 			
 			if (materia == null){
 				isrt.setNull(7, Types.BIGINT);
@@ -199,6 +221,108 @@ public class SpazioLavoroService {
 		ExtDirectStoreResult<SpazioLavoro> ans = new ExtDirectStoreResult<>(spazioLavoroList.size(), spazioLavoroList, errorMessage == null);
 		ans.setMessage(errorMessage);
 		return ans;
+	}
+	
+	@ExtDirectMethod(STORE_MODIFY)
+	//@PreAuthorize("hasRole('Gestore')")
+	@PreAuthorize("isAuthenticated()")
+	@Transactional
+	public ExtDirectStoreResult<SpazioLavoro> upd(SpazioLavoro spazioLavoro, Locale locale) throws SQLException {
+		String errorMessage = null;
+		Connection conn = null;
+	    CallableStatement isrt = null;
+
+	    Long classe, materia, docente, famigliare, alunno;
+	    
+		Long newRv = null;
+	    
+		// crea prepared statement
+		try{
+			conn = DataHelper.myConnection();
+		    
+			
+			isrt = conn.prepareCall("{? = call spazi_lavoro_upd(?,?,?,?,?,?,?,?,?,?) }");
+
+			isrt.registerOutParameter(1,Types.BIGINT);
+			
+			isrt.setLong(2, spazioLavoro.getRv());
+			isrt.setLong(3, spazioLavoro.getSpazio_lavoro());
+			isrt.setString(4,spazioLavoro.getDescrizione());
+			isrt.setLong(5, spazioLavoro.getIstituto());
+			isrt.setLong(6, spazioLavoro.getAnno_scolastico());
+			
+			classe = spazioLavoro.getClasse();
+			materia = spazioLavoro.getMateria();
+			docente = spazioLavoro.getDocente();
+			famigliare = spazioLavoro.getFamigliare();
+			alunno = spazioLavoro.getAlunno();
+			
+			if (classe == null){
+				isrt.setNull(7, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(7, classe);
+			}
+			
+			if (materia == null){
+				isrt.setNull(8, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(8, materia);
+			}
+			
+			if (docente == null){
+				isrt.setNull(9, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(9, docente);
+			}
+			
+			if (famigliare == null){
+				isrt.setNull(10, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(10, famigliare);
+			}
+			
+			if (alunno == null){
+				isrt.setNull(11, Types.BIGINT);
+			}
+			else{
+				isrt.setLong(11, alunno);
+			}
+			isrt.execute();
+			
+			newRv = isrt.getLong(1);
+			spazioLavoro.setRv(newRv);
+		}
+		catch (PSQLException e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			errorMessage = e.getMessage();
+		}
+		catch(Exception e){
+			Logger logger = LoggerFactory.getLogger(getClass());
+			logger.error(e.getMessage(), e);
+			errorMessage = e.getCause() + " - " + e.getMessage();
+		}
+		finally{
+			if (isrt != null){
+				isrt.close();
+			}
+			if (conn != null){
+				conn.close();
+			}
+		}
+		
+		List<SpazioLavoro> spazioLavoroList = new LinkedList<>();
+		if (errorMessage == null){
+			spazioLavoroList.add(spazioLavoro);
+		}
+		ExtDirectStoreResult<SpazioLavoro> ans = new ExtDirectStoreResult<>(spazioLavoroList.size(), spazioLavoroList, errorMessage == null);
+		ans.setMessage(errorMessage);
+		return ans;
+
 	}
 	
 	@ExtDirectMethod(STORE_MODIFY)

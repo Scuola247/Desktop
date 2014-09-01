@@ -100,9 +100,6 @@ Ext.define('Desktop.view.Settings', {
 				title: i18n.settings_userinformation,
 				itemId: 'userSettingsPanel',
 				defaultType: 'textfield',
-				defaults: {
-					anchor: '100%'
-				},
 				paramsAsHash: true,
 				api: {
 					load: userService.userFormSettingsLoad,
@@ -113,36 +110,6 @@ Ext.define('Desktop.view.Settings', {
 				},
 				bodyPadding: 10,
 				items: [ {
-					name: 'email',
-					fieldLabel: i18n.user_email,
-					vtype: 'email',
-					allowBlank: false,
-					maxLength: 255,
-					enforceMaxLength: true
-				}, {
-					name: 'firstName',
-					fieldLabel: i18n.user_firstname,
-					allowBlank: true,
-					maxLength: 255,
-					enforceMaxLength: true
-				}, {
-					name: 'name',
-					fieldLabel: i18n.user_surname,
-					allowBlank: true,
-					maxLength: 255,
-					enforceMaxLength: true
-				}, {
-					name: 'passwordHash',
-					fieldLabel: i18n.user_password,
-					inputType: 'password',
-					itemId: 'pass'
-				}, {
-					name: 'password-confirm',
-					fieldLabel: i18n.user_confirmpassword,
-					vtype: 'password',
-					inputType: 'password',
-					initialPassField: 'pass'
-				}, {
 					xtype: 'combobox',
 					fieldLabel: i18n.user_language,
 					name: 'locale',
@@ -157,18 +124,39 @@ Ext.define('Desktop.view.Settings', {
 					allowBlank: false,
 					forceSelection: true,
 					anchor: '50%'
-				} ]
-			}), Ext.create('Ext.panel.Panel', {
-				title: i18n.settings_reset,
-				bodyPadding: 20,
-				layout: {
-					type: 'vbox'
-				},
-				items: [ {
+				}, {
 					xtype: 'button',
 					itemId: 'resetWindowPosButton',
-					text: i18n.settings_resetall
-				} ]
+					text: i18n.settings_resetall,
+					anchor: '50%'
+				}]
+			}), Ext.create('Ext.form.Panel', {
+				title: i18n.settings_change_password,
+				itemId: 'changePasswordSettingsPanel',
+				defaultType: 'textfield',
+				defaults: {
+					anchor: '100%'
+				},
+				paramsAsHash: true,
+				api: {
+					submit: userService.updatePassword
+				},
+				fieldDefaults: {
+					msgTarget: 'side'
+				},
+				bodyPadding: 10,
+				items: [ {
+					name: 'passwordHash',
+					fieldLabel: i18n.user_password,
+					inputType: 'password',
+					itemId: 'pass'
+				}, {
+					name: 'password-confirm',
+					fieldLabel: i18n.user_confirmpassword,
+					vtype: 'password',
+					inputType: 'password',
+					initialPassField: 'pass'
+				}]
 			}) ]
 
 		});

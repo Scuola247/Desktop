@@ -5,10 +5,10 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.scuola247.desktop.security.UtenteDettagli;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
-import org.scuola247.desktop.security.UtenteDettagli;
 
 public class AppLocaleResolver extends AbstractLocaleResolver {
 

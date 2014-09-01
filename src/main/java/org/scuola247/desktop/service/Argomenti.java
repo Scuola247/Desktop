@@ -37,7 +37,7 @@ public class Argomenti {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("hasAnyRole('Docente','Impiegato','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Argomento> ByMateriaClasse(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<Argomento> ans = new LinkedList<>();

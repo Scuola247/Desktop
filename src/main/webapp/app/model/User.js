@@ -3,15 +3,6 @@ Ext.define("Desktop.model.User",
   extend : "Ext.data.Model",
   uses : [ "Desktop.model.Role" ],
   fields : [ {
-    name : "email",
-    type : "string"
-  }, {
-    name : "name",
-    type : "string"
-  }, {
-    name : "firstName",
-    type : "string"
-  }, {
     name : "locale",
     type : "string"
   }, {

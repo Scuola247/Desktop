@@ -1,4 +1,4 @@
-Ext.define("Desktop.model.Argomento",
+Ext.define("Desktop.model.Topic",
 {
   extend : "Ext.data.Model",
   fields : [ {
@@ -8,14 +8,23 @@ Ext.define("Desktop.model.Argomento",
     name : "argomento",
     type : "int"
   }, {
+    name : "materia",
+    type : "int"
+  }, {
     name : "descrizione",
     type : "string"
+  }, {
+    name : "anno_corso",
+    type : "int"
+  }, {
+    name : "indirizzo_scolastico",
+    type : "int"
   } ],
   proxy : {
     type : "direct",
     api : {
-      read : "argomenti.ByMateriaClasse",
-      destroy : "argomenti.del"
+      read : "topicsService.sel",
+      destroy : "topicsService.del"
     },
     reader : {
       root : "records"

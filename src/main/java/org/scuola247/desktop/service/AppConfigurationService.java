@@ -3,9 +3,8 @@ package org.scuola247.desktop.service;
 import java.util.LinkedList;
 import java.util.List;
 
-//import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import org.scuola247.desktop.dto.ConfigurationDto;
+import org.scuola247.desktop.entity.Configuration;
 //import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
-
-import org.scuola247.desktop.dto.ConfigurationDto;
-import org.scuola247.desktop.entity.Configuration;
+//import javax.persistence.EntityManager;
 
 @Service
 @Lazy

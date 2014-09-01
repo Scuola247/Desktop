@@ -1,7 +1,8 @@
 .x-colorpicker {
-	border : 1px solid #98C0F4;
-	background : #FFF;
+	border: 1px solid #98C0F4;
+	background: #FFF;
 }
+
 .x-cp-rgbpicker {
 	background-image: url(../images/colorpicker/mask.png);
 	background-repeat: no-repeat;
@@ -14,9 +15,8 @@
 	_margin: 7px 7px 7px 4px;
 	_cursor: hand;
 	_background-image: none;
-	_filter: progid :   DXImageTransform.Microsoft.AlphaImageLoader (   src
-		= 
-		 'mask.png', sizingMethod =   'scale' );
+	_filter: progid:   DXImageTransform.Microsoft.AlphaImageLoader(   src= 
+		 'mask.png', sizingMethod=   'scale');
 }
 
 .x-cp-rgbslider {

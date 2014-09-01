@@ -10,7 +10,7 @@ Ext.Loader.setConfig({
 
 Ext.define('DesktopApp', {
 	extend: 'Deft.mvc.Application',
-	requires: [ 'overrides.AbstractMixedCollection', 'overrides.Window', 'Desktop.ux.window.Notification', 'Desktop.view.Viewport', 'Desktop.shared.SharedStorage' ],
+	requires: [ 'overrides.AbstractMixedCollection', 'overrides.Window', 'Desktop.ux.window.Notification', 'Desktop.view.Viewport', 'Desktop.shared.SharedStorage', 'Desktop.ux.util.ExceptionDecoder' ],
 
 	init: function() {
 		Ext.fly('circularG').destroy();
@@ -97,6 +97,9 @@ Ext.define('DesktopApp', {
 		});
 
 		Ext.create('Desktop.view.Viewport');
+		
+		
+		
 	},
 
 	setupGlobalErrorHandler: function() {

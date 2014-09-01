@@ -3,7 +3,10 @@ package org.scuola247.desktop.beans;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 
-@Model(value = "Desktop.model.Institutes", readMethod = "institutesService.sel", destroyMethod = "institutesService.del", paging = true)
+@Model(value = "Desktop.model.Institutes", 
+	   readMethod = "institutesService.sel", 
+	   destroyMethod = "institutesService.del", 
+	   paging = true)
 public class Institute {
 	
 	@ModelField

@@ -1,12 +1,5 @@
 package org.scuola247.desktop.web;
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.Set;
-
-//import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
 //import org.joda.time.LocalDateTime;
@@ -15,14 +8,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.scuola247.desktop.entity.LoggingEvent;
-import org.scuola247.desktop.entity.LoggingEventException;
-import org.scuola247.desktop.entity.LoggingEventProperty;
+//import javax.persistence.EntityManager;
 //import org.scuola247.desktop.entity.QLoggingEvent;
 //import org.scuola247.desktop.entity.QLoggingEventException;
 //

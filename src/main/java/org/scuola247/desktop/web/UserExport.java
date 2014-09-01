@@ -1,14 +1,9 @@
 package org.scuola247.desktop.web;
 
-import java.io.OutputStream;
-import java.util.List;
 import java.util.Locale;
 
-//import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 //import org.apache.poi.ss.usermodel.Cell;
 //import org.apache.poi.ss.usermodel.CellStyle;
 //import org.apache.poi.ss.usermodel.Font;
@@ -26,9 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+//import javax.persistence.EntityManager;
 //import org.scuola247.desktop.entity.QUser;
-import org.scuola247.desktop.entity.User;
 
 //import com.mysema.query.BooleanBuilder;
 //import com.mysema.query.jpa.JPQLQuery;

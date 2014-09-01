@@ -25,9 +25,12 @@ import javax.naming.NamingException;
 import org.joda.time.DateTime;
 import org.postgresql.util.PSQLException;
 import org.scuola247.desktop.beans.AlunnoClasse;
+import org.scuola247.desktop.beans.DirectResponse;
 import org.scuola247.desktop.beans.GrigliaValutazioneColonna;
 import org.scuola247.desktop.beans.GrigliaValutazioneRiga;
+import org.scuola247.desktop.beans.ValutazioniResponse;
 import org.scuola247.desktop.config.DataHelper;
+import org.scuola247.desktop.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,7 +160,7 @@ public class ValutazioniService {
 		    conn = DataHelper.myConnection();
 		    conn.setAutoCommit(false);
 			// crea prepared statement
-		    valutazioni_stm = conn.prepareStatement("select * from griglia_valutazioni_righe_by_classe_docente_materia(?,?,?)");
+		    valutazioni_stm = conn.prepareStatement("select alunno, cognome, nome, assenze, ritardi, uscite, fuori_classe, note, mancanze, condotta, rvs, valutazioni, voti from griglia_valutazioni_righe_by_classe_docente_materia(?,?,?)");
 			// compila prepare statement
 	
 		    valutazioni_stm.setLong(1, filtroClasse);
@@ -339,7 +342,7 @@ public class ValutazioniService {
 	@ExtDirectMethod
 	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
-    public String valutazioni_ins(
+    public DirectResponse valutazioni_ins(
 			Long rv,  
 			Long valutazione, 
 			Long classe,
@@ -353,8 +356,7 @@ public class ValutazioniService {
 		    Long docente,
 		    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") DateTime giorno)
             throws IOException, SQLException {
-		String ans = "";
-		String errorMessage = null;
+		DirectResponse resp = null;
 		Connection conn = null;
 		CallableStatement stsm = null;
 		
@@ -392,7 +394,7 @@ public class ValutazioniService {
 				Logger logger = LoggerFactory.getLogger(getClass());
 				logger.error(e.getMessage(), e);
 				//			throw e;
-				errorMessage = e.getMessage();
+				resp = Util.getPSQLExceptionDetail(e);
 			}
 			finally{
 				if (stsm != null){
@@ -422,7 +424,8 @@ public class ValutazioniService {
 				Logger logger = LoggerFactory.getLogger(getClass());
 				logger.error(e.getMessage(), e);
 				//			throw e;
-				errorMessage = e.getMessage();
+				
+				resp = Util.getPSQLExceptionDetail(e);
 			}
 			finally{
 				if (stsm != null){
@@ -433,24 +436,22 @@ public class ValutazioniService {
 				}
 			}
 		}
-		if (errorMessage == null){
-			ans = "OK," + newRv + "," + newValutazione;
+		if (resp == null){
+			resp = new DirectResponse();
+			resp.setOk(true);
+			resp.setPayload(new ValutazioniResponse(newRv, newValutazione));
 		}
-		else {
-			ans = "KO," + errorMessage;
-		}
-    	return ans;
+    	return resp;
     }
 	
 	@ExtDirectMethod
 	@PreAuthorize("hasAnyRole('Docente','Dirigente','Gestore')")
 	@Transactional(readOnly = true)
-    public String valutazioni_del(
+    public DirectResponse valutazioni_del(
 			Long rv,  
 			Long valutazione)
             throws IOException, SQLException {
-		String ans = "";
-		String errorMessage = null;
+		DirectResponse resp = null;
 		Connection conn = null;
 		CallableStatement stsm = null;
 
@@ -468,7 +469,7 @@ public class ValutazioniService {
 			Logger logger = LoggerFactory.getLogger(getClass());
 			logger.error(e.getMessage(), e);
 			//			throw e;
-			errorMessage = e.getMessage();
+			resp = Util.getPSQLExceptionDetail(e);
 		}
 		finally{
 			if (stsm != null){
@@ -478,13 +479,13 @@ public class ValutazioniService {
 				conn.close();
 			}
 		}
-		if (errorMessage == null){
-			ans = "OK,OK";
+		if (resp == null){
+			if (resp == null){
+				resp = new DirectResponse();
+				resp.setOk(true);
+			}
 		}
-		else {
-			ans = "KO," + errorMessage;
-		}
-    	return ans;
+    	return resp;
     }
 	
 	@ExtDirectMethod

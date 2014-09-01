@@ -1,14 +1,10 @@
 package org.scuola247.desktop.schedule;
 
 //import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 //import org.joda.time.DateTime;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import org.scuola247.desktop.entity.AccessLog;
 
 @Component
 public class AccessLogCleanup {

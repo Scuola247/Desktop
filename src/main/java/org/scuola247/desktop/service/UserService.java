@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-//import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
+import org.scuola247.desktop.entity.Role;
+import org.scuola247.desktop.entity.User;
+import org.scuola247.desktop.security.UtenteDettagli;
 //import org.joda.time.Duration;
 //import org.joda.time.Period;
 //import org.joda.time.PeriodType;
@@ -35,16 +36,10 @@ import ch.ralscha.extdirectspring.annotation.ExtDirectMethodType;
 import ch.ralscha.extdirectspring.bean.ExtDirectFormPostResult;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-import ch.ralscha.extdirectspring.filter.StringFilter;
-
-import org.scuola247.desktop.entity.Role;
-import org.scuola247.desktop.entity.User;
-import org.scuola247.desktop.security.UtenteDettagli;
-
-import ch.rasc.edsutil.QueryUtil;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
+//import javax.persistence.EntityManager;
 
 @Service
 @Lazy
@@ -162,9 +157,9 @@ public class UserService {
 					dbUser.getRoles().addAll(roles);
 
 					dbUser.setEnabled(modifiedUser.isEnabled());
-					dbUser.setName(modifiedUser.getName());
-					dbUser.setFirstName(modifiedUser.getFirstName());
-					dbUser.setEmail(modifiedUser.getEmail());
+//					dbUser.setName(modifiedUser.getName());
+//					dbUser.setFirstName(modifiedUser.getFirstName());
+//					dbUser.setEmail(modifiedUser.getEmail());
 					dbUser.setLocale(modifiedUser.getLocale());
 
 					if (StringUtils.hasText(modifiedUser.getPasswordHash())) {

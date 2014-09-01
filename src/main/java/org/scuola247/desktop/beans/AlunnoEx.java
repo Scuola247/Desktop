@@ -4,11 +4,11 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import ch.rasc.edsutil.jackson.ISO8601DateTimeSerializer;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Model(value = "Desktop.model.AlunnoEx", readMethod="alunnoService.listClasseAlunniEx", paging=true)
 public class AlunnoEx {

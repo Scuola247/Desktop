@@ -39,7 +39,7 @@ public class InstitutesService {
 	private MessageSource messageSource;
 
 	@ExtDirectMethod(STORE_READ)
-	@PreAuthorize("hasRole('Pubblico')")
+	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
 	public ExtDirectStoreResult<Institute> list(ExtDirectStoreReadRequest request, Locale locale) throws NamingException, SQLException {
 		List<Institute> ans = new LinkedList<>();

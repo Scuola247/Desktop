@@ -1,6 +1,5 @@
 Ext.define('Desktop.controller.TeacherRegister', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: ['Deft.mixin.Injectable'],
 	inject: ['sharedStorage'],
 	requires: [], 
 
@@ -145,17 +144,17 @@ Ext.define('Desktop.controller.TeacherRegister', {
 		this.setDocente(sharedStorage.sl_docente);
 		this.setMateria(sharedStorage.sl_materia);
 		
-		if (Ext.isEmpty(this.getClasse())){
+		if (Ext.isEmpty(this.getClasse()) || this.getClasse() == 0){
 			Desktop.ux.window.Notification.info(i18n.important, i18n.workspace_required_class);
 			view.destroy();
 		}
 		else{
-			if (Ext.isEmpty(this.getDocente())){
+			if (Ext.isEmpty(this.getDocente()) || this.getDocente() == 0){
 				Desktop.ux.window.Notification.info(i18n.important, i18n.workspace_required_teacher);
 				view.destroy();
 			}
 			else{
-				if (Ext.isEmpty(this.getMateria())){
+				if (Ext.isEmpty(this.getMateria()) || this.getMateria() == 0){
 					Desktop.ux.window.Notification.info(i18n.important, i18n.workspace_required_subject);
 					view.destroy();
 				}
@@ -345,14 +344,12 @@ Ext.define('Desktop.controller.TeacherRegister', {
 								, function(provider, response) {
 							   // process response
 								if (!Ext.isEmpty(response.result)){
-									
-									var resultTokens = response.result.split(",");
-									if (resultTokens[0] == "KO"){
+									if (!response.result.ok){
 										//response.result è il messaggio di errore
 										Ext.Msg.show({
 						                	title:i18n.teacher_register_error,
 						                	buttons: Ext.Msg.OK,
-						                	msg: resultTokens[1],
+						                	msg: Desktop.ux.util.ExceptionDecoder.decode(response.result),
 						                	icon: Ext.MessageBox.ERROR
 						                });
 									}
@@ -413,23 +410,23 @@ Ext.define('Desktop.controller.TeacherRegister', {
 						, function(provider, response) {
 					   // process response
 						if (!Ext.isEmpty(response.result)){
-							var resultTokens = response.result.split(",");
-							if (resultTokens[0] == "KO"){
+							if (!response.result.ok){
 								//response.result è il messaggio di errore
+								var view = this.getView();
 								Ext.Msg.show({
 				                	title:i18n.teacher_register_error,
 				                	buttons: Ext.Msg.OK,
-				                	msg: resultTokens[1],
-				                	icon: Ext.MessageBox.ERROR
+				                	msg:Desktop.ux.util.ExceptionDecoder.decode(response.result),
+				                	icon: Ext.MessageBox.ERROR,
+				                	fn:function(){
+				                		view.destroy();
+				                	}
 				                });
 							}
 							else{
 								
-								record.set("rv_" + indexCol, resultTokens[1]);
-								record.set("va_" + indexCol, resultTokens[2]);
-								
-	//							this.setSelectedRV(resultTokens[1]);
-	//							this.setSelectedValutazione(resultTokens[2]);
+								record.set("rv_" + indexCol, response.result.payload.rv);
+								record.set("va_" + indexCol, response.result.payload.valutazione);
 								
 								judgmentGridStore.commitChanges();
 								this.setEditRow(null);
@@ -460,87 +457,98 @@ Ext.define('Desktop.controller.TeacherRegister', {
 	
 	addJudgmentConfirmButtonClick:function ( button, e, eOpts ){
 
-		var storeGrigliaValutazioneColonne = this.getStoreGrigliaValutazioneColonne();
-		var newColumn = Ext.create('Desktop.model.GrigliaValutazioneColonna');
+		var judgmentGridAddForm = this.getJudgmentGridAddForm();
+		if (judgmentGridAddForm.isValid()){
+			var storeGrigliaValutazioneColonne = this.getStoreGrigliaValutazioneColonne();
+			var newColumn = Ext.create('Desktop.model.GrigliaValutazioneColonna');
+			
+			var judgmentGridAddFormTipoVoto = this.getJudgmentGridAddFormTipoVoto();
+			var judgmentGridAddFormArgomento = this.getJudgmentGridAddFormArgomento();
+			var judgmentGridAddFormMetrica = this.getJudgmentGridAddFormMetrica();
+			var judgmentGridAddFormGiorno = this.getJudgmentGridAddFormGiorno();
 		
-		var judgmentGridAddFormTipoVoto = this.getJudgmentGridAddFormTipoVoto();
-		var judgmentGridAddFormArgomento = this.getJudgmentGridAddFormArgomento();
-		var judgmentGridAddFormMetrica = this.getJudgmentGridAddFormMetrica();
-		var judgmentGridAddFormGiorno = this.getJudgmentGridAddFormGiorno();
-		
-		var tipo_voto = judgmentGridAddFormTipoVoto.getValue();
-		var tipo_voto_descrizione = judgmentGridAddFormTipoVoto.findRecordByValue(tipo_voto).get('descrizione');
-		
-		var argomento = judgmentGridAddFormArgomento.getValue();
-		var argomento_descrizione = judgmentGridAddFormArgomento.findRecordByValue(argomento).get('descrizione');
-		
-		var metrica = judgmentGridAddFormMetrica.getValue();
-		var metrica_descrizione = judgmentGridAddFormMetrica.findRecordByValue(metrica).get('descrizione');
-		
-		newColumn.set('giorno', judgmentGridAddFormGiorno.getValue());
-		newColumn.set('tipo_voto', tipo_voto);
-		newColumn.set('tipo_voto_descrizione', tipo_voto_descrizione);
-		newColumn.set('argomento', argomento);
-		newColumn.set('argomento_descrizione', argomento_descrizione);
-		newColumn.set('metrica', metrica);
-		newColumn.set('metrica_descrizione', metrica_descrizione);
-		var indiceColonna = storeGrigliaValutazioneColonne.getCount();
-		storeGrigliaValutazioneColonne.add(newColumn);
-		
-		var columns = this.getJudgmentGrid().columns;
-		var colonna = columns[indiceColonna + 10];
-		
-		this.preloadVotiMetrica(metrica);
+			var tipo_voto = judgmentGridAddFormTipoVoto.getValue();
+			var tipo_voto_descrizione = judgmentGridAddFormTipoVoto.findRecordByValue(tipo_voto).get('descrizione');
+			
+			var argomento = judgmentGridAddFormArgomento.getValue();
+			var argomento_descrizione = (argomento == null)?"":judgmentGridAddFormArgomento.findRecordByValue(argomento).get('descrizione');
+			
+			var metrica = judgmentGridAddFormMetrica.getValue();
+			var metrica_descrizione = judgmentGridAddFormMetrica.findRecordByValue(metrica).get('descrizione');
+			
+			newColumn.set('giorno', judgmentGridAddFormGiorno.getValue());
+			newColumn.set('tipo_voto', tipo_voto);
+			newColumn.set('tipo_voto_descrizione', tipo_voto_descrizione);
+			newColumn.set('argomento', argomento);
+			newColumn.set('argomento_descrizione', argomento_descrizione);
+			newColumn.set('metrica', metrica);
+			newColumn.set('metrica_descrizione', metrica_descrizione);
+			var indiceColonna = storeGrigliaValutazioneColonne.getCount();
+			storeGrigliaValutazioneColonne.add(newColumn);
+			
+			var columns = this.getJudgmentGrid().columns;
+			var colonna = columns[indiceColonna + 10];
+			
+			this.preloadVotiMetrica(metrica);
 
-		var voti = this.getVoti();
-		this.getJudgmentGrid().headerCt.down('gridcolumn[dataIndex=vo_' + (indiceColonna + 1) + ']').renderer = function (value, metaData, record, rowIndex, colIndex, store, view, returnHtml){
-			if (!Ext.isEmpty(value)){
-				var colonne = storeGrigliaValutazioneColonne;
-				var colonna = colonne.getAt(colIndex);
-				
-				var votiMetrica = voti.get(colonna.get('metrica'));
-				
-				var voto = votiMetrica.getAt(votiMetrica.findExact('voto', value));
-				
-				var millesimi = voto.get('millesimi');
-				var color = "#FF0000";
-				if (millesimi < 101){
-					color = "#FF0000";
-				} else if (millesimi < 201){
-					color = "#FF0000";
-				} else if (millesimi < 301){
-					color = "#FF0000";
-				} else if (millesimi < 401){
-					color = "#FF8000";
-				} else if (millesimi < 501){
-					color = "#FF8000";
-				} else if (millesimi < 601){
-					color = "#4B8A08";
-				} else if (millesimi < 701){
-					color = "#4B8A08";
-				} else if (millesimi < 801){
-					color = "#4B8A08";
-				} else if (millesimi < 901){
-					color = "#0174DF";
-				} else {
-					color = "#0404B4";
+			var voti = this.getVoti();
+			this.getJudgmentGrid().headerCt.down('gridcolumn[dataIndex=vo_' + (indiceColonna + 1) + ']').renderer = function (value, metaData, record, rowIndex, colIndex, store, view, returnHtml){
+				if (!Ext.isEmpty(value)){
+					var colonne = storeGrigliaValutazioneColonne;
+					var colonna = colonne.getAt(colIndex);
+					
+					var votiMetrica = voti.get(colonna.get('metrica'));
+					
+					var voto = votiMetrica.getAt(votiMetrica.findExact('voto', value));
+					
+					var millesimi = voto.get('millesimi');
+					var color = "#FF0000";
+					if (millesimi < 101){
+						color = "#FF0000";
+					} else if (millesimi < 201){
+						color = "#FF0000";
+					} else if (millesimi < 301){
+						color = "#FF0000";
+					} else if (millesimi < 401){
+						color = "#FF8000";
+					} else if (millesimi < 501){
+						color = "#FF8000";
+					} else if (millesimi < 601){
+						color = "#4B8A08";
+					} else if (millesimi < 701){
+						color = "#4B8A08";
+					} else if (millesimi < 801){
+						color = "#4B8A08";
+					} else if (millesimi < 901){
+						color = "#0174DF";
+					} else {
+						color = "#0404B4";
+					}
+					
+					metaData.style = 'color:' + color;
+					
+					return voto.get('mnemonico');
 				}
-				
-				metaData.style = 'color:' + color;
-				
-				return voto.get('mnemonico');
-			}
-			else {
-				return '';
-			}
-		};
-		
-		this.creaColonna(colonna, newColumn);
-		
-		this.getJudgmentGridAddPanel().hide();
-		this.getJudgmentGrid().show();
-		
-		this.getJudgmentGridAddFormGiorno().reset();
+				else {
+					return '';
+				}
+			};
+			
+			this.creaColonna(colonna, newColumn);
+			
+			this.getJudgmentGridAddPanel().hide();
+			this.getJudgmentGrid().show();
+			
+			this.getJudgmentGridAddFormGiorno().reset();	
+		}
+		else{
+			Ext.Msg.show({
+            	title:i18n.teacher_register_error,
+            	buttons: Ext.Msg.OK,
+            	msg: "Data valutazione obbligatoria",
+            	icon: Ext.MessageBox.ERROR
+            });
+		}
 	},
 	addJudgmentCancelButtonClick:function ( button, e, eOpts ){
 		this.getJudgmentGridAddPanel().hide();
@@ -789,14 +797,12 @@ Ext.define('Desktop.controller.TeacherRegister', {
 						function(provider, response) {
 					   // process response
 						if (!Ext.isEmpty(response.result)){
-							
-							var resultTokens = response.result.split(",");
-							if (resultTokens[0] == "KO"){
+							if (!response.result.ok){
 								//response.result è il messaggio di errore
 								Ext.Msg.show({
 				                	title:i18n.teacher_register_error,
 				                	buttons: Ext.Msg.OK,
-				                	msg: resultTokens[1],
+				                	msg: Desktop.ux.util.ExceptionDecoder.decode(response.result),
 				                	icon: Ext.MessageBox.ERROR
 				                });
 							}

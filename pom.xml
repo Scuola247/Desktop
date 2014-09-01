@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.scuola247</groupId>
 	<artifactId>desktop</artifactId>
-	<version>1.0.8</version>
+	<version>1.0.9</version>
 	<packaging>war</packaging>
 
 	<prerequisites>
@@ -24,6 +24,7 @@
 		<maven.build.timestamp.format>yyyy-MM-dd'T'hh:mm:ss.SSSZ</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<extjs.version>4.2.2</extjs.version>
+		<spring.version>4.0.6.RELEASE</spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -31,7 +32,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>
-				<version>4.0.0.RELEASE</version>
+				<version>${spring.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -52,7 +53,7 @@
 			<version>1.0.0</version>
 		</dependency>
 
-<!-- Spring inizio -->
+		<!-- Spring inizio -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -89,10 +90,10 @@
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 
- 		<dependency>
- 			<groupId>org.springframework</groupId>
- 			<artifactId>spring-orm</artifactId>
- 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -116,13 +117,13 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-<!-- Spring fine -->
+		<!-- Spring fine -->
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.jadira.usertype</groupId> -->
-<!-- 			<artifactId>usertype.core</artifactId> -->
-<!-- 			<version>3.1.0.CR10</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jadira.usertype</groupId> -->
+		<!-- <artifactId>usertype.core</artifactId> -->
+		<!-- <version>3.1.0.CR10</version> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -135,6 +136,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.2.Final</version>
 			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>
@@ -149,13 +151,13 @@
 			</exclusions>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.aspectj</groupId> -->
-<!-- 			<artifactId>aspectjrt</artifactId> -->
-<!-- 			<version>1.7.4</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.aspectj</groupId> -->
+		<!-- <artifactId>aspectjrt</artifactId> -->
+		<!-- <version>1.7.4</version> -->
+		<!-- </dependency> -->
 
-<!-- logging inizio -->
+		<!-- logging inizio -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -179,7 +181,7 @@
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-<!-- logging fine -->
+		<!-- logging fine -->
 
 		<dependency>
 			<groupId>ch.ralscha</groupId>
@@ -228,7 +230,7 @@
 			<artifactId>extjs-gpl</artifactId>
 			<version>${extjs.version}</version>
 		</dependency>
-<!-- ExtJS inizio -->
+		<!-- ExtJS inizio -->
 		<dependency>
 			<groupId>resources</groupId>
 			<artifactId>extjs-gpl-theme-classic</artifactId>
@@ -245,30 +247,30 @@
 			<groupId>resources</groupId>
 			<artifactId>extjs-gpl-debug</artifactId>
 			<version>${extjs.version}</version>
-<!-- 			<scope>provided</scope> -->
+			<!-- <scope>provided</scope> -->
 		</dependency>
-<!-- ExtJS fine -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.poi</groupId> -->
-<!-- 			<artifactId>poi</artifactId> -->
-<!-- 			<version>3.9</version> -->
-<!-- 		</dependency> -->
+		<!-- ExtJS fine -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.poi</groupId> -->
+		<!-- <artifactId>poi</artifactId> -->
+		<!-- <version>3.9</version> -->
+		<!-- </dependency> -->
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.poi</groupId> -->
-<!-- 			<artifactId>poi-ooxml</artifactId> -->
-<!-- 			<version>3.9</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>stax-api</artifactId> -->
-<!-- 					<groupId>stax</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>xml-apis</artifactId> -->
-<!-- 					<groupId>xml-apis</groupId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.poi</groupId> -->
+		<!-- <artifactId>poi-ooxml</artifactId> -->
+		<!-- <version>3.9</version> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>stax-api</artifactId> -->
+		<!-- <groupId>stax</groupId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>xml-apis</artifactId> -->
+		<!-- <groupId>xml-apis</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>com.yahoo.platform.yui</groupId>
@@ -321,10 +323,10 @@
 
 
 		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-dbcp</artifactId>
-		    <version>7.0.52</version>
-		    <scope>provided</scope>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-dbcp</artifactId>
+			<version>7.0.52</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -333,37 +335,34 @@
 			<version>9.3-1100-jdbc41</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		
+
+
 		<dependency>
-		    <groupId>net.sf.jasperreports</groupId>
-		    <artifactId>jasperreports</artifactId>
-		    <version>5.5.1</version>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.5.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>2.0.1</version>
 		</dependency>
-		
-		<!-- 
-		
-		installazione pacchetto manuale
-		mvn install:install-file -Dfile=C:\Users\denis\Documents\GitHub\Desktop\jasperreports-functions-5.5.1.jar -DgroupId=net.sf.jasperreports -DartifactId=jasperreports-functions -Dversion=5.5.1 -Dpackaging=jar -DlocalRepositoryPath=C:\Users\denis\Documents\GitHub\Desktop\external
-		
-		 -->
-		
-		<dependency> 
-			<groupId>net.sf.jasperreports</groupId> 
-			<artifactId>jasperreports-functions</artifactId> 
-			<version>5.5.1</version> 
-		</dependency>
-		
+
+		<!-- installazione pacchetto manuale mvn install:install-file -Dfile=C:\Users\denis\Documents\GitHub\Desktop\jasperreports-functions-5.5.1.jar 
+			-DgroupId=net.sf.jasperreports -DartifactId=jasperreports-functions -Dversion=5.5.1 
+			-Dpackaging=jar -DlocalRepositoryPath=C:\Users\denis\Documents\GitHub\Desktop\external -->
+
 		<dependency>
-		    <groupId>net.sf.opencsv</groupId>
-		    <artifactId>opencsv</artifactId>
-		    <version>2.3</version>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-functions</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
 		</dependency>
 	</dependencies>
 
@@ -531,56 +530,56 @@
 
 	</build>
 
-<profiles>
-  <profile>
-    <id>jsLint</id>
-    <activation>
-      <activeByDefault>false</activeByDefault>
-    </activation>
-    <build>
-    	<plugins>
-			<plugin>
-				<groupId>com.googlecode.jslint4java</groupId>
-				<artifactId>jslint4java-maven-plugin</artifactId>
-				<version>2.0.5</version>
-				<executions>
-					<execution>
-						<id>lint</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>lint</goal>
-						</goals>
-						<configuration>
-							<failOnError>false</failOnError>
-							<sourceFolders>
-								<sourceFolder>${project.basedir}/src/main/webapp</sourceFolder>
-							</sourceFolders>
-	
-							<excludes>
-								<exclude>resources/extjs-gpl/**/*.js</exclude>
-								<exclude>resources/deft.js</exclude>
-								<exclude>resources/deft-debug.js</exclude>
-							</excludes>
-	
-							<options>
-								<browser>true</browser>
-								<sloppy>true</sloppy>
-								<white>true</white>
-								<vars>true</vars>
-								<plusplus>true</plusplus>
-								<unparam>true</unparam>
-								<predef>Desktop,Ext,Deft,REMOTING_API,POLLING_URLS,desktop,app_context_path,i18n,accessLogService,userService,logService,
-									loggingEventService,infrastructureService,moduleService,wallpaperService,
-									appConfigurationService</predef>
-							</options>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-    </build>
-  </profile>
-</profiles>
+	<profiles>
+		<profile>
+			<id>jsLint</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.googlecode.jslint4java</groupId>
+						<artifactId>jslint4java-maven-plugin</artifactId>
+						<version>2.0.5</version>
+						<executions>
+							<execution>
+								<id>lint</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>lint</goal>
+								</goals>
+								<configuration>
+									<failOnError>false</failOnError>
+									<sourceFolders>
+										<sourceFolder>${project.basedir}/src/main/webapp</sourceFolder>
+									</sourceFolders>
+
+									<excludes>
+										<exclude>resources/extjs-gpl/**/*.js</exclude>
+										<exclude>resources/deft.js</exclude>
+										<exclude>resources/deft-debug.js</exclude>
+									</excludes>
+
+									<options>
+										<browser>true</browser>
+										<sloppy>true</sloppy>
+										<white>true</white>
+										<vars>true</vars>
+										<plusplus>true</plusplus>
+										<unparam>true</unparam>
+										<predef>Desktop,Ext,Deft,REMOTING_API,POLLING_URLS,desktop,app_context_path,i18n,accessLogService,userService,logService,
+											loggingEventService,infrastructureService,moduleService,wallpaperService,
+											appConfigurationService</predef>
+									</options>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 
 </project>

@@ -1,8 +1,6 @@
 package org.scuola247.desktop.web;
 
 //import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 //import org.joda.time.DateTime;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.session.SessionDestroyedEvent;

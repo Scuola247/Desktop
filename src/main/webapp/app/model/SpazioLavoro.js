@@ -45,6 +45,7 @@ Ext.define("Desktop.model.SpazioLavoro",
     api : {
       read : "spazioLavoroService.list",
       create : "spazioLavoroService.ins",
+      update : "spazioLavoroService.upd",
       destroy : "spazioLavoroService.del"
     },
     reader : {

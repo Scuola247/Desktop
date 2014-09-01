@@ -2,6 +2,7 @@ package org.scuola247.desktop.config;
 
 import java.util.Locale;
 
+import org.scuola247.desktop.web.AppLocaleResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import org.scuola247.desktop.web.AppLocaleResolver;
 
 import com.google.common.collect.ImmutableMap;
 

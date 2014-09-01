@@ -20,6 +20,7 @@ import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+import org.scuola247.desktop.entity.AccessLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,11 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-import ch.ralscha.extdirectspring.filter.StringFilter;
-
-import org.scuola247.desktop.entity.AccessLog;
-
-import ch.rasc.edsutil.QueryUtil;
 
 @Service
 public class AccessLogService {

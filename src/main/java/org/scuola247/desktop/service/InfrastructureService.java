@@ -9,13 +9,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.mail.MessagingException;
-//import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 
 import org.joda.time.DateTime;
+import org.scuola247.desktop.entity.AccessLog;
+import org.scuola247.desktop.security.UtenteDettagli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,11 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
-
-import org.scuola247.desktop.entity.AccessLog;
-import org.scuola247.desktop.entity.User;
-import org.scuola247.desktop.security.UtenteDettagli;
-import org.scuola247.desktop.util.Util;
+//import javax.persistence.EntityManager;
 
 @Service
 public class InfrastructureService {

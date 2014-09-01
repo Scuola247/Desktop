@@ -3,7 +3,7 @@ package org.scuola247.desktop.beans;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 
-@Model(value = "Desktop.model.SpazioLavoro", createMethod = "spazioLavoroService.ins", readMethod = "spazioLavoroService.list", destroyMethod = "spazioLavoroService.del", paging = true)
+@Model(value = "Desktop.model.SpazioLavoro", createMethod = "spazioLavoroService.ins", updateMethod = "spazioLavoroService.upd", readMethod = "spazioLavoroService.list", destroyMethod = "spazioLavoroService.del", paging = true)
 public class SpazioLavoro {
 	
 	@ModelField

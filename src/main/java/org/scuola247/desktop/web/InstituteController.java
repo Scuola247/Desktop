@@ -51,7 +51,9 @@ public class InstituteController {
 		Long newRv = null;
 		Long newInstituteCode = null;
 
+		
 		conn = DataHelper.myConnection();
+		if (conn == null)  return;
 		// crea prepared statement
 		/*
 		isrt = conn.prepareCall("{ ? = call istituti_ins(?,?,?,?) }");
@@ -66,7 +68,7 @@ public class InstituteController {
 
 		if ("".equals(rv)){
 			isrt = conn.prepareCall("{call istituti_ins(?,?,?,?,?,?) }");
-	
+			if (isrt == null)  return;
 			isrt.registerOutParameter(1,Types.BIGINT);
 			isrt.registerOutParameter(2,Types.BIGINT);
 	

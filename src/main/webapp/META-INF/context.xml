@@ -1,35 +1,27 @@
 <Context>
 
-<Environment name="spring.profiles.active" value="development" type="java.lang.String" override="false"/>       
-<!--   	<Environment name="spring.profiles.active" value="production" type="java.lang.String" override="false"/> -->   
-	<Parameter name="environment" value="TEST" override="false"/>
-	
-<!-- <Resource name="jdbc/postgres" auth="Container" -->
-<!--           type="javax.sql.DataSource" driverClassName="org.postgresql.Driver" -->
-<!--           url="jdbc:postgresql://127.0.0.1:5432/mydb" -->
-<!--           username="myuser" password="mypasswd" maxActive="20" maxIdle="10" -->
-<!-- maxWait="-1"/> -->
+	<Environment name="spring.profiles.active" value="development"
+		type="java.lang.String" override="false" />
+	<!-- <Environment name="spring.profiles.active" value="production" type="java.lang.String" 
+		override="false"/> -->
+	<Parameter name="environment" value="TEST" override="false" />
+
+	<!-- <Resource name="jdbc/postgres" auth="Container" -->
+	<!-- type="javax.sql.DataSource" driverClassName="org.postgresql.Driver" -->
+	<!-- url="jdbc:postgresql://127.0.0.1:5432/mydb" -->
+	<!-- username="myuser" password="mypasswd" maxActive="20" maxIdle="10" -->
+	<!-- maxWait="-1"/> -->
 
 
-     <Resource 
-               type="javax.sql.DataSource"
-               name="jdbc/scuola247" 
-               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
-               driverClassName="org.postgresql.Driver"
-               url="jdbc:postgresql://scuola247.fulcro.local/scuola247" 
-               alternateUsernameAllowed="true"
-               initialSize="0"
-               maxActive="80" 
-               maxIdle = "30" 
-               minIdle="20"
-               timeBetweenEvictionRunsMillis="30000"
-               minEvictableIdleTimeMillis="60000"
-               testOnBorrow="true"
-               validationQuery="SELECT 1" 
-               validationInterval="30000" 
-               removeAbandoned="true"
-               removeAbandonedTimeout="60" 
-               logAbandoned="true" 
-               abandonWhenPercentageFull="60"
-               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ResetAbandonedTimer"/>
+	<Resource type="javax.sql.DataSource" name="jdbc/scuola247"
+		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+		driverClassName="org.postgresql.Driver"
+		url="jdbc:postgresql://scuola247.fulcro.local/scuola247?ApplicationName=Desktop"
+		alternateUsernameAllowed="true" initialSize="0" maxActive="80"
+		maxIdle="30" minIdle="20" maxWait="-1" timeBetweenEvictionRunsMillis="30000"
+		minEvictableIdleTimeMillis="60000" testOnBorrow="true"
+		validationQuery="SELECT 1" validationInterval="30000" removeAbandoned="true"
+		removeAbandonedTimeout="600" logAbandoned="true"
+		abandonWhenPercentageFull="60"
+		jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ResetAbandonedTimer" />
 </Context>

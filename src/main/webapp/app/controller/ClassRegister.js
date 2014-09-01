@@ -1,6 +1,5 @@
 Ext.define('Desktop.controller.ClassRegister', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: ['Deft.mixin.Injectable'],
 	inject: ['sharedStorage'],
 	requires: [], 
 

@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import javax.servlet.ServletOutputStream;
-
 import org.scuola247.desktop.config.DataHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

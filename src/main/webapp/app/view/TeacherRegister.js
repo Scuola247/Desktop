@@ -5,6 +5,7 @@ Ext.define('Desktop.view.TeacherRegister', {
 	           'Ext.grid.*',
 	           'Ext.selection.CellModel',
 	           'Ext.ux.grid.FiltersFeature',
+	           'Ext.ux.grid.filter.*',
 	           'Desktop.model.GrigliaValutazioneColonna',
 	           'Desktop.store.GrigliaValutazioneColonne',
 	           'Desktop.model.GrigliaValutazioneRiga',
@@ -273,7 +274,7 @@ Ext.define('Desktop.view.TeacherRegister', {
 		        		displayField: 'descrizione',
 		        		valueField:'argomento',
 		        		store:argomentiStore,
-		        		allowBlank: false
+		        		allowBlank: true
 		        	},{
 		        		itemId: 'judgmentGridAddFormMetrica',
 		        		fieldLabel:'Metrica',

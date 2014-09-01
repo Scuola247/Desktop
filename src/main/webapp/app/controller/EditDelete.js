@@ -1,6 +1,5 @@
 Ext.define('Desktop.controller.EditDelete', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: ['Deft.mixin.Injectable'],
 	
 	control: {
 		view: {

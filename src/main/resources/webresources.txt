@@ -22,9 +22,20 @@ app_js:
   /overrides/
   /resources/deft-debug.js[d]
   /resources/deft.js
+  
   /api.js[d]
   /api-{application.version}.js[ps]
-  /resources/extjs-gpl/{extjs.version}/ux/form/MultiSelect.js
+  /resources/extjs-gpl/{extjs.version}/ux/form/MultiSelect.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/Filter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/BooleanFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/DateFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/DateTimeFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/ListFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/NumericFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/filter/StringFilter.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/FiltersFeature.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/menu/ListMenu.js[dp]
+  /resources/extjs-gpl/{extjs.version}/ux/grid/menu/RangeMenu.js[dp]
   /app/ux/
   /app/model/
   /app/shared/

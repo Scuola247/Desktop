@@ -16,7 +16,6 @@ import javax.naming.NamingException;
 
 import org.postgresql.util.PSQLException;
 import org.scuola247.desktop.beans.Metrica;
-import org.scuola247.desktop.beans.TipoVoto;
 import org.scuola247.desktop.config.DataHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

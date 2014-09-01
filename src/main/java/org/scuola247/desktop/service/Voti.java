@@ -8,18 +8,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.naming.NamingException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.postgresql.util.PSQLException;
-import org.scuola247.desktop.beans.AlunnoClasse;
-import org.scuola247.desktop.beans.AlunnoEx;
 import org.scuola247.desktop.beans.Voto;
 import org.scuola247.desktop.config.DataHelper;
 import org.slf4j.Logger;
@@ -27,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

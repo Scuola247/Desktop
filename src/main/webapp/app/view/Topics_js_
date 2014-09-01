@@ -1,0 +1,213 @@
+Ext.define('Desktop.view.Topics', {
+	extend: 'Ext.window.Window',
+	requires: ['Desktop.view.TopicsGridPanel'],
+	controller: 'Desktop.controller.Topics',
+
+	title: i18n.topics,
+	width: 840,
+	height: 560,
+	iconCls: 'topics-icon',
+	layout: 'fit',
+
+	initComponent: function() {
+		var topicsGrid = Ext.create('Desktop.view.TopicsGridPanel', {
+			itemId: 'topicsGrid',
+			region:'center'
+		});
+		var topicsPanel = Ext.create('Ext.panel.Panel', {
+			itemId: 'topicsPanel',
+			layout: 'border',
+			hidden: false,
+			items:[
+			      {
+			    	  region: 'north',
+			    	  xtype: 'form',
+			    	  layout: 'hbox',
+			    	  hidden: true,
+			    	  itemId: 'topicsSearchForm',
+			    	  fieldDefaults: {
+			    		  labelAlign: 'left',
+			    		  labelWidth: 100,
+			    		  margin: "4 4 4 4"
+			    	  },
+			    	  items: [{
+			    		  itemId:'topicDescriptionFilter',
+			    		  xtype: 'textfield',
+			    		  fieldLabel: i18n.topics_search_desc
+			    	  }],
+			    	  buttons: ['->', {
+			    		  itemId: 'topicsSearchButton',
+			    		  text: i18n.topics_search_button
+			    	  }]
+
+			      },
+			      topicsGrid
+			      ],
+			tbar: [
+		             {
+		            	 text: i18n.topics_search,
+		            	 itemId: 'searchTopicToggleButton',
+		            	 enableToggle: true,
+		            	 pressed: false,
+		            	 iconCls: 'find-icon'
+		             },/*{
+		            	 text: i18n.topics_edit,
+		            	 itemId: 'editTopicToggleButton',
+		            	 enableToggle: true,
+		            	 pressed: false,
+		            	 iconCls: 'pageedit-icon'
+		             },*/{
+		            	 text: i18n.topics_add,
+		            	 itemId: 'addTopicButton',
+		            	 iconCls: 'add-icon'
+		             },{
+		            	 text: i18n.topics_print,
+		            	 itemId: 'printTopicButton',
+		            	 iconCls: 'print-icon'
+		             }
+	             ]
+
+
+		});
+		var createTopicPanel = Ext.create('Ext.panel.Panel', {
+			itemId: 'createTopicPanel',
+			hidden: true,
+			items: [
+			        {
+			        	xtype: 'form',
+			        	itemId:'topicForm',
+			        	bodyPadding: '10 10 0 10',
+			        	width:500,
+			        	//height:130,
+			        	border:false,
+			        	defaults: {
+			        		xtype: 'textfield',
+			        		width: 300
+			        	},
+			        	items: [
+			        	        {
+			        	        	readOnly:true,
+			        	        	xtype:'hidden',
+			        	        	name:'rv'
+			        	        },
+			        	        {
+			        	        	readOnly:true,
+			        	        	name:'istituto',
+			        	        	fieldLabel: i18n.topics_topic_field,
+			        	        	itemId:'idIstitutoInsertField'
+			        	        },
+			        	        {
+			        	        	allowBlank: false,
+			        	        	minLength: 1,
+			        	        	fieldLabel: i18n.topics_description,
+			        	        	name:'descrizione'
+			        	        },
+			        	        {
+			        	        	allowBlank: false,
+			        	        	minLength: 1,
+			        	        	fieldLabel: i18n.topics_meccanografico,
+			        	        	name:'codice_meccanografico'
+			        	        },
+			        	        {
+			        	        	allowBlank: false,
+			        	        	minLength: 1,
+			        	        	fieldLabel: i18n.topics_mnem,
+			        	        	name:'mnemonico'
+			        	        	
+			        	        },
+			        	        {
+			        	        	xtype: 'checkbox',
+			        	        	cls: 'x-grid-checkheader-editor',
+			        	        	fieldLabel: i18n.topics_example,
+			        	        	name:'esempio'
+			        	        }
+	        	        ],
+	        	        api: {
+	        	        	submit: 'topicController.createNewTopic'
+	        	        }
+			        },
+			        {
+			        	xtype: 'form',
+			        	fileUpload: true,
+			        	itemId:'topicImageForm',
+			        	bodyPadding: '0 10 10 10',
+			        	width:500,
+			        	//height:350,
+			        	border:false,
+			        	defaults: {
+			        		xtype: 'textfield',
+			        		width: 300
+			        	},
+			        	items: [
+			        	        {
+			        	        	xtype: 'filefield',
+			        	        	fieldLabel: i18n.topics_logo,
+			        	        	name:'topicLogo',
+			        	        	itemId:'topicLogo',
+			        	        	buttonOnly:true,
+			        	        	buttonText: '',
+			        	        	buttonConfig: {
+			        	        		iconCls: 'upload-icon'
+			        	        	},
+			        	        	listeners:{
+			        	        		afterrender:function(cmp){
+			        	        			cmp.fileInputEl.set({
+			        	        				accept:'image/jpeg' // or w/e type
+			        	        			});
+			        	        		}
+			        	        	}
+			        	        },
+			        	        {
+			        	        	fieldLabel:i18n.topics_creation_logoName,
+			        	        	xtype:'textareafield',
+			        	        	readOnly: true,
+			        	        	itemId:'topicsLogoName'
+			        	        },
+			        	        {
+			        	        	xtype: 'container',
+			        	        	itemId: 'previewContainer',
+			        	        	padding: '0 0 0 105',
+			        	        	items:[{
+				        	        	xtype: 'image',
+				        	        	itemId:'topicLogoPreview',
+//				        	        	maxHeight:300,
+//				        	        	maxWidth:300,
+				        	        	src:''
+			        	        	}]
+			        	        }
+			        	        
+			        	        ],
+			        	        api: {
+			        	        	submit: 'topicController.uploadTopicImage'
+			        	        }
+			        }
+
+			        ],
+			        buttons: [{
+			        	text: i18n.topics_creation_form_insert_button,
+			        	itemId: 'insertNewTopicButton'
+			        	/*disabled: true*/
+			        },
+			        {
+			        	text: i18n.topics_creation_form_cancel_button,
+			        	itemId: 'closeInsertNewTopicButton'
+			        }
+			        ]
+		});
+
+
+		var centerContainer = Ext.create('Ext.container.Container', {
+			region: 'center',
+			layout: {
+				type: 'fit'
+			},
+			items:[topicsPanel, createTopicPanel]
+		});
+
+		this.items = [centerContainer];
+
+		this.callParent(arguments);
+
+	}
+
+});

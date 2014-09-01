@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
-
 import org.scuola247.desktop.entity.LoggingEventException;
 import org.scuola247.desktop.entity.LoggingEventProperty;
 import org.scuola247.desktop.util.DateTimeSerializer;
+
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 

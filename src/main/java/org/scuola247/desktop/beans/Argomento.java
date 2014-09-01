@@ -3,7 +3,11 @@ package org.scuola247.desktop.beans;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 
-@Model(value = "Desktop.model.Argomento", readMethod = "argomenti.ByMateriaClasse", paging = true)
+@Model(value = "Desktop.model.Argomento", 
+       readMethod = "argomenti.ByMateriaClasse", 
+       destroyMethod = "argomenti.del", 
+       paging = true)
+
 public class Argomento {
 	
 	public Argomento(Long rv, Long argomento, String descrizione) {

@@ -2,19 +2,8 @@ package org.scuola247.desktop.entity;
 
 import java.util.Set;
 
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.FetchType;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.JoinTable;
-//import javax.persistence.ManyToMany;
-//import javax.persistence.Table;
-//import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-//import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
 //import ch.rasc.edsutil.entity.AbstractPersistable;
@@ -24,12 +13,21 @@ import ch.rasc.extclassgenerator.ModelAssociationType;
 import ch.rasc.extclassgenerator.ModelField;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.JoinTable;
+//import javax.persistence.ManyToMany;
+//import javax.persistence.Table;
+//import javax.persistence.Transient;
+//import org.hibernate.annotations.Type;
 
 //@ - Entity
 //@ - Table(name = "AppUser")
 @Model(value = "Desktop.model.User", readMethod = "userService.read", destroyMethod = "userService.destroy", paging = true)
 public class User /*extends AbstractPersistable*/ {
-
+/*
 	@Email
 	@Size(max = 255)
 	@NotNull
@@ -41,7 +39,7 @@ public class User /*extends AbstractPersistable*/ {
 
 	@Size(max = 255)
 	private String firstName;
-
+*/
 	@Size(max = 60)
 	private String passwordHash;
 
@@ -73,7 +71,7 @@ public class User /*extends AbstractPersistable*/ {
 //	@ - Transient
 	@ModelField(persist = false)
 	private String lastLoginDescription;
-
+/*
 	public String getName() {
 		return name;
 	}
@@ -97,7 +95,7 @@ public class User /*extends AbstractPersistable*/ {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+*/
 	@JsonIgnore
 	public String getPasswordHash() {
 		return passwordHash;

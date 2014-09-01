@@ -6,8 +6,10 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
@@ -21,6 +23,9 @@ public class WallpaperService {
 
 	private ImmutableList<Wallpaper> wallpapers;
 
+	@Autowired
+    private ServletContext servletContext;
+	
 	@PostConstruct
 	private void init() {
 		Yaml y = new Yaml();
@@ -29,7 +34,7 @@ public class WallpaperService {
 		try (InputStream is = getClass().getResourceAsStream("/wallpapers.yaml")) {
 			for (String wp : (List<String>) y.load(is)) {
 				String[] splitted = wp.split(",");
-				builder.add(new Wallpaper(splitted[0], splitted[1], Integer.valueOf(splitted[2]), Integer
+				builder.add(new Wallpaper(splitted[0], servletContext.getContextPath() + splitted[1], Integer.valueOf(splitted[2]), Integer
 						.valueOf(splitted[3])));
 			}
 		} catch (IOException e) {

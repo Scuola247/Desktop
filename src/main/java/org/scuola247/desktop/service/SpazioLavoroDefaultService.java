@@ -8,9 +8,12 @@ import java.sql.Types;
 import java.util.Set;
 
 import org.postgresql.util.PSQLException;
+import org.scuola247.desktop.beans.DirectResponse;
+import org.scuola247.desktop.beans.SpazioLavoroResponse;
 import org.scuola247.desktop.config.CustomAuthenticationProvider;
 import org.scuola247.desktop.config.DataHelper;
 import org.scuola247.desktop.security.UtenteDettagli;
+import org.scuola247.desktop.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +34,8 @@ public class SpazioLavoroDefaultService {
 	//@PreAuthorize("hasRole('Pubblico')")
 	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
-    public String setSpazioLavoroDefault(String spazioLavoro, boolean reloadRoles) throws IOException, SQLException {
-		String errorMessage = null;
+    public DirectResponse setSpazioLavoroDefault(String spazioLavoro, boolean reloadRoles) throws IOException, SQLException {
+		DirectResponse resp = null;
 		Connection conn = null;
 
 		conn = DataHelper.myConnection();
@@ -54,7 +57,7 @@ public class SpazioLavoroDefaultService {
 			Logger logger = LoggerFactory.getLogger(getClass());
 			logger.error(e.getMessage(), e);
 //				throw e;
-			errorMessage = e.getMessage();
+			resp = Util.getPSQLExceptionDetail(e);
 		}
 		finally{
 			if (upd != null){
@@ -64,9 +67,8 @@ public class SpazioLavoroDefaultService {
 				conn.close();
 			}
 		}
-		if (errorMessage == null){
+		if (resp == null){
 			//salvata l'impostazione spazio di lavoro
-			
 			
 			if (reloadRoles){ 
 				Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -77,19 +79,19 @@ public class SpazioLavoroDefaultService {
 				userDetail.setRuoli(roles);
 			
 			}
-			return "OK";
+			resp = new DirectResponse();
+			resp.setOk(true);
 		}
-		else{
-			return errorMessage;
-		}
+
+		return resp;
     }
 
 	@ExtDirectMethod
 	//@PreAuthorize("hasRole('Pubblico')")
 	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
-	public String getSessionUtente() throws IOException, SQLException {
-		String errorMessage = null;
+	public DirectResponse getSessionUtente() throws IOException, SQLException {
+		DirectResponse resp = null;
 		Connection conn = null;
 	    CallableStatement getSU = null;
 	    long codiceUtente = -1;
@@ -108,7 +110,7 @@ public class SpazioLavoroDefaultService {
 			Logger logger = LoggerFactory.getLogger(getClass());
 			logger.error(e.getMessage(), e);
 //				throw e;
-			errorMessage = e.getMessage();
+			resp = Util.getPSQLExceptionDetail(e);
 		}
 		finally{
 			if (getSU != null){
@@ -118,20 +120,20 @@ public class SpazioLavoroDefaultService {
 				conn.close();
 			}
 		}
-		if (errorMessage == null){
-			return String.valueOf(codiceUtente);
+		if (resp == null){
+			resp = new DirectResponse();
+			resp.setOk(true);
+			resp.setPayload(new SpazioLavoroResponse(codiceUtente));
 		}
-		else{
-			return errorMessage;
-		}
+		return resp;
 	}
 	
 	@ExtDirectMethod
 	//@PreAuthorize("hasRole('Pubblico')")
 	@PreAuthorize("isAuthenticated()")
 	@Transactional(readOnly = true)
-	public String getSessionPersona(Long istituto) throws IOException, SQLException {
-		String errorMessage = null;
+	public DirectResponse getSessionPersona(Long istituto) throws IOException, SQLException {
+		DirectResponse resp = null;
 		Connection conn = null;
 	    CallableStatement getSP = null;
 	    long codicePersona = -1;
@@ -152,7 +154,7 @@ public class SpazioLavoroDefaultService {
 			Logger logger = LoggerFactory.getLogger(getClass());
 			logger.error(e.getMessage(), e);
 //				throw e;
-			errorMessage = e.getMessage();
+			resp = Util.getPSQLExceptionDetail(e);
 		}
 		finally{
 			if (getSP != null){
@@ -162,11 +164,11 @@ public class SpazioLavoroDefaultService {
 				conn.close();
 			}
 		}
-		if (errorMessage == null){
-			return String.valueOf(codicePersona);
+		if (resp == null){
+			resp = new DirectResponse();
+			resp.setOk(true);
+			resp.setPayload(new SpazioLavoroResponse(codicePersona));
 		}
-		else{
-			return errorMessage;
-		}
+		return resp;
 	}
 }

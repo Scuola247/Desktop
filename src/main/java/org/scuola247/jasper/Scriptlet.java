@@ -1,14 +1,14 @@
 package org.scuola247.jasper;
 
-import net.sf.jasperreports.engine.JRDefaultScriptlet;
-import net.sf.jasperreports.engine.JRScriptletException;
-import net.sf.jasperreports.engine.fill.JRFillParameter;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import net.sf.jasperreports.engine.JRDefaultScriptlet;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JRScriptletException;
 
 public class Scriptlet  extends JRDefaultScriptlet {
 	public InputStream persona_foto_miniatura(Long persona) throws JRScriptletException, SQLException
@@ -16,7 +16,7 @@ public class Scriptlet  extends JRDefaultScriptlet {
 		
 		CallableStatement cs = null;
 		
-		Connection conn = (Connection)(this.getParameterValue( JRFillParameter.REPORT_CONNECTION));
+		Connection conn = (Connection)(this.getParameterValue( JRParameter.REPORT_CONNECTION));
 		
 
         cs = conn.prepareCall("{? = call persone_sel_foto_miniatura(?) }");

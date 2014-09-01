@@ -1,4 +1,4 @@
-.appLabel, .appButton .x-btn-inner  {
+.appLabel,.appButton .x-btn-inner {
 	color: black;
 	font-size: 14px;
 }
@@ -48,8 +48,8 @@ div.view-over.settings-wallpaper-item {
 .wallpaper {
 	background-color: #3d71b8;
 	display: table-cell;
-    text-align: center;
-    vertical-align: middle;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .wallpaper-center {
@@ -66,7 +66,7 @@ div.view-over.settings-wallpaper-item {
 	text-align: center;
 	margin: 12px;
 	width: 64px;
-	height: 88px; 
+	height: 88px;
 	float: left;
 }
 
@@ -83,13 +83,13 @@ div.view-over.settings-wallpaper-item {
 	text-decoration: none;
 	padding-top: 5px;
 	color: white;
-	text-shadow:0px 0px 3px #000000;
+	text-shadow: 0px 0px 3px #000000;
 }
 
 .view-over .desktop-shortcut-text {
 	text-decoration: underline;
-	text-shadow:0px 0px 5px #000000;
-	font-weight:bold;
+	text-shadow: 0px 0px 5px #000000;
+	font-weight: bold;
 }
 
 .cursor-pointer {
@@ -97,7 +97,6 @@ div.view-over.settings-wallpaper-item {
 }
 
 /* Icons */
-
 .accesslog-icon {
 	background-image: url(../images/accesslog-icon.png);
 }
@@ -190,11 +189,15 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/16/institutes.png);
 }
 
+.topics-icon {
+	background-image: url(../icons/16/topics.png);
+}
+
 .settings-icon {
 	background-image: url(../images/settings-icon.png);
 }
 
-.dataexport-icon{
+.dataexport-icon {
 	background-image: url(../images/dataexport-icon.png);
 }
 
@@ -203,7 +206,6 @@ div.view-over.settings-wallpaper-item {
 }
 
 /* Shorcut */
-
 .users-shortcut {
 	background-image: url(../images/users.png);
 }
@@ -292,12 +294,16 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/48/teacher_register.png);
 }
 
-.institutes-shortcut {
-	background-image: url(../images/48/institutes.png);
+.topics-shortcut {
+	background-image: url(../icons/48/topics.png);
 }
 
 .settings-shortcut {
 	background-image: url(../images/settings.png);
+}
+
+.institutes-shortcut {
+	background-image: url(../images/48/institutes.png);
 }
 
 .dataexport-shortcut {
@@ -321,9 +327,7 @@ div.view-over.settings-wallpaper-item {
 	background-image: url(../images/logout.png);
 }
 
-
 /* DEMO */
-
 .tabs-icon {
 	background-image: url(../images/demo/tabs-icon.gif);
 }
@@ -366,26 +370,32 @@ user {
 
 .institutes-row {
 	/*height: 210px;*/
+	
 }
 
 .upload-icon {
-    background: url(../icons/image_add.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	background: url(../icons/image_add.png) no-repeat scroll 0 0
+		rgba(0, 0, 0, 0) !important;
 }
 
 .find-icon {
-	background: url(../icons/find.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	background: url(../icons/find.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+		!important;
 }
 
 .pageedit-icon {
-	background: url(../icons/page_edit.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	background: url(../icons/page_edit.png) no-repeat scroll 0 0
+		rgba(0, 0, 0, 0) !important;
 }
 
 .add-icon {
-	background: url(../icons/add.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	background: url(../icons/add.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+		!important;
 }
 
 .print-icon {
-	background: url(../icons/print.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	background: url(../icons/print.png) no-repeat scroll 0 0
+		rgba(0, 0, 0, 0) !important;
 }
 
 .judgmentGridColumn {
@@ -394,5 +404,5 @@ user {
 }
 
 .judgmentGrid .x-grid-cell-inner {
-    height: 50px
- }
+	height: 50px
+}

@@ -1,6 +1,5 @@
 Ext.define('Desktop.controller.Desktop', {
 	extend: 'Deft.mvc.ViewController',
-	mixins: ['Deft.mixin.Injectable'],
 	requires: ['Desktop.store.ModuleStore'],
 	inject: ['spaziLavoroStore', 'sharedStorage'],
 	observe: {
@@ -81,19 +80,18 @@ Ext.define('Desktop.controller.Desktop', {
 		
 		spazioLavoroDefaultService.getSessionUtente(function(provider, response) {
     		// process response
-			if (Ext.isNumeric(response.result)){
-				this.getSharedStorage().user = parseInt(response.result);
+			if (response.result.ok){
+				this.getSharedStorage().user = response.result.payload.code;
 				this.getView().setLoading(false);
 			}
 			else{
-				//response.result è il messaggio di errore
 				Ext.Msg.show({
 					title:i18n.workspace_selection_error,
 					buttons: Ext.Msg.OK,
-					msg: response.result,
+					msg: Desktop.ux.util.ExceptionDecoder.decode(response.result),
 					icon: Ext.MessageBox.ERROR
 				});
-				this.getView().setLoading(response.result);
+				this.getView().setLoading(Desktop.ux.util.ExceptionDecoder.decode(response.result));
 			}
 		}, this);
 		
